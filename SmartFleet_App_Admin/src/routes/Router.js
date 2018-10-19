@@ -9,48 +9,147 @@ import {
     Platform,
     StyleSheet,
     Text,
-    View
+    View,
+    Image,
 } from 'react-native';
+import {
+    createBottomTabNavigator,
+    createStackNavigator,
+    createTabNavigator,
+} from 'react-navigation';
+import CardStackStyleInterpolator from 'react-navigation/src/views/StackView/StackViewStyleInterpolator';
 
-const instructions = Platform.select({
-    ios: 'sdfsdadsfsdfadsf',
-    android: '123123123123123123',
-});
+import Images from '../constants/Images';
+import I18n from '../language/index';
+import { isEmpty, createAction } from '../utils/index';
+import Global from '../utils/Global';
+import setting from '../utils/setting';
 
 
-export default class App extends Component {
+import Spalsh from '../pages/Spalsh/Spalsh';
+import Login from '../pages/Login/Login';
+import Home from '../pages/Home/Home';
+import FullView from '../pages/FullView/FullView';
+import Events from '../pages/Events/Events';
+import Setting from '../pages/Setting/Setting';
+import RouterConfig from './routerConfig';
+
+let tabBarIcon = function (focused, tintColor, imgNormal, imgFocus) {
+    let IconImg = focused ? imgFocus : imgNormal;
+    return <Image source={IconImg} style={{ tintColor: tintColor, width: 27, height: 21 }} />
+}
+export default class Router extends Component {
+    constructor(props) {
+        super(props);
+        var cfg = new setting();
+        if (Global.cfg == undefined) {
+            Global.cfg = cfg;
+            cfg.getRunningConfig(this);
+        }
+    }
+    refresh(cfg) {
+        Global.cfg = cfg;
+    }
+    renderTabs() {
+        return createTabNavigator({
+            Home: {
+                screen: Home,
+                navigationOptions: ({ navigation }) => ({
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_incident, Images.tab_incident_h),
+                }),
+            },
+            FullView: {
+                screen: FullView,
+                navigationOptions: ({ navigation }) => ({
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_panorama, Images.tab_panorama_h),
+                }),
+            },
+            Events: {
+                screen: Events,
+                navigationOptions: ({ navigation }) => ({
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_incident, Images.tab_incident_h),
+                }),
+            },
+            Setting: {
+                screen: Setting,
+                navigationOptions: ({ navigation }) => ({
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_set, Images.tab_set_h),
+                }),
+            },
+        }, {
+                tabBarPosition: 'bottom',
+                swipeEnabled: false,
+                backBehavior: 'none',
+                animationEnabled: false,
+                lazy: true,
+                initialRouteName: 'Home',
+                tabBarOptions: {
+                    activeTintColor: '#24ba8e',
+                    inactiveTintColor: '#9797a3',
+                    showLabel: true,
+                    showIcon: true,
+                    upperCaseLabel: false,
+                    headerTitleStyle: {
+                        flex: 1,
+                        textAlign: 'center',
+                    },
+                    labelStyle: {//
+                        fontSize: 12,
+                        margin: 0,
+                    },
+                    style: {
+                        height: 49,
+                        borderTopWidth: 0,
+                        backgroundColor: '#f7f7f7',
+                    },
+                    indicatorStyle: {
+                        height: 0,
+                    },
+                },
+            });
+    }
+    renderApp() {
+        const Main = this.renderTabs();
+        return createStackNavigator({
+            Spalsh: {
+                screen: Spalsh,
+                navigationOptions: ({ navigation }) => ({
+                    header: null,
+                })
+            },
+            Login: {
+                screen: Login,
+                navigationOptions: {
+                    header: null,
+                }
+            },
+            Main: {
+                screen: Main,
+                navigationOptions: ({ navigation }) => ({
+                    header: null,
+                })
+            },
+            ...RouterConfig,
+        }, {
+                initialRouteName: "Spalsh",
+                transitionConfig: () => ({
+                    // 只要修改最后的forVertical就可以实现不同的动画了。
+                    screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+                }),
+                navigationOptions: ({ navigation }) => ({
+                    gesturesEnabled: true,
+                    headerTitleStyle: {
+                        flex: 1,
+                        fontSize: 18,
+                        color: '#1c1c1d',
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                    },
+                }),
+            });
+    }
     render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to React Native!
-        </Text>
-                <Text style={styles.instructions}>
-                    To get started, edit App.js
-        </Text>
-                <Text style={styles.instructions}>
-                    {instructions}
-                </Text>
-            </View>
-        );
+        const AppNavigator = this.renderApp();
+        return <AppNavigator />
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});

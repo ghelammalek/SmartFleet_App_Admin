@@ -46,8 +46,8 @@ function getServerIP() {
  */
 function refreshToken(method, url1, header, body, hasToken) {
     const url = getServerIP() + "/oauth2/access_token?" +
-        "client_id=" + Global.cfg.client_id +
-        "&client_secret=" + Global.cfg.client_secret +
+        "client_id=" + Global.client_id +
+        "&client_secret=" + Global.client_secret +
         "&grant_type=refresh_token" +
         "&refresh_token=" + Global.cfg.refresh_token;
 
@@ -115,23 +115,23 @@ function request(method, url1, header, body, hasToken) {
         .then((response) => response.json())
         .then((data) => {
             if (data.error_code === 21327 || data.error_code === 21336 || data.error_code === 21337 || data.error_code === 21338) {
-                // console.log('失败了' + url);
-                // console.log(data);
+                console.log('失败了' + url);
+                console.log(data);
                 return refreshToken(method, url1, header, body, hasToken);
             } else {
                 if (data.error) {
-                    // console.log('失败了' + url);
-                    // console.log(data);
+                    console.log('失败了' + url);
+                    console.log(data);
                     return data;
                 }
-                // console.log('成功了' + url);
-                // console.log(data);
+                console.log('成功了' + url);
+                console.log(data);
                 return data;
             }
         })
         .catch((err) => {
-            // console.log('崩溃了' + url);
-            // console.log({ error: err });
+            console.log('崩溃了' + url);
+            console.log({ error: err });
             return { error: err };
         });
 }
@@ -225,8 +225,8 @@ exports.delete = function (url, body, hasToken, header = HEADER_JSON) {
  */
 exports.getNewToken = function () {
     const url = getServerIP() + "/oauth2/access_token?" +
-        "client_id=" + Global.cfg.client_id +
-        "&client_secret=" + Global.cfg.client_secret +
+        "client_id=" + Global.client_id +
+        "&client_secret=" + Global.client_secret +
         "&grant_type=refresh_token" +
         "&refresh_token=" + Global.cfg.refresh_token;
 
