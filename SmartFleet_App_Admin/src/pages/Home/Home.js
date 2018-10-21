@@ -38,6 +38,9 @@ class Home extends Component {
     goEventDetail(item) {
         this.props.navigation.navigate('EventDetail', { item: item });
     }
+    goEvents() {
+        this.props.navigation.navigate('Events');
+    }
     _separator = () => {
         return <View style={styles.separator} />;
     }
@@ -198,6 +201,9 @@ class Home extends Component {
                     <View style={{ height: 20, flex: 1, backgroundColor: '#f7f7f7' }} />
                     <View style={styles.titleView}>
                         <Text style={styles.text1}>{'车辆事件'}</Text>
+                        <TouchableOpacity style={styles.moreEvents} activeOpacity={0.6} onPress={() => this.goEvents()} >
+                            <Text style={styles.btnTitle} >{'更多'}</Text>
+                        </TouchableOpacity>
                     </View>
                     {
                         this.getItems(this.props.events)

@@ -83,13 +83,23 @@ export default homeStyle = StyleSheet.create({
         paddingLeft: 8,
     },
     titleView: {
-        paddingVertical: 10,
+        // paddingVertical: 10,
+        height: 40,
         paddingHorizontal: 16,
         borderColor: '#dfdfdf',
         borderWidth: 0.5,
         backgroundColor: '#fff',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
-
+    moreEvents: {
+        padding: 8,
+    },
+    btnTitle: {
+        fontSize: 14,
+        color: '#24ba8e',
+    },
     textView: {
         flex: 1,
         flexDirection: 'row',
