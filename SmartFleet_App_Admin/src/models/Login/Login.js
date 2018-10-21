@@ -3,6 +3,8 @@ import { Alert } from 'react-native';
 import Global from '../../utils/Global';
 import I18n from '../../language/index';
 import api from '../../constants/api';
+import moment from 'moment';
+
 
 
 const signin = params => StackActions.reset({
@@ -55,6 +57,11 @@ export default {
                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 }
             } else {
+                Global.cfg.access_token = data.access_token;
+                Global.cfg.refresh_token = data.refresh_token;
+                Global.cfg.expires_in = data.expires_in;
+                Global.cfg.create_token_time = moment().unix();
+                Global.cfg.setRunningConfig();
                 Global.global.navigation.dispatch(signin(data));
             }
             yield put({

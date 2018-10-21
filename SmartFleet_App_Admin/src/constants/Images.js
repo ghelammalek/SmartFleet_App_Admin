@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-19 17:30:53
+ * @Last Modified time: 2018-10-21 19:34:23
  */
 
 export default {
@@ -13,12 +13,16 @@ export default {
     login_username: require('../assets/images/login/username.png'),
     login_password: require('../assets/images/login/password.png'),
 
-    tab_incident_h: require('../assets/images/tabbar/tab_incident_h.png'),
-    tab_incident: require('../assets/images/tabbar/tab_incident.png'),
-    tab_panorama_h: require('../assets/images/tabbar/tab_panorama_h.png'),
-    tab_panorama: require('../assets/images/tabbar/tab_panorama.png'),
-    tab_set_h: require('../assets/images/tabbar/tab_set_h.png'),
-    tab_set: require('../assets/images/tabbar/tab_set.png'),
-    tab_topology_h: require('../assets/images/tabbar/tab_topology_h.png'),
-    tab_topology: require('../assets/images/tabbar/tab_topology.png'),
+    tab_home_h: require('../assets/images/tabbar/home_selected.png'),
+    tab_home: require('../assets/images/tabbar/home_normal.png'),
+    tab_fullview_h: require('../assets/images/tabbar/fullview_selected.png'),
+    tab_fullview: require('../assets/images/tabbar/fullview_normal.png'),
+    tab_event_h: require('../assets/images/tabbar/event_selected.png'),
+    tab_event: require('../assets/images/tabbar/event_normal.png'),
+    tab_about_h: require('../assets/images/tabbar/about_selected.png'),
+    tab_about: require('../assets/images/tabbar/about_normal.png'),
+
+    other_ico_entrance: require('../assets/images/other/ico_entrance.png'),
+    ico_refresh: require('../assets/images/other/ico_refresh.png'),
+
 }

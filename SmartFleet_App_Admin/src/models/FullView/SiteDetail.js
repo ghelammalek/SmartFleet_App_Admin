@@ -5,12 +5,18 @@ import I18n from '../../language/index';
 import Global from '../../utils/Global';
 import api from '../../constants/api';
 
-
 export default {
-    namespace: 'events',
+    namespace: 'siteDetail',
     state: {
         data: null,
         isLoading: false,
+        marker: {
+
+        },
+        center: {
+            longitude: 113.981718,
+            latitude: 22.542449
+        },
     },
     reducers: {
         updateState(state, { payload }) {
@@ -37,6 +43,6 @@ export default {
                     }
                 });
             }
-        },
+        }
     },
 }

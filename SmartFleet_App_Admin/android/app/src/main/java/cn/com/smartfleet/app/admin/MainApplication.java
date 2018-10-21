@@ -3,6 +3,7 @@ package cn.com.smartfleet.app.admin;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.lovebing.reactnative.baidumap.BaiduMapPackage;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BaiduMapPackage(),
             new RNVersionNumberPackage(),
             new VectorIconsPackage(),
             new SplashScreenReactPackage(),

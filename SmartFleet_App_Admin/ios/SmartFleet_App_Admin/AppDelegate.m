@@ -14,6 +14,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "RCTBaiduMapViewManager.h"
 
 @implementation AppDelegate
 
@@ -64,7 +65,7 @@
 {
   [JPUSHService setupWithOption:launchOptions appKey:@"54b962092bf2707b01baf1df"
                         channel:nil apsForProduction:nil];
-
+[RCTBaiduMapViewManager initSDK:@"RgTtEnd7rcOTKbsgE0KSddPN5fB08QYX"];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];

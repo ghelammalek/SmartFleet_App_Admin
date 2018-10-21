@@ -223,9 +223,9 @@ class Login extends Component {
                                         <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: '#fff', marginTop: 20 }} onPress={() => this.changeAction()}>
+                                {/* <TouchableOpacity style={{ backgroundColor: '#fff', marginTop: 20 }} onPress={() => this.changeAction()}>
                                     <Text style={loginStyle.changeLabel}  >{I18n.t('change_language_IP')}</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View> :
                             <View style={loginStyle.body}>
                                 <View style={loginStyle.textView}>
@@ -258,9 +258,9 @@ class Login extends Component {
                                         <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: '#fff', marginTop: 20 }} onPress={() => this.changeAction()}>
+                                {/* <TouchableOpacity style={{ backgroundColor: '#fff', marginTop: 20 }} onPress={() => this.changeAction()}>
                                     <Text style={loginStyle.changeLabel}  >{I18n.t('change_language_IP')}</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
                     }
                 </View>

@@ -11,7 +11,7 @@ export default navigationBarStyle = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         paddingTop: Platform.OS == 'ios' ? 20 : 0,
-        backgroundColor: '#F7F7F7'
+        backgroundColor: '#F3F3F3'
     },
     title: {
         fontSize: 18,

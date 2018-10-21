@@ -24,11 +24,11 @@ import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
 import setting from '../../utils/setting';
-import styles from '../../styles/FullView/fullViewStyle';
+import styles from '../../styles/Event/eventDetailStyle';
 
-class FullView extends Component {
+class EventDetail extends Component {
     static navigationOptions = ({ navigation }) => ({
-        tabBarLabel: '车辆',
+        headerTitle: navigation.state.params.item.moduleName,
         headerBackTitle: null,
     });
     constructor(props) {
@@ -41,15 +41,15 @@ class FullView extends Component {
         };
     }
     componentDidMount() {
-        this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
-        this.props.dispatch(createAction('fullView/getSites')({}));
+        // this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
+        // this.props.dispatch(createAction('fullView/getSites')({}));
     }
     refresh() {
-        this.props.dispatch(createAction('fullView/getSites')({}));
+        // this.props.dispatch(createAction('fullView/getSites')({}));
     }
     refresh_() {
-        this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
-        this.props.dispatch(createAction('fullView/getSites')({}));
+        // this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
+        // this.props.dispatch(createAction('fullView/getSites')({}));
     }
     _annotationClinck_(event) {
         var item = {};
@@ -95,52 +95,9 @@ class FullView extends Component {
         )
     }
     render() {
-        var center = this.state.center;
-
         return (
             <View style={styles.container}>
-                <NavigationBar title='车辆' />
-                <ScrollableTabView
-                    locked={false}
-                    style={styles.tabbar}
-                    renderTabBar={() => <DefaultTabBar />}
-                    tabBarUnderlineStyle={styles.lineStyle}
-                    tabBarActiveTextColor='#FF0000'>
-                    <View tabLabel='地图' style={styles.container}>
-                        <MapView
-                            trafficEnabled={this.state.trafficEnabled}
-                            baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
-                            zoom={this.state.zoom}
-                            mapType={this.state.mapType}
-                            center={this.props.center}
-                            markers={this.props.markers}
-                            style={styles.map}
-                            onMarkerClick={this._annotationClinck_.bind(this)}
-                            onMapClick={(e) => {
-                            }}
-                        />
 
-                        <TouchableOpacity disabled={this.props.isLoading} onPress={() => this.refresh_()} style={{ position: 'absolute', bottom: 30, right: 20, height: 50, width: 50 }}>
-                            <Image style={{ margin: 5, height: 40, width: 40, resizeMode: 'stretch' }} source={Images.ico_refresh} />
-                        </TouchableOpacity>
-                    </View>
-                    <FlatList
-                        tabLabel='列表'
-                        refreshing={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        data={this.props.data}
-                        keyExtractor={(item, index) => index.toString()}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={false}
-                                onRefresh={() => this.refresh()}
-                                colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
-                                progressBackgroundColor="#ffffff"
-                            />
-                        }
-                    />
-                </ScrollableTabView>
                 {
                     this.props.isLoading ? <LoadingView /> : <View />
                 }
@@ -150,10 +107,10 @@ class FullView extends Component {
 }
 function mapStateToProps(state) {
     return {
-        isLoading: state.fullView.isLoading,
-        data: state.fullView.data,
-        markers: state.fullView.markers,
-        center: state.fullView.center,
+        isLoading: state.eventDetail.isLoading,
+        data: state.eventDetail.data,
+        markers: state.eventDetail.markers,
+        center: state.eventDetail.center,
     }
 }
-export default connect(mapStateToProps)(FullView);
+export default connect(mapStateToProps)(EventDetail);

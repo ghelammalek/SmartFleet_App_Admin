@@ -1,3 +1,10 @@
+import { NavigationActions, StackActions } from 'react-navigation';
+import { Alert } from 'react-native';
+import moment from 'moment';
+import I18n from '../../language/index';
+import Global from '../../utils/Global';
+import api from '../../constants/api';
+
 export default {
     namespace: 'setting',
     state: {
@@ -7,5 +14,11 @@ export default {
             return { ...state, ...payload }
         }
     },
-    effects: {},
+    effects: {
+        * loginOut({ payload }, { call, put, select }) {
+            const data = yield call(api.loginOut);
+            // console.log(data);
+
+        },
+    },
 }

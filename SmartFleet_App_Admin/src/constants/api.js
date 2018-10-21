@@ -67,3 +67,48 @@ exports.getAccessToken = function (username, password) {
         "&password_type=2&language=2&autoLogin=true";
     return request.post(url, null, false, HEADER_FORM);
 };
+
+/**
+ *    获取车辆的统计数据
+ *
+ *  * @param {*} queryType
+ * @returns
+ */
+exports.getStatistics = function (queryType) {
+    const url = '/api/statistics/vehicle/accumulation?queryType=' + queryType;
+    return request.get(url, null, true, HEADER_JSON);
+}
+
+/**
+ *   获取车辆的列表信息
+ *
+ * @param {*} 
+ * @returns
+ */
+exports.getSites = function () {
+    const url = '/api/general/sites?cursor=0&limit=0';
+    return request.get(url, null, true, HEADER_JSON);
+}
+
+/**
+ *   获取车辆的事件列表
+ *
+ * @param {*} 
+ * @returns
+ */
+exports.getAlerts = function (params) {
+    const url = '/api/alerts?cursor=0&limit=2';
+    return request.post(url, params, true, HEADER_JSON);
+}
+
+
+
+/** 
+ *   退出登录
+ *
+ * @returns
+ */
+exports.loginOut = function () {
+    const url = '/api2/logout';
+    return request.post(url, null, true, HEADER_JSON);
+}

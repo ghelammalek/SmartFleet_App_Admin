@@ -55,25 +55,25 @@ export default class Router extends Component {
             Home: {
                 screen: Home,
                 navigationOptions: ({ navigation }) => ({
-                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_incident, Images.tab_incident_h),
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_home, Images.tab_home_h),
                 }),
             },
             FullView: {
                 screen: FullView,
                 navigationOptions: ({ navigation }) => ({
-                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_panorama, Images.tab_panorama_h),
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_fullview, Images.tab_fullview_h),
                 }),
             },
             Events: {
                 screen: Events,
                 navigationOptions: ({ navigation }) => ({
-                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_incident, Images.tab_incident_h),
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_event, Images.tab_event_h),
                 }),
             },
             Setting: {
                 screen: Setting,
                 navigationOptions: ({ navigation }) => ({
-                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_set, Images.tab_set_h),
+                    tabBarIcon: ({ focused, tintColor }) => tabBarIcon(focused, tintColor, Images.tab_about, Images.tab_about_h),
                 }),
             },
         }, {

@@ -8,14 +8,16 @@ import dva from './src/routes/dva';
 import Router from './src/routes/Router';
 
 import Spalsh from './src/models/Spalsh/Spalsh';
-import Login from './src//models/Login/Login';
-import Home from './src//models/Home/Home';
-import FullView from './src//models/FullView/FullView';
-import Events from './src//models/Events/Events';
-import Setting from './src//models/Setting/Setting';
+import Login from './src/models/Login/Login';
+import Home from './src/models/Home/Home';
+import FullView from './src/models/FullView/FullView';
+import SiteDetail from './src/models/FullView/SiteDetail';
+import Events from './src/models/Events/Events';
+import EventDetail from './src/models/Events/EventDetail';
+import Setting from './src/models/Setting/Setting';
 
 const app = dva({
-  models: [Spalsh, Login, Home, FullView, Events, Setting],
+  models: [Spalsh, Login, Home, FullView, Events, EventDetail, Setting, SiteDetail],
   onError(e) {
     // console.log('onError', e);
   },
