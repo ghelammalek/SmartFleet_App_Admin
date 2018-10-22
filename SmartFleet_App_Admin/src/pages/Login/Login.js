@@ -78,6 +78,8 @@ class Login extends Component {
         } else {
             if (this.state.username.trim() == '') {
                 this.getAlert(I18n.t('please_entry_username'));
+            } else if (!((/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/).test(this.state.username))) {
+                this.getAlert(I18n.t('email_format_err'));
             } else if (this.state.password.trim() == '') {
                 this.getAlert(I18n.t('please_entry_password'));
             } else {

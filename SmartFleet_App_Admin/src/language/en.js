@@ -37,6 +37,7 @@ export default {
     select_serverIP: '服务器选择',
     please_entry_tel: '请输入手机号',
     tel_format_err: '手机号格式有误',
+    email_format_err: '邮箱格式有误',
     please_entry_code: '请输入验证码',
     get_code: '获取验证码',
     repeat_later: 's 后请重试',
