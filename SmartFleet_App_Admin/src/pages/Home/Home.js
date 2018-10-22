@@ -19,6 +19,7 @@ import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
 import setting from '../../utils/setting';
+import ihtool from '../../utils/ihtool';
 import styles from '../../styles/Home/homeStyle';
 
 class Home extends Component {
@@ -29,20 +30,26 @@ class Home extends Component {
         super(props);
     }
     componentDidMount() {
-        this.props.dispatch(createAction('home/updateState')({ isLoading: true }));
-        this.props.dispatch(createAction('home/getData')({}));
+        this.props.dispatch(createAction('home/getStatistics')({ queryType: '1' }));
+        this.props.dispatch(createAction('home/getAlerts')({
+            cursor: 0,
+            limit: 5,
+            body: {}
+        }));
     }
     refresh() {
-        this.props.dispatch(createAction('home/getData')({}));
+        this.props.dispatch(createAction('home/getStatistics')({ queryType: '1' }));
+        this.props.dispatch(createAction('home/getAlerts')({
+            cursor: 0,
+            limit: 5,
+            body: {}
+        }));
     }
     goEventDetail(item) {
         this.props.navigation.navigate('EventDetail', { item: item });
     }
     goEvents() {
         this.props.navigation.navigate('Events');
-    }
-    _separator = () => {
-        return <View style={styles.separator} />;
     }
 
     getItems(items) {
@@ -53,20 +60,19 @@ class Home extends Component {
                 <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => this.goEventDetail(item)} >
                     <View style={styles.itemView}>
                         <View style={styles.itemviewLeft}>
-                            <View style={styles.topView}>
+                            <View style={styles.itemTitleView}>
                                 <Text style={styles.itemName} >{item.moduleName}</Text>
                             </View>
-                            <View style={styles.bodyView}>
-                                <View style={styles.texView}>
-                                    <Text style={styles.textBody} >{item.startsAt}</Text>
-                                </View>
-                                <View style={styles.texView}>
-                                    <Text style={styles.textBody} >{item.desc}</Text>
-                                </View>
-                                {/* <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.duration + ' 小时'}</Text>
-                            </View> */}
+                            <View style={styles.texView}>
+                                {
+                                    isEmpty(item.desc) ? <View /> :
+                                        <Text style={styles.textBody} >{item.desc}</Text>
+                                }
                             </View>
+                        </View>
+
+                        <View style={styles.texView}>
+                            <Text style={styles.textBody} >{ihtool.getSimpleDate(item.startsAt)}</Text>
                         </View>
                         <Image style={styles.image_right} source={Images.other_ico_entrance} />
                     </View>
@@ -76,7 +82,6 @@ class Home extends Component {
         }
     }
     render() {
-        // alert(JSON.stringify(this.props.data));
         const data = {
             id: this.props.data.id == undefined ? '--' : this.props.data.id,
             distance: this.props.data.distance == undefined ? '--' : this.props.data.distance,
@@ -94,7 +99,7 @@ class Home extends Component {
             <View style={styles.container}>
                 <NavigationBar title='首页' />
                 <ScrollView
-                    // style={{ backgroundColor: '#f3f3f3' }}
+                    style={styles.scrollView}
                     showsVerticalScrollIndicator={false}
                     refreshControl={
                         <RefreshControl
@@ -105,114 +110,48 @@ class Home extends Component {
                         />
                     }
                 >
-                    <View style={styles.titleView}>
-                        <Text style={styles.text1}>{'概览'}</Text>
-                    </View>
                     <View style={styles.staticView}>
-                        <Image style={styles.image} source={Images.tab_home_h} />
-                        <View style={styles.rightView}>
-                            <View style={styles.textView}>
-                                <Text style={styles.text2}>{'今日总行驶里程'}</Text>
+                        <View style={styles.staticView_}>
+                            <View style={styles.static_titleView}>
+                                <Text style={styles.static_title}>{data.distance}</Text>
+                                <Text style={styles.static_sunTitle}>{'千米'}</Text>
                             </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text3}>{data.distance}</Text>
-                                <Text style={styles.text4}>{'千米'}</Text>
+                            <Image style={styles.static_image} source={Images.home_distance} />
+                        </View>
+                        <View style={styles.staticView_}>
+                            <View style={styles.static_titleView}>
+                                <Text style={styles.static_title}>{data.duration}</Text>
+                                <Text style={styles.static_sunTitle}>{'小时'}</Text>
                             </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'本月 ' + data.distance + '千米'}</Text>
+                            <Image style={styles.static_image} source={Images.home_duration} />
+                        </View>
+
+                        <View style={styles.staticView_}>
+                            <View style={styles.static_titleView}>
+                                <Text style={styles.static_title}>{data.workPerson}</Text>
+                                <Text style={styles.static_sunTitle}>{'辆'}</Text>
                             </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'预计再行驶756千米后保养'}</Text>
+                            <Image style={styles.static_image} source={Images.home_workPerson} />
+                        </View>
+                        <View style={styles.staticView_}>
+                            <View style={styles.static_titleView}>
+                                <Text style={styles.static_title}>{data.fuelConsumption}</Text>
+                                <Text style={styles.static_sunTitle}>{'次'}</Text>
                             </View>
+                            <Image style={styles.static_image} source={Images.home_fuelConsumption} />
                         </View>
                     </View>
-                    <View style={styles.staticView}>
-                        <Image style={styles.image} source={Images.tab_home_h} />
-                        <View style={styles.rightView}>
-                            <View style={styles.textView}>
-                                <Text style={styles.text2}>{'今日总工作时长'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text3}>{data.duration}</Text>
-                                <Text style={styles.text4}>{'小时'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'本月 ' + data.duration + '小时'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'预计再工作23小时后保养'}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.staticView}>
-                        <Image style={styles.image} source={Images.tab_home_h} />
-                        <View style={styles.rightView}>
-                            <View style={styles.textView}>
-                                <Text style={styles.text2}>{'今日总燃料消耗'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text3}>{data.fuelConsumption}</Text>
-                                <Text style={styles.text4}>{'升'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'本月 ' + data.fuelConsumption + '升'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'燃油消耗情况正常'}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.staticView}>
-                        <Image style={styles.image} source={Images.tab_home_h} />
-                        <View style={styles.rightView}>
-                            <View style={styles.textView}>
-                                <Text style={styles.text2}>{'今日总出勤车辆'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text3}>{data.cars}</Text>
-                                <Text style={styles.text4}>{'辆'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'本月 ' + data.cars + '辆'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'出勤率0%'}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.staticView}>
-                        <Image style={styles.image} source={Images.tab_home_h} />
-                        <View style={styles.rightView}>
-                            <View style={styles.textView}>
-                                <Text style={styles.text2}>{'今日总违规驾驶行为'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text3}>{data.illegal}</Text>
-                                <Text style={styles.text4}>{'次'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'本月 ' + data.illegal + '次'}</Text>
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text5}>{'可能事故0次'}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{ height: 20, flex: 1, backgroundColor: '#f7f7f7' }} />
+                    <View style={styles.space_horizontal} />
                     <View style={styles.titleView}>
                         <Text style={styles.text1}>{'车辆事件'}</Text>
                         <TouchableOpacity style={styles.moreEvents} activeOpacity={0.6} onPress={() => this.goEvents()} >
-                            <Text style={styles.btnTitle} >{'更多'}</Text>
+                            <Image style={styles.btnImage} source={Images.other_more} />
                         </TouchableOpacity>
                     </View>
                     {
                         this.getItems(this.props.events)
                     }
-                    <View style={{ height: 20, flex: 1, backgroundColor: '#fff' }} />
                 </ScrollView>
-                {
-                    this.props.isLoading ? <LoadingView /> : <View />
-                }
             </View>
         );
     }

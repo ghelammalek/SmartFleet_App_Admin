@@ -40,8 +40,7 @@ export default siteDetailStyle = StyleSheet.create({
 
     itemView: {
         flex: 1,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
+        padding: 8,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
@@ -51,30 +50,23 @@ export default siteDetailStyle = StyleSheet.create({
         flexDirection: 'column',
         marginRight: 20,
     },
-    topView: {
+    itemTitleView: {
         flexDirection: 'row',
-        marginBottom: 5,
+        // marginBottom: 5,
     },
     itemName: {
-        fontSize: 16,
-        color: '#1c1c1d',
-        // fontWeight: 'bold',
-        marginRight: 10,
-    },
-    bodyView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    textBody: {
         fontSize: 14,
         color: '#1c1c1d',
+        marginRight: 10,
+    },
+    textBody: {
+        fontSize: 12,
+        color: '#9797a3',
     },
     texView: {
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingLeft: 3,
-        // backgroundColor: 'green',
+        alignItems: 'flex-start',
+        marginRight: 8,
     },
     image_right: {
         width: 13,

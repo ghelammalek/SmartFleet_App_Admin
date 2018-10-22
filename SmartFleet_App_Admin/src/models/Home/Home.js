@@ -18,13 +18,10 @@ export default {
         }
     },
     effects: {
-        * getData({ payload }, { call, put, select }) {
-            // var statistics = {};
-            // var events = [];
-            const data = yield call(api.getStatistics, '1');
-
-            if (data.error == undefined) {
-                // statistics = data.result;
+        * getStatistics({ payload }, { call, put, select }) {
+            const data = yield call(api.getStatistics, payload.queryType);
+            if (data.error) {
+            } else {
                 yield put({
                     type: 'updateState',
                     payload: {
@@ -32,32 +29,18 @@ export default {
                     }
                 });
             }
-            const data1 = yield call(api.getAlerts, payload);
-
-            if (data1.error == undefined) {
-                // events = data1.result;
-
-                var arr = [];
-                const length = data1.result.length > 5 ? 5 : data1.result.length;
-                for (let index = 0; index < length; index++) {
-                    const element = data1.result[index];
-                    arr.push(element);
-                }
+        },
+        * getAlerts({ payload }, { call, put, select }) {
+            const data = yield call(api.getAlerts, payload);
+            if (data.error) {
+            } else {
                 yield put({
                     type: 'updateState',
                     payload: {
-                        events: arr,//data1.result,
+                        events: data.result,
                     }
                 });
             }
-            yield put({
-                type: 'updateState',
-                payload: {
-                    // data: statistics,
-                    // events: events,
-                    isLoading: false,
-                }
-            });
         },
     },
 }

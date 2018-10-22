@@ -25,6 +25,7 @@ import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
 import setting from '../../utils/setting';
+import ihtool from '../../utils/ihtool';
 import styles from '../../styles/FullView/siteDetailStyle';
 
 class SiteDetail extends Component {
@@ -56,13 +57,17 @@ class SiteDetail extends Component {
     componentDidMount() {
         this.props.dispatch(createAction('siteDetail/updateState')({ isLoading: true }));
         this.props.dispatch(createAction('siteDetail/getAlerts')({
-            // start_time: '2017-10-20T16:01:26.399Z',
-            // end_time: '2018-10-20T16:01:26.399Z',
-            // eventsTypes: null,
-            // labels: {
-            //     code: null,
-            // },
-            moduleName: '川WFF111',
+            cursor: 0,
+            limit: 20,
+            body: {
+                // start_time: '2017-10-20T16:01:26.399Z',
+                // end_time: '2018-10-20T16:01:26.399Z',
+                // eventsTypes: null,
+                // labels: {
+                //     code: null,
+                // },
+                moduleName: this.state.title,
+            },
         }));
     }
     componentWillUnmount() {
@@ -74,13 +79,17 @@ class SiteDetail extends Component {
     }
     refresh() {
         this.props.dispatch(createAction('siteDetail/getAlerts')({
-            // start_time: '2017-10-20T16:01:26.399Z',
-            // end_time: '2018-10-20T16:01:26.399Z',
-            // eventsTypes: null,
-            // labels: {
-            //     code: null,
-            // },
-            moduleName: '川WFF111',
+            cursor: 0,
+            limit: 20,
+            body: {
+                // start_time: '2017-10-20T16:01:26.399Z',
+                // end_time: '2018-10-20T16:01:26.399Z',
+                // eventsTypes: null,
+                // labels: {
+                //     code: null,
+                // },
+                moduleName: this.state.title,
+            },
         }));
     }
     goEventDetail(item) {
@@ -94,20 +103,18 @@ class SiteDetail extends Component {
             <TouchableOpacity key={item.index} activeOpacity={0.6} onPress={() => this.goEventDetail(item.item)} >
                 <View style={styles.itemView}>
                     <View style={styles.itemviewLeft}>
-                        <View style={styles.topView}>
+                        <View style={styles.itemTitleView}>
                             <Text style={styles.itemName} >{item.item.moduleName}</Text>
                         </View>
-                        <View style={styles.bodyView}>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.startsAt}</Text>
-                            </View>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.desc}</Text>
-                            </View>
-                            {/* <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.duration + ' 小时'}</Text>
-                            </View> */}
+                        <View style={styles.texView}>
+                            {
+                                isEmpty(item.item.desc) ? <View /> :
+                                    <Text style={styles.textBody} >{item.item.desc}</Text>
+                            }
                         </View>
+                    </View>
+                    <View style={styles.texView}>
+                        <Text style={styles.textBody} >{ihtool.getSimpleDate(item.startsAt)}</Text>
                     </View>
                     <Image style={styles.image_right} source={Images.other_ico_entrance} />
                 </View>

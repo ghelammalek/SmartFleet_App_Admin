@@ -10,14 +10,21 @@ import {
 import VersionNumber from 'react-native-version-number';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { connect } from '../../routes/dva';
+import moment, { unix } from 'moment';
 import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
+import ihtool from '../../utils/ihtool';
 import setting from '../../utils/setting';
 import NavigationBar from '../../widget/NavigationBar';
 import styles from '../../styles/setting/settingStyle.js';
-
+const signin = StackActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({ routeName: 'Login' })
+    ]
+});
 
 class Setting extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -88,17 +95,18 @@ class Setting extends Component {
      * 跳转到登录界面
      */
     loginOut() {
-        this.props.dispatch(createAction('setting/loginOut')({}));
+        // this.props.dispatch(createAction('setting/loginOut')({}));
 
         Global.cfg.access_token = '';
         Global.cfg.refresh_token = '';
         Global.cfg.setRunningConfig();
-        this.props.navigation.navigate('Login');
+        Global.global.navigation.dispatch(signin);
     }
     /**
      * 切换用户单位
      */
     changeCompanys() {
+        alert(ihtool.getSimpleDate(new Date()));
         // this.props.navigation.navigate('SelectCompany');
     }
     /**
@@ -136,8 +144,7 @@ class Setting extends Component {
 }
 function mapStateToProps(state) {
     return {
-        isLoading: state.setting.isLoading,
-        data: state.setting.data,
+        ...state,
     }
 }
 export default connect(mapStateToProps)(Setting);

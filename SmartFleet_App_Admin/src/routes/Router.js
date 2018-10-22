@@ -18,6 +18,7 @@ import {
     createTabNavigator,
 } from 'react-navigation';
 import CardStackStyleInterpolator from 'react-navigation/src/views/StackView/StackViewStyleInterpolator';
+import SplashScreen from 'react-native-splash-screen';
 
 import Images from '../constants/Images';
 import I18n from '../language/index';
@@ -100,7 +101,7 @@ export default class Router extends Component {
                     style: {
                         height: 49,
                         borderTopWidth: 0,
-                        backgroundColor: '#f7f7f7',
+                        backgroundColor: '#fff',
                     },
                     indicatorStyle: {
                         height: 0,
@@ -138,6 +139,9 @@ export default class Router extends Component {
                 }),
                 navigationOptions: ({ navigation }) => ({
                     gesturesEnabled: true,
+                    style: {
+                        backgroundColor: '#fff',
+                    },
                     headerTitleStyle: {
                         flex: 1,
                         fontSize: 18,

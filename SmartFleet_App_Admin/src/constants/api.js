@@ -97,8 +97,9 @@ exports.getSites = function () {
  * @returns
  */
 exports.getAlerts = function (params) {
-    const url = '/api/alerts?cursor=0&limit=2';
-    return request.post(url, params, true, HEADER_JSON);
+    const url = '/api/alerts?cursor=' + params.cursor +
+        '&limit=' + params.limit;
+    return request.post(url, params.body, true, HEADER_JSON);
 }
 
 

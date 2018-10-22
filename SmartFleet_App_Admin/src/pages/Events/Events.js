@@ -19,7 +19,8 @@ import I18n from '../../language/index';
 import Global from '../../utils/Global';
 import setting from '../../utils/setting';
 import moment from 'moment';
-import styles from '../../styles/FullView/fullViewStyle';
+import ihtool from '../../utils/ihtool';
+import styles from '../../styles/Event/eventStyle';
 
 class Events extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -30,10 +31,18 @@ class Events extends Component {
     }
     componentDidMount() {
         this.props.dispatch(createAction('events/updateState')({ isLoading: true }));
-        this.props.dispatch(createAction('events/getAlerts')({}));
+        this.props.dispatch(createAction('events/getAlerts')({
+            cursor: 0,
+            limit: 20,
+            body: {}
+        }));
     }
     refresh() {
-        this.props.dispatch(createAction('events/getAlerts')({}));
+        this.props.dispatch(createAction('events/getAlerts')({
+            cursor: 0,
+            limit: 20,
+            body: {}
+        }));
     }
     goEventDetail(item) {
         this.props.navigation.navigate('EventDetail', { item: item });
@@ -47,20 +56,18 @@ class Events extends Component {
             <TouchableOpacity key={item.index} activeOpacity={0.6} onPress={() => this.goEventDetail(item.item)} >
                 <View style={styles.itemView}>
                     <View style={styles.itemviewLeft}>
-                        <View style={styles.topView}>
+                        <View style={styles.itemTitleView}>
                             <Text style={styles.itemName} >{item.item.moduleName}</Text>
                         </View>
-                        <View style={styles.bodyView}>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.startsAt}</Text>
-                            </View>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.desc}</Text>
-                            </View>
-                            {/* <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.duration + ' 小时'}</Text>
-                            </View> */}
+                        <View style={styles.texView}>
+                            {
+                                isEmpty(item.item.desc) ? <View /> :
+                                    <Text style={styles.textBody} >{item.item.desc}</Text>
+                            }
                         </View>
+                    </View>
+                    <View style={styles.texView}>
+                        <Text style={styles.textBody} >{ihtool.getSimpleDate(item.startsAt)}</Text>
                     </View>
                     <Image style={styles.image_right} source={Images.other_ico_entrance} />
                 </View>
@@ -72,7 +79,6 @@ class Events extends Component {
             <View style={styles.container}>
                 <NavigationBar title='事件' />
                 <FlatList
-                    tabLabel='列表'
                     refreshing={false}
                     ItemSeparatorComponent={this._separator}
                     renderItem={this._renderItem}

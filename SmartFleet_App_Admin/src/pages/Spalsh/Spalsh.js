@@ -13,6 +13,7 @@ import {
     StackActions
 } from 'react-navigation';
 import { getLanguages } from 'react-native-i18n';
+import SplashScreen from 'react-native-splash-screen';
 
 import { connect } from '../../routes/dva';
 import { isEmpty, createAction } from '../../utils/index';
@@ -64,6 +65,7 @@ class Spalsh extends Component {
         Global.cfg.setRunningConfig();
         Global.global.navigation = this.props.navigation;
         setTimeout(() => {
+            SplashScreen.hide();
             if (isEmpty(Global.cfg.access_token)) {
                 this.props.navigation.dispatch(singin);
             } else {

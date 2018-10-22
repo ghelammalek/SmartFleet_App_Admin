@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-21 19:34:23
+ * @Last Modified time: 2018-10-22 14:16:04
  */
 
 export default {
@@ -22,7 +22,16 @@ export default {
     tab_about_h: require('../assets/images/tabbar/about_selected.png'),
     tab_about: require('../assets/images/tabbar/about_normal.png'),
 
+
+    home_cars: require('../assets/images/home/cars.png'),
+    home_distance: require('../assets/images/home/distance.png'),
+    home_duration: require('../assets/images/home/duration.png'),
+    home_fuelConsumption: require('../assets/images/home/fuelConsumption.png'),
+    home_illegal: require('../assets/images/home/illegal.png'),
+    home_workPerson: require('../assets/images/home/workPerson.png'),
+
     other_ico_entrance: require('../assets/images/other/ico_entrance.png'),
     ico_refresh: require('../assets/images/other/ico_refresh.png'),
+    other_more: require('../assets/images/other/more.png'),
 
 }

@@ -17,7 +17,7 @@ export default {
     effects: {
         * loginOut({ payload }, { call, put, select }) {
             const data = yield call(api.loginOut);
-            // console.log(data);
+            console.log(data);
 
         },
     },
