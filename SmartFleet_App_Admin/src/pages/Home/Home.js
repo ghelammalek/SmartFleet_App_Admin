@@ -46,7 +46,7 @@ class Home extends Component {
         }));
     }
     goEventDetail(item) {
-        this.props.navigation.navigate('EventDetail', { item: item });
+        // this.props.navigation.navigate('EventDetail', { item: item });
     }
     goEvents() {
         this.props.navigation.navigate('Events');

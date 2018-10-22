@@ -103,6 +103,17 @@ exports.getAlerts = function (params) {
 }
 
 
+/**
+ *   确认事件
+ *
+ * @param {*} _id
+ * @returns
+ */
+exports.putAlert = function (_id) {
+    const url = '/api/alerts/' + _id + '/confirm';
+    return request.post(url, null, true, HEADER_JSON);
+}
+
 
 /** 
  *   退出登录

@@ -93,7 +93,7 @@ class SiteDetail extends Component {
         }));
     }
     goEventDetail(item) {
-        this.props.navigation.navigate('EventDetail', { item: item });
+        // this.props.navigation.navigate('EventDetail', { item: item });
     }
     _separator = () => {
         return <View style={styles.separator} />;
