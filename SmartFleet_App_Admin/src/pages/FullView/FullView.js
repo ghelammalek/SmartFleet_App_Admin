@@ -101,7 +101,7 @@ class FullView extends Component {
             <View style={styles.container}>
                 <NavigationBar title='车辆' />
                 <ScrollableTabView
-                    locked={false}
+                    locked={true}
                     style={styles.tabbar}
                     renderTabBar={() => <DefaultTabBar />}
                     tabBarUnderlineStyle={styles.lineStyle}

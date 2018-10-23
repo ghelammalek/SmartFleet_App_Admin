@@ -114,7 +114,7 @@ class SiteDetail extends Component {
                         </View>
                     </View>
                     <View style={styles.texView}>
-                        <Text style={styles.textBody} >{ihtool.getSimpleDate(item.startsAt)}</Text>
+                        <Text style={styles.textBody} >{ihtool.getSimpleDate(item.item.startsAt)}</Text>
                     </View>
                     <Image style={styles.image_right} source={Images.other_ico_entrance} />
                 </View>
@@ -126,7 +126,7 @@ class SiteDetail extends Component {
             <View style={styles.container}>
 
                 <ScrollableTabView
-                    locked={false}
+                    locked={true}
                     style={styles.tabbar}
                     renderTabBar={() => <DefaultTabBar />}
                     tabBarUnderlineStyle={styles.lineStyle}

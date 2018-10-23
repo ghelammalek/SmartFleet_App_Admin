@@ -122,6 +122,7 @@ export default homeStyle = StyleSheet.create({
     image_right: {
         width: 13,
         height: 16,
+        marginVertical: 5,
         resizeMode: 'contain',
     },
 });
