@@ -40,6 +40,7 @@ class Login extends Component {
             isCode: true,
             seconds: 60,
             keyboardHeight: 0,
+            loginType: Global.cfg.loginType,
         };
         this.submitAction = this.submitAction.bind(this);
         this.getCode = this.getCode.bind(this);
@@ -162,6 +163,17 @@ class Login extends Component {
     onBackClicked() {
         return true;
     }
+    changeLoginType() {
+        if (Global.cfg.loginType == 1) {
+            Global.cfg.loginType = 0;
+        } else {
+            Global.cfg.loginType = 1;
+        }
+        this.setState({
+            loginType: Global.cfg.loginType,
+        })
+        Global.cfg.setRunningConfig();
+    }
     changeAction() {
         this.props.navigation.navigate('ChangeView', { title: I18n.t('change_language_IP') });
     }
@@ -176,7 +188,7 @@ class Login extends Component {
                     />
                     <Image source={Images.logo} resizeMode={'stretch'} style={loginStyle.bgImage} />
                     {
-                        Global.cfg.loginType == 1 ?
+                        this.state.loginType == 1 ?
                             <View style={loginStyle.body}>
                                 <View style={loginStyle.textView}>
                                     <Image source={Images.login_ico_phone} resizeMode={'contain'} style={loginStyle.img} />
@@ -220,6 +232,11 @@ class Login extends Component {
 
                                 </View>
                                 <View style={loginStyle.spaceView} />
+                                {/* <TouchableOpacity onPress={() => this.changeLoginType()}>
+                                    <View style={loginStyle.spaceView} >
+                                        <Text style={loginStyle.changeTypeLabel}  >{I18n.t('change_loginType')}</Text>
+                                    </View>
+                                </TouchableOpacity> */}
                                 <TouchableOpacity activeOpacity={0.6} disabled={this.props.visible} onPress={() => { Keyboard.dismiss(); this.submitAction() }} >
                                     <View style={loginStyle.buttonView_submit}>
                                         <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>
@@ -255,6 +272,11 @@ class Login extends Component {
                                     />
                                 </View>
                                 <View style={loginStyle.spaceView} />
+                                {/* <TouchableOpacity onPress={() => this.changeLoginType()}>
+                                    <View style={loginStyle.spaceView} >
+                                        <Text style={loginStyle.changeTypeLabel}  >{I18n.t('change_loginType')}</Text>
+                                    </View>
+                                </TouchableOpacity> */}
                                 <TouchableOpacity activeOpacity={0.6} disabled={this.props.visible} onPress={() => { Keyboard.dismiss(); this.submitAction() }} >
                                     <View style={loginStyle.buttonView_submit}>
                                         <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>

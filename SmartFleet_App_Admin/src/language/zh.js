@@ -31,6 +31,7 @@ export default {
     signIn_err_again: '登录失败,请重新登录',
     signIn_err: '登录失败，请重试!',
     repeat: '请重试',
+    change_loginType: '切换登录方式',
     change_language_IP: '切换语言或服务器',
     language: '中文',
     select_language: '语言选择',

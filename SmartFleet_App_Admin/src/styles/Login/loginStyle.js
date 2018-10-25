@@ -88,13 +88,21 @@ export default loginStyle = StyleSheet.create({
         fontWeight: "bold",
     },
     spaceView: {
-        width: 15,
+        width: Dimensions.get('window').width - 60,
         height: 40,
+        paddingTop: 10,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+    },
+    changeTypeLabel: {
+        fontSize: 13,
+        color: '#24ba8e',
     },
     changeLabel: {
         fontSize: 14,
         color: '#1c1c1d',
     },
+
 })
 
 
