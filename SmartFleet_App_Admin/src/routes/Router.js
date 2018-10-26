@@ -37,7 +37,7 @@ import RouterConfig from './routerConfig';
 
 let tabBarIcon = function (focused, tintColor, imgNormal, imgFocus) {
     let IconImg = focused ? imgFocus : imgNormal;
-    return <Image source={IconImg} style={{ tintColor: tintColor, width: 27, height: 21 }} />
+    return <Image source={IconImg} style={{ tintColor: tintColor, width: 24, height: 20, resizeMode: 'contain' }} />
 }
 export default class Router extends Component {
     constructor(props) {

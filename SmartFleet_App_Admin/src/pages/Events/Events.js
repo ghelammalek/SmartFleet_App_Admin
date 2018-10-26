@@ -69,7 +69,7 @@ class Events extends Component {
                     <View style={styles.texView}>
                         <Text style={styles.textBody} >{ihtool.getSimpleDate(item.item.startsAt)}</Text>
                     </View>
-                    <Image style={styles.image_right} source={Images.other_ico_entrance} />
+                    <Image style={styles.image_right} source={Images.other_right} />
                 </View>
             </TouchableOpacity>
         )

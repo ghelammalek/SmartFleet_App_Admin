@@ -1,8 +1,7 @@
 import {
-    StyleSheet
+    StyleSheet,
+    Dimensions,
 } from 'react-native';
-
-import { Dimensions } from 'react-native';
 
 export default homeStyle = StyleSheet.create({
     container: {
@@ -37,92 +36,134 @@ export default homeStyle = StyleSheet.create({
         flexWrap: 'wrap',
     },
     staticView_: {
-        minWidth: 80,
+        width: (Dimensions.get('window').width - 32) / 2,
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 3,
-        padding: 8,
-        marginBottom: 8,
+        padding: 15,
+        marginBottom: 12,
     },
     static_titleView: {
         justifyContent: 'center',
-        alignItems: 'flex-end',
         flexDirection: 'column',
     },
+    static_subView: {
+        marginTop: 3,
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+    },
     static_title: {
-        fontSize: 16,
-        color: '#1c1c1d',
+        fontSize: 18,
+        color: '#2d2d2d',
+        fontWeight: 'bold',
+        marginRight: 2,
     },
     static_sunTitle: {
-        fontSize: 11,
-        color: '#9797a3',
+        fontSize: 12,
+        color: '#adadad',
     },
     static_image: {
-        width: 30,
-        height: 30,
+        width: 40,
+        height: 40,
         resizeMode: 'contain',
-        marginLeft: 8,
+        marginRight: 8,
     },
 
-    titleView: {
-        height: 40,
-        borderBottomColor: '#dfdfdf',
-        borderBottomWidth: 0.5,
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
+    bodyView: {
         backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 3,
+    },
+    titleView: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingLeft: 8,
-        marginTop: 16,
+        // marginTop: 8,
+        backgroundColor: '#fff',
     },
-    moreEvents: {
-        padding: 10,
+    btnView: {
+        height: 40,
+        marginRight: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    btnImage: {
-        width: 20,
-        height: 16,
-        resizeMode: 'contain',
+    btnView_: {
+        height: 30,
+        marginRight: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: '#24ba8e',
+        borderBottomWidth: 2,
     },
+    btnTitle: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#2d2d2d',
+    },
+    btnTitle_: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#24ba8e',
+    },
+
 
 
     itemView: {
         flex: 1,
-        padding: 8,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-    },
-    itemviewLeft: {
-        flex: 1,
         flexDirection: 'column',
-        marginRight: 20,
+        backgroundColor: '#fff',
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        borderRadius: 3,
+        marginVertical: 5,
     },
-    itemTitleView: {
+    itemTopView: {
+        height: 40,
         flexDirection: 'row',
-        // marginBottom: 5,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 12,
+        borderBottomColor: '#f3f3f3',
+        borderBottomWidth: 1,
     },
-    itemName: {
-        fontSize: 14,
-        color: '#1c1c1d',
-        marginRight: 10,
-    },
-    textBody: {
-        fontSize: 12,
-        color: '#9797a3',
-    },
-    texView: {
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+    itemTopLeft: {
+        alignItems: 'center',
+        flexDirection: 'row',
         marginRight: 8,
     },
-    image_right: {
-        width: 13,
-        height: 16,
-        marginVertical: 5,
+    itemTopRight: {
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    itemTitle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#2d2d2d',
+    },
+    time: {
+        fontSize: 12,
+        color: '#adadad',
+    },
+    imgagRight: {
+        marginLeft: 3,
+        width: 10,
+        height: 11,
         resizeMode: 'contain',
     },
+    itemBodyView: {
+        padding: 8,
+        flexDirection: 'column',
+    },
+    itemTextView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    itemText: {
+        fontSize: 12,
+        color: '#2d2d2d',
+    },
+
 });

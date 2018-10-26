@@ -24,7 +24,7 @@ import styles from '../../styles/FullView/registerCarStyle';
 
 class RegisterCar extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: '添加车辆',
+        headerTitle: I18n.t('add_car'),
         headerBackTitle: null,
     });
     constructor(props) {
@@ -62,14 +62,14 @@ class RegisterCar extends Component {
     }
     submit() {
         if (this.state.plateNo == '') {
-            Alert.alert('温馨提示', '请填写车牌号', [{ text: I18n.t('okText'), onPress: () => { } },]);
-        } else if (this.state.grayway == '') {
-            Alert.alert('温馨提示', '请填写网关序列号', [{ text: I18n.t('okText'), onPress: () => { } },]);
+            Alert.alert('', I18n.t('please_entry_plateNo'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+        } else if (this.state.sn == '') {
+            Alert.alert('', I18n.t('please_entry_sn'), [{ text: I18n.t('okText'), onPress: () => { } },]);
         } else {
             this.props.dispatch({
                 type: 'registerCar/register',
                 payload: {
-                    sn: this.state.grayway,
+                    sn: this.state.sn,
                     email: this.state.email,
                     body: {
                         prodcut: 'smartfleet.gateway',
@@ -91,12 +91,12 @@ class RegisterCar extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.itemView}>
-                        <Text style={styles.itemTitle}>{'车牌号'}</Text>
+                        <Text style={styles.itemTitle}>{I18n.t('plateNo')}</Text>
                         <View style={styles.itemRightView}>
                             <TextInput
                                 style={styles.itemTextInput}
                                 value={this.state.plateNo}
-                                placeholder={'请填写'}
+                                placeholder={I18n.t('please_entry')}
                                 placeholderTextClolor='#979797'
                                 // editable={!this.props.visible}
                                 underlineColorAndroid="transparent"
@@ -106,12 +106,12 @@ class RegisterCar extends Component {
                         </View>
                     </View>
                     <View style={styles.itemView}>
-                        <Text style={styles.itemTitle}>{'资产编号'}</Text>
+                        <Text style={styles.itemTitle}>{I18n.t('asset_no')}</Text>
                         <View style={styles.itemRightView}>
                             <TextInput
                                 style={styles.itemTextInput}
                                 value={this.state.asset_no}
-                                placeholder={'请填写'}
+                                placeholder={I18n.t('please_entry')}
                                 placeholderTextClolor='#979797'
                                 // editable={!this.props.visible}
                                 underlineColorAndroid="transparent"
@@ -125,12 +125,12 @@ class RegisterCar extends Component {
                         </View>
                     </View>
                     <View style={styles.itemView}>
-                        <Text style={styles.itemTitle}>{'网关序列号'}</Text>
+                        <Text style={styles.itemTitle}>{'gateway_no'}</Text>
                         <View style={styles.itemRightView}>
                             <TextInput
                                 style={styles.itemTextInput}
                                 value={this.state.sn}
-                                placeholder={'请填写'}
+                                placeholder={I18n.t('please_entry')}
                                 placeholderTextClolor='#979797'
                                 // editable={!this.props.visible}
                                 underlineColorAndroid="transparent"
@@ -144,12 +144,12 @@ class RegisterCar extends Component {
                         </View>
                     </View>
                     <View style={styles.itemView}>
-                        <Text style={styles.itemTitle}>{'网关型号'}</Text>
+                        <Text style={styles.itemTitle}>{I18n.t('gateway_type')}</Text>
                         <View style={styles.itemRightView}>
                             <TextInput
                                 style={styles.itemTextInput}
                                 value={this.state.type}
-                                placeholder={'请填写'}
+                                placeholder={I18n.t('please_entry')}
                                 placeholderTextClolor='#979797'
                                 // editable={!this.props.visible}
                                 underlineColorAndroid="transparent"
@@ -159,7 +159,7 @@ class RegisterCar extends Component {
                         </View>
                     </View>
                     <View style={styles.itemView}>
-                        <Text style={styles.itemTitle}>{'账号'}</Text>
+                        <Text style={styles.itemTitle}>{I18n.t('account')}</Text>
                         <View style={styles.itemRightView}>
                             <TextInput
                                 style={styles.itemTextInput}
@@ -174,7 +174,7 @@ class RegisterCar extends Component {
                     <View style={styles.centter}>
                         <TouchableOpacity activeOpacity={0.6} onPress={() => this.submit()} >
                             <View style={styles.btnView}>
-                                <Text style={styles.btnTitle}>{'提交'}</Text>
+                                <Text style={styles.btnTitle}>{I18n.t('submit')}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

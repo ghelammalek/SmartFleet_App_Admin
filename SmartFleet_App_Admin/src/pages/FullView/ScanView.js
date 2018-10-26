@@ -27,7 +27,7 @@ import ihtool from '../../utils/ihtool';
 
 class ScanView extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: '扫一扫',
+        headerTitle: I18n.t('scan'),
         headerBackTitle: null,
     });
     constructor(props) {
@@ -56,9 +56,7 @@ class ScanView extends Component {
         // console.log(`e.nativeEvent.data.type = ${e.nativeEvent.data.type}, e.nativeEvent.data.code = ${e.nativeEvent.data.code}`)
         this._stopScan();
         if (code == undefined) {
-            Alert.alert('', '无数据', [
-                { text: 'OK', onPress: () => this._startScan() },
-            ])
+            Alert.alert('', I18n.t('no_data'), [{ text: I18n.t('okText'), onPress: () => this._startScan() },]);
         } else {
             this.props.navigation.state.params.callback(code);
             this.props.navigation.goBack();

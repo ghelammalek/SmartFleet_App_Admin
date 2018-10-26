@@ -89,7 +89,7 @@ class EventDetail extends Component {
                             </View>
                         </View>
                     </View>
-                    <Image style={styles.image_right} source={Images.other_ico_entrance} />
+                    <Image style={styles.image_right} source={Images.other_right} />
                 </View>
             </TouchableOpacity>
         )

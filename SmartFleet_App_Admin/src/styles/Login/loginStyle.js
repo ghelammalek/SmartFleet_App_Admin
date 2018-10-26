@@ -53,8 +53,8 @@ export default loginStyle = StyleSheet.create({
         borderBottomWidth: 1,
     },
     img: {
-        width: 30,
-        height: 30,
+        width: 20,
+        height: 20,
         marginRight: 15,
     },
     textInput: {

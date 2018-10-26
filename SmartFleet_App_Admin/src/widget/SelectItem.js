@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 
 import selectItemStyle from '../style/selectItemStyle';
+import Images from '../constants/Images/Images.js';
+
 export default class SelectItem extends Component {
     render() {
         return (
@@ -16,7 +18,7 @@ export default class SelectItem extends Component {
                     <View style={selectItemStyle.container}>
                         <Image source={this.props.icon} style={selectItemStyle.img} />
                         <Text style={selectItemStyle.title}>{this.props.title}</Text>
-                        <Image source={require('./../assets/images/other/ico_entrance.png')} style={selectItemStyle.skipImg} />
+                        <Image source={Images.other_right} style={selectItemStyle.skipImg} />
                     </View>
                     {this.props.showline ? <View style={selectItemStyle.underline} /> : <View />}
                 </View>

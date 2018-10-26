@@ -24,16 +24,12 @@ export default {
             const data = yield call(api.register, payload);
             if (data.error) {
                 if (data.result) {
-                    Alert.alert('', '该车辆已经被注册了', [{
-                        text: I18n.t('okText'), onPress: () => {
-                            that.props.navigation.goBack();
-                        }
-                    },]);
+                    Alert.alert('', I18n.t('register_car_exist'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 } else {
-                    Alert.alert('', '注册失败', [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    Alert.alert('', I18n.t('register_failed'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 }
             } else {
-                Alert.alert('', '注册成功', [{
+                Alert.alert('', I18n.t('register_successul'), [{
                     text: I18n.t('okText'), onPress: () => {
                         that.props.navigation.goBack();
                     }

@@ -1,15 +1,29 @@
 export default {
     //tab标签
-    title_events: '线路事件',
-    title_fullView: '全景监测',
-    title_topology: '线路拓扑',
-    title_setting: '常规设置',
+    tab_home: '首页',
+    tab_cars: '车辆',
+    tab_events: '事件',
+    tab_owner: '我',
+
+    //home
+    label_distance: '今日里程',
+    label_duration: '今日工作时长',
+    label_fuelConsumption: '今日燃料消耗',
+    label_cars: '出勤车辆',
+    km: '千米',
+    hour: '小时',
+    liang: '辆',
+    sheng: '升',
+
+    event_for_car: '车辆事件',
+    event_for_driving: '驾驶事件',
+    event_for_work: '工单事件',
+    event_for_alarm: '网关告警',
+    event_type: '事件类型',
+    event_level: '事件等级',
+    event_desc: '事件描述',
     //title
     event_detail: '事件详情',
-    title_outline: '概要',
-    title_soe: "SOE",
-    title_wave: "录波",
-    title_historical: "历史数据",
 
     search: "搜索",
     sift: '筛选',
@@ -20,11 +34,10 @@ export default {
     none: "无",
     done: '完成',
     loading_error: '加载失败',
+    no_data: '无数据',
+    scan: '扫一扫',
 
     //登录
-    app_title: 'IWOS',
-    app_name: '智能化配电网',
-    app_subname: '线路状态监测系统',
     get_code_err: '获取验证码失败，请重试!',
     code_err: '验证码错误,请重新获取',
     signIn_again: '请重新登录',
@@ -47,4 +60,22 @@ export default {
     signIn: '登录',
     signIn_in: '登录中...',
     get_code_limit: '操作过于频繁已被禁止，请联系管理员',
+
+
+    add_car: '添加车辆',
+    please_entry_plateNo: '请填写车牌号',
+    please_entry_sn: '请填写网关序列号',
+    plateNo: '车牌号',
+    please_entry: '请填写',
+    asset_no: '资产编号',
+    gateway_no: '网关序列号',
+    gateway_type: '网关型号',
+    account: '账号',
+    submit: '提交',
+    register_successful: '注册成功',
+    register_failed: '注册失败',
+    register_car_exist: '该车辆已经被注册了',
+
+
+
 }

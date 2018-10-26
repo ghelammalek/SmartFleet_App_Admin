@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-26 08:33:16
+ * @Last Modified time: 2018-10-26 08:42:45
  */
 
 export default {
@@ -30,7 +30,7 @@ export default {
     home_illegal: require('../assets/images/home/illegal.png'),
     home_workPerson: require('../assets/images/home/workPerson.png'),
 
-    other_ico_entrance: require('../assets/images/other/ico_entrance.png'),
+    other_right: require('../assets/images/other/right.png'),
     ico_refresh: require('../assets/images/other/ico_refresh.png'),
     other_more: require('../assets/images/other/more.png'),
     other_add: require('../assets/images/other/add.png'),
