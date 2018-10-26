@@ -10,5 +10,6 @@ YellowBox.ignoreWarnings([
     'You should only render one navigator explicitly in your app',
     'Method `jumpToIndex` is deprecated.',
     'createTabNavigator is deprecated.',
-    'Class RCTCxxModule was not exported.'
+    'Class RCTCxxModule was not exported.',
+    'Module RCTBarcodeManager requires main queue setup since',
 ]);

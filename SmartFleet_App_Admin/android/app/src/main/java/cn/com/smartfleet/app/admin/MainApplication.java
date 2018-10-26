@@ -3,6 +3,7 @@ package cn.com.smartfleet.app.admin;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecomponent.barcode.RCTCapturePackage;
 import org.lovebing.reactnative.baidumap.BaiduMapPackage;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RCTCapturePackage(),
             new BaiduMapPackage(),
             new RNVersionNumberPackage(),
             new VectorIconsPackage(),

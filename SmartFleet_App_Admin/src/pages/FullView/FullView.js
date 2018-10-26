@@ -66,6 +66,9 @@ class FullView extends Component {
     goSiteDetail(item) {
         this.props.navigation.navigate('SiteDetail', { item: item });
     }
+    goRegisterCar() {
+        this.props.navigation.navigate('RegisterCar');
+    }
     _separator = () => {
         return <View style={styles.separator} />;
     }
@@ -99,7 +102,7 @@ class FullView extends Component {
 
         return (
             <View style={styles.container}>
-                <NavigationBar title='车辆' />
+                <NavigationBar title='车辆' rightImage={Images.other_add} rightAction={this.goRegisterCar.bind(this)} />
                 <ScrollableTabView
                     locked={true}
                     style={styles.tabbar}

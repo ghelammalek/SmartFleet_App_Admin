@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-22 14:16:04
+ * @Last Modified time: 2018-10-26 08:33:16
  */
 
 export default {
@@ -33,5 +33,8 @@ export default {
     other_ico_entrance: require('../assets/images/other/ico_entrance.png'),
     ico_refresh: require('../assets/images/other/ico_refresh.png'),
     other_more: require('../assets/images/other/more.png'),
+    other_add: require('../assets/images/other/add.png'),
+    other_scan: require('../assets/images/other/scan.png'),
+    other_default_car: require('../assets/images/other/default_car.png'),
 
 }

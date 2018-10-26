@@ -1,4 +1,6 @@
 rootProject.name = 'SmartFleet_App_Admin'
+include ':react-native-smart-barcode'
+project(':react-native-smart-barcode').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-smart-barcode/android')
 include ':react-native-baidu-map'
 project(':react-native-baidu-map').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-baidu-map/android')
 include ':react-native-version-number'

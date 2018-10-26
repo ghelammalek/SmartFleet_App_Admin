@@ -115,6 +115,49 @@ exports.putAlert = function (_id) {
 }
 
 
+
+
+
+
+/**
+ *   注册车辆
+ *
+ * @param {*} params
+ * @returns
+ */
+exports.register = function (params) {
+    const url = '/dapi/sites?sn=' + params.sn +
+        '&auth=' + params.email +
+        '&sign=' + md5.hex_md5(params.sn + params.email + '64391099@inhand');
+    var labels = { labels: params.body };
+    return request.post(url, labels, true, HEADER_JSON);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ *  获取用户信息
+ *
+ * @returns
+ */
+exports.getUserInfo = function () {
+    const url = '/api2/users/this?verbose=100';
+    return request.get(url, null, true, HEADER_JSON);
+}
+
+
 /** 
  *   退出登录
  *

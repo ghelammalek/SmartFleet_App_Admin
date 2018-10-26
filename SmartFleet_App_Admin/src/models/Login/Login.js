@@ -56,20 +56,42 @@ export default {
                 } else {
                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 }
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        visible: false,
+                    }
+                });
             } else {
                 Global.cfg.access_token = data.access_token;
                 Global.cfg.refresh_token = data.refresh_token;
                 Global.cfg.expires_in = data.expires_in;
                 Global.cfg.create_token_time = moment().unix();
-                Global.cfg.setRunningConfig();
-                Global.global.navigation.dispatch(signin(data));
-            }
-            yield put({
-                type: 'updateState',
-                payload: {
-                    visible: false,
+
+                const userInfo = yield call(api.getUserInfo);
+                if (userInfo.error) {
+                    Global.cfg.access_token = '';
+                    Global.cfg.refresh_token = '';
+                    Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            visible: false,
+                        }
+                    });
+                } else {
+                    Global.cfg.userInfo = userInfo.result;
+                    Global.cfg.setRunningConfig();
+                    Global.global.navigation.dispatch(signin(data));
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            visible: false,
+                        }
+                    });
+
                 }
-            });
+            }
         }
     }
 }

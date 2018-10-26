@@ -7,6 +7,8 @@ import SiteDetail from '../pages/FullView/SiteDetail';
 import Events from '../pages/Events/Events';
 import Setting from '../pages/Setting/Setting';
 import EventDetail from '../pages/Events/EventDetail';
+import ScanView from '../pages/FullView/ScanView';
+import RegisterCar from '../pages/FullView/RegisterCar';
 
 export default {
     Home: { screen: Home },
@@ -15,4 +17,6 @@ export default {
     Setting: { screen: Setting },
     SiteDetail: { screen: SiteDetail },
     EventDetail: { screen: EventDetail },
+    ScanView: { screen: ScanView },
+    RegisterCar: { screen: RegisterCar },
 }

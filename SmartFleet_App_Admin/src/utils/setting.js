@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-19 15:00:08 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-19 17:14:06
+ * @Last Modified time: 2018-10-25 18:44:20
  */
 'use strick';
 
@@ -23,6 +23,7 @@ class Settings {
         this.language = "";
         this.expires_in = "";
         this.loginType = 0;
+        this.userInfo = {};
     }
 
     async setRunningConfig() {
@@ -50,6 +51,7 @@ class Settings {
             this.language = cfg.language;
             this.expires_in = cfg.expires_in;
             this.loginType = cfg.loginType;
+            this.userInfo = cfg.userInfo;
         }
         app.refresh(this);
     }

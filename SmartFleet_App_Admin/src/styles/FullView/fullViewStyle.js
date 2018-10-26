@@ -1,8 +1,7 @@
 import {
-    StyleSheet
+    StyleSheet,
+    Dimensions
 } from 'react-native';
-
-import { Dimensions } from 'react-native';
 
 export default fullViewStyle = StyleSheet.create({
     row: {
