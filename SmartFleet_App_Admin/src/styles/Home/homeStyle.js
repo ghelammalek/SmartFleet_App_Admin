@@ -152,14 +152,16 @@ export default homeStyle = StyleSheet.create({
         resizeMode: 'contain',
     },
     itemBodyView: {
-        padding: 8,
+        paddingTop: 8,
+        paddingHorizontal: 8,
         flexDirection: 'column',
+        // backgroundColor: 'red',
     },
     itemTextView: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 12,
     },
     itemText: {
         fontSize: 12,
@@ -187,7 +189,8 @@ export default homeStyle = StyleSheet.create({
     },
 
     nodataView: {
-        height: 250,
+        flex: 1,
+        minHeight: 300,
         backgroundColor: '#fff',
     }
 });

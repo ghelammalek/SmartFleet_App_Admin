@@ -9,7 +9,7 @@ import api from '../../constants/api';
 export default {
     namespace: 'eventDetail',
     state: {
-        data: {},
+        data: null,
         isLoading: false,
     },
     reducers: {
@@ -18,7 +18,7 @@ export default {
         }
     },
     effects: {
-        * postAlert({ payload }, { call, put, select }) {
+        * postAlert({ payload, that }, { call, put, select }) {
             const data = yield call(api.postAlert, payload._id);
             if (data.error) {
                 Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
@@ -29,6 +29,12 @@ export default {
                     }
                 });
             } else {
+                Alert.alert('', I18n.t('successful'), [{
+                    text: I18n.t('okText'), onPress: () => {
+                        that.props.navigation.state.params.callback(data.result);
+                        that.props.navigation.goBack();
+                    }
+                },]);
                 yield put({
                     type: 'updateState',
                     payload: {

@@ -32,6 +32,7 @@ class Home extends Component {
         super(props);
         this.state = {
             eventType: 0,
+            selectIndex: 0,
         }
     }
     componentDidMount() {
@@ -61,8 +62,23 @@ class Home extends Component {
         }));
     }
 
-    goEventDetail(item) {
-        this.props.navigation.navigate('EventDetail', { item: item });
+    goEventDetail(item, index) {
+        this.setState({ selectIndex: index });
+        this.props.navigation.navigate('EventDetail', {
+            item: item,
+            callback: (backdata) => {
+                var events = [];
+                for (let i = 0; i < this.props.events.length; i++) {
+                    const element = this.props.events[i];
+                    if (index == i) {
+                        events.push(backdata);
+                    } else {
+                        events.push(element);
+                    }
+                }
+                this.props.dispatch(createAction('home/updateState')({ events: events }));
+            }
+        });
     }
     goEvents(value) {
         this.setState({ eventType: value });
@@ -81,7 +97,7 @@ class Home extends Component {
     getItems(items) {
         if (items && items.length > 0) {
             return items.map((item, index) =>
-                <TouchableOpacity disabled={this.props.isLoading} key={index} activeOpacity={0.6} onPress={() => this.goEventDetail(item)} >
+                <TouchableOpacity disabled={this.props.isLoading} key={index} activeOpacity={0.6} onPress={() => this.goEventDetail(item, index)} >
                     <View style={homeStyle.itemView}>
                         <View style={homeStyle.itemTopView}>
                             <View style={homeStyle.itemTopLeft}>
@@ -100,7 +116,7 @@ class Home extends Component {
                         <View style={homeStyle.itemBodyView}>
                             <View style={homeStyle.itemTextView}>
                                 <Text style={homeStyle.itemText} >{I18n.t('event_type') + '：'}</Text>
-                                <Text style={homeStyle.itemText} >{item.labels.code}</Text>
+                                <Text style={homeStyle.itemText} >{ihtool.getEventType(item)}</Text>
                             </View>
                             <View style={homeStyle.itemTextView}>
                                 <Text style={homeStyle.itemText} >{I18n.t('event_level') + '：'}</Text>

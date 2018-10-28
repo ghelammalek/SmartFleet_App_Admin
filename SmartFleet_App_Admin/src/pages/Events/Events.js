@@ -29,6 +29,9 @@ class Events extends Component {
     });
     constructor(props) {
         super(props);
+        this.state = {
+            selectIndex: 0,
+        }
     }
     componentDidMount() {
         this.props.dispatch(createAction('events/updateState')({ isLoading: true }));
@@ -57,7 +60,22 @@ class Events extends Component {
         }
     }
     goEventDetail(item) {
-        this.props.navigation.navigate('EventDetail', { item: item });
+        this.setState({ selectIndex: item.index });
+        this.props.navigation.navigate('EventDetail', {
+            item: item.item,
+            callback: (backdata) => {
+                var events = [];
+                for (let i = 0; i < this.props.data.length; i++) {
+                    const element = this.props.data[i];
+                    if (item.index == i) {
+                        events.push(backdata);
+                    } else {
+                        events.push(element);
+                    }
+                }
+                this.props.dispatch(createAction('events/updateState')({ data: events }));
+            }
+        });
     }
     _separator = () => {
         return <View style={styles.separator} />;
@@ -65,7 +83,7 @@ class Events extends Component {
 
     _renderItem = (item) => {
         return (
-            <TouchableOpacity disabled={this.props.isLoad} key={item.index} activeOpacity={0.6} onPress={() => this.goEventDetail(item.item)} >
+            <TouchableOpacity disabled={this.props.isLoad} key={item.index} activeOpacity={0.6} onPress={() => this.goEventDetail(item)} >
                 <View style={homeStyle.itemView}>
                     <View style={homeStyle.itemTopView}>
                         <View style={homeStyle.itemTopLeft}>
@@ -83,7 +101,7 @@ class Events extends Component {
                     <View style={homeStyle.itemBodyView}>
                         <View style={homeStyle.itemTextView}>
                             <Text style={homeStyle.itemText} >{I18n.t('event_type') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{item.item.labels.code}</Text>
+                            <Text style={homeStyle.itemText} >{ihtool.getEventType(item.item)}</Text>
                         </View>
                         <View style={homeStyle.itemTextView}>
                             <Text style={homeStyle.itemText} >{I18n.t('event_level') + '：'}</Text>
@@ -103,7 +121,7 @@ class Events extends Component {
         return (
             <View style={styles.container}>
                 <NavigationBar title={I18n.t('tab_events')} />
-                <View style={[styles.container, { padding: 10 }]}>
+                <View style={[styles.container, { paddingHorizontal: 10 }]}>
                     <FlatList
                         refreshing={this.props.isLoad}
                         // ItemSeparatorComponent={this._separator}

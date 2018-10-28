@@ -27,6 +27,25 @@ exports.getEventLevelLabel = function getEventLevelLabel(value) {
 }
 
 /**
+ *   获取事件类型
+ *
+ * @param {*} record
+ */
+exports.getEventType = function getEventType(record) {
+    const { labels, fields } = record;
+    const { value, type, category } = fields;
+    const { code } = labels;
+
+    var label = '';
+    if (code === 'behavior') {
+        label = I18n.t('notice.car_notice');
+    } else if (code === 'driving') {
+        label = I18n.t('notice.driving_notice');
+    }
+    return label;
+}
+
+/**
  *    获取事件的描述信息
  *
  * @param {*} record

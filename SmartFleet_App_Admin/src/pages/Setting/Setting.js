@@ -96,7 +96,6 @@ class Setting extends Component {
      */
     loginOut() {
         // this.props.dispatch(createAction('setting/loginOut')({}));
-
         Global.cfg.access_token = '';
         Global.cfg.refresh_token = '';
         Global.cfg.setRunningConfig();
@@ -106,7 +105,7 @@ class Setting extends Component {
      * 切换用户单位
      */
     changeCompanys() {
-        alert(ihtool.getSimpleDate(new Date()));
+        // alert(ihtool.getSimpleDate(new Date()));
         // this.props.navigation.navigate('SelectCompany');
     }
     /**

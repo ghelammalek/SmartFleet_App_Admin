@@ -85,6 +85,8 @@ export default {
     level3: '次要告警',
     level4: '重要告警',
     level5: '严重告警',
+    clear_event: '消除事件',
+    successful: '成功',
     common: {
         name: '名称',
         all: '全部',
