@@ -165,5 +165,29 @@ export default homeStyle = StyleSheet.create({
         fontSize: 12,
         color: '#2d2d2d',
     },
+    itemClear: {
+        marginLeft: 5,
+        fontSize: 12,
+        color: '#fff',
+        padding: 3,
+        backgroundColor: '#adadad',
+    },
+    itemClear_: {
+        marginLeft: 5,
+        fontSize: 12,
+        color: '#fff',
+        padding: 3,
+        backgroundColor: '#24ba8e',
+    },
+    itemLevelImage: {
+        marginLeft: 3,
+        width: 12,
+        height: 12,
+        resizeMode: 'contain',
+    },
 
+    nodataView: {
+        height: 250,
+        backgroundColor: '#fff',
+    }
 });

@@ -18,8 +18,8 @@ export default {
         }
     },
     effects: {
-        * putAlert({ payload }, { call, put, select }) {
-            const data = yield call(api.putAlert, payload._id);
+        * postAlert({ payload }, { call, put, select }) {
+            const data = yield call(api.postAlert, payload._id);
             if (data.error) {
                 Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 yield put({

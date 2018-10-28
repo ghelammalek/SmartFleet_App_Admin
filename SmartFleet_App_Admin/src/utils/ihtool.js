@@ -4,6 +4,148 @@ import Global from '../utils/Global';
 import moment from 'moment';
 
 
+
+
+/**
+ *   获取告警级别label
+ *
+ * @param {*} value
+ * @returns
+ */
+exports.getEventLevelLabel = function getEventLevelLabel(value) {
+    if (value == 1) {
+        return I18n.t('level1');
+    } else if (value == 2) {
+        return I18n.t('level2');
+    } else if (value == 3) {
+        return I18n.t('level3');
+    } else if (value == 4) {
+        return I18n.t('level4');
+    } else {
+        return I18n.t('level5');
+    }
+}
+
+/**
+ *    获取事件的描述信息
+ *
+ * @param {*} record
+ * @returns
+ */
+exports.getEventDesc = function getEventDesc(record) {
+    const { labels, fields } = record;
+    const { value, type, category } = fields;
+    const { code } = labels;
+    var label = '';
+    if (code === 'behavior') {
+        if (type === 'fatigure') {
+            label = I18n.t('notice.fatigure');
+        } else if (type === 'belt') {
+            label = I18n.t('notice.belt');
+        } else if (type === 'overspeed') {
+            label = I18n.t('notice.overspeed') + ',' + I18n.t('notice.mph');
+        } else if (type === 'brake') {
+            label = I18n.t('notice.brake');
+        }
+        label = I18n.t('notice.car_notice');
+    } else if (code === 'driving') {
+        if (type === 'overspeed') {
+            label = I18n.t('notice.overspeed') + ',' + I18n.t('notice.mph');
+        } else if (type === 'zone') {
+            if (category === 'route') {
+                if (value) {
+                    label = I18n.t('notice.backroute');
+                } else {
+                    label = I18n.t('notice.outroute');
+                }
+            } else if (category !== 'route') {
+                if (value) {
+                    label = I18n.t('notice.backzone');
+                } else {
+                    label = I18n.t('notice.outzone');
+                }
+            }
+        } else if (type === 'engine') {
+            if (value === 1) {
+                label = I18n.t('notice.vehicle_start');
+            } else if (value === 0) {
+                label = I18n.t('notice.vehicle_stop');
+            }
+        } else if (type === 'angle') {
+            label = I18n.t('notice.angle');
+        }
+    } else if (code === 'asset') {
+        if (value) {
+            if (type === 'RFID') {
+                label = I18n.t('notice.asset_monitoring_online') + ':RFID';
+            } else if (type === 'Bluetooth') {
+                label = I18n.t('notice.asset_monitoring_online') + ':Bluetooth';
+            } else {
+                label = I18n.t('notice.asset_monitoring_online') + ':' + I18n.t('vehicle.other');
+            }
+        } else if (!value) {
+            if (type === 'RFID') {
+                label = I18n.t('notice.asset_monitoring_offline') + ':RFID';
+            } else if (type === 'Bluetooth') {
+                label = I18n.t('notice.asset_monitoring_online') + ':Bluetooth';
+            } else {
+                label = I18n.t('notice.asset_monitoring_online') + ':' + I18n.t('vehicle.other');
+            }
+        }
+    } else if (code === 'driver') {
+        label = I18n.t('notice.driver_change');
+    } else if (code === 'state') {
+        if (type === 'fuel') {
+            label = I18n.t('notice.fuel_change');
+        } else if (type === 'gnss') {
+            if (value === 0) {
+                label = I18n.t('notice.gnss_fault');
+            } else if (value === 1) {
+                label = I18n.t('notice.gnss_short');
+            } else {
+                label = I18n.t('notice.gnss_cut');
+            }
+        } else if (type === 'battery') {
+            if (value === 0) {
+                label = I18n.t('notice.battery_power_off');
+            } else {
+                label = I18n.t('notice.battery_undervoltage');
+            }
+        }
+    } else if (code === 'safety') {
+        if (type === 'crash') {
+            label = I18n.t('notice.crash');
+        } else if (code === 'turnover') {
+            label = I18n.t('notice.turnover');
+        } else if (code === 'urgency') {
+            label = I18n.t('notice.urgency');
+        }
+    } else {
+        label = '';
+    }
+    return label.replace('{value}', value);
+}
+
+/**
+ *   获取告警级别图片
+ *
+ * @param {*} value
+ * @returns
+ */
+exports.getEventLevelImage = function getEventLevelImage(value) {
+    if (value == 1) {
+        return Images.event_level1;
+    } else if (value == 2) {
+        return Images.event_level2;
+    } else if (value == 3) {
+        return Images.event_level3;
+    } else if (value == 4) {
+        return Images.event_level4;
+    } else {
+        return Images.event_level5;
+    }
+}
+
 /**
  *   获取10位的时间戳
  *

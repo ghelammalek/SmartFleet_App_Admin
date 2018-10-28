@@ -5,15 +5,8 @@ import {
     View,
     Alert,
     Image,
-    FlatList,
-    RefreshControl,
     TouchableOpacity,
 } from 'react-native';
-import {
-    MapView,
-    MapTypes,
-    Geolocation
-} from 'react-native-baidu-map';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 import { connect } from '../../routes/dva';
@@ -24,7 +17,9 @@ import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
 import setting from '../../utils/setting';
+import ihtool from '../../utils/ihtool';
 import styles from '../../styles/Event/eventDetailStyle';
+import homeStyle from '../../styles/Home/homeStyle';
 
 class EventDetail extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -34,72 +29,46 @@ class EventDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mayType: MapTypes.NORMAL,
-            zoom: 6,
-            trafficEnabled: false,
-            baiduHeatMapEnabled: false,
+            data: this.props.navigation.state.params.item,
         };
     }
     componentDidMount() {
-        // this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
-        // this.props.dispatch(createAction('fullView/getSites')({}));
-    }
-    refresh() {
-        // this.props.dispatch(createAction('fullView/getSites')({}));
-    }
-    refresh_() {
-        // this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
-        // this.props.dispatch(createAction('fullView/getSites')({}));
-    }
-    _annotationClinck_(event) {
-        var item = {};
-        for (let i = 0; i < this.props.data.length; i++) {
-            const site = this.props.data[i];
-            if (site.plateNo === event.title) {
-                item = site;
-                break;
-            }
-        }
-
-        this.props.navigation.navigate('SiteDetail', { item: item });
-    }
-    goSiteDetail(item) {
-        this.props.navigation.navigate('SiteDetail', { item: item });
-    }
-    _separator = () => {
-        return <View style={styles.separator} />;
+        this.props.dispatch(createAction('eventDetail/updateState')(this.state.data));
     }
     _renderItem = (item) => {
         return (
-            <TouchableOpacity key={item.index} activeOpacity={0.6} onPress={() => this.goSiteDetail(item.item)} >
-                <View style={styles.itemView}>
-                    <View style={styles.itemviewLeft}>
-                        <View style={styles.topView}>
-                            <Text style={styles.itemName} >{item.item.plateNo}</Text>
-                        </View>
-                        <View style={styles.bodyView}>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.minutes + ' 分钟'}</Text>
-                            </View>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.distance + ' 千米'}</Text>
-                            </View>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.duration + ' 小时'}</Text>
-                            </View>
-                        </View>
+            <View style={homeStyle.itemView}>
+                <View style={homeStyle.itemTopView}>
+                    <View style={homeStyle.itemTopLeft}>
+                        <Text style={homeStyle.itemTitle} >{item.moduleName}</Text>
                     </View>
-                    <Image style={styles.image_right} source={Images.other_right} />
+                    <View style={homeStyle.itemTopRight}>
+                        <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.startsAt)}</Text>
+                        <Image style={homeStyle.imgagRight} source={Images.other_right} />
+                    </View>
                 </View>
-            </TouchableOpacity>
+                <View style={homeStyle.itemBodyView}>
+                    <View style={homeStyle.itemTextView}>
+                        <Text style={homeStyle.itemText} >{I18n.t('event_type') + '：'}</Text>
+                        <Text style={homeStyle.itemText} >{item.type}</Text>
+                    </View>
+                    <View style={homeStyle.itemTextView}>
+                        <Text style={homeStyle.itemText} >{I18n.t('event_level') + '：'}</Text>
+                        <Text style={homeStyle.itemText} >{item.level}</Text>
+                    </View>
+                    <View style={homeStyle.itemTextView}>
+                        <Text style={homeStyle.itemText} >{I18n.t('event_desc') + '：'}</Text>
+                        <Text style={homeStyle.itemText} >{item.endsAt}</Text>
+                    </View>
+                </View>
+            </View>
         )
     }
     render() {
         return (
             <View style={styles.container}>
-
                 {
-                    this.props.isLoading ? <LoadingView /> : <View />
+                    this._renderItem(this.props.data)
                 }
             </View>
         );
@@ -109,8 +78,6 @@ function mapStateToProps(state) {
     return {
         isLoading: state.eventDetail.isLoading,
         data: state.eventDetail.data,
-        markers: state.eventDetail.markers,
-        center: state.eventDetail.center,
     }
 }
 export default connect(mapStateToProps)(EventDetail);

@@ -109,7 +109,7 @@ exports.getAlerts = function (params) {
  * @param {*} _id
  * @returns
  */
-exports.putAlert = function (_id) {
+exports.postAlert = function (_id) {
     const url = '/api/alerts/' + _id + '/confirm';
     return request.post(url, null, true, HEADER_JSON);
 }

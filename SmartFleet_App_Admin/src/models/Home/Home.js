@@ -31,13 +31,26 @@ export default {
             }
         },
         * getAlerts({ payload }, { call, put, select }) {
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: true,
+                }
+            });
             const data = yield call(api.getAlerts, payload);
             if (data.error) {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        isLoading: false,
+                    }
+                });
             } else {
                 yield put({
                     type: 'updateState',
                     payload: {
                         events: data.result,
+                        isLoading: false,
                     }
                 });
             }

@@ -7,7 +7,7 @@ import { Dimensions } from 'react-native';
 export default eventStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f3f3f3',
+        backgroundColor: '#fff',
     },
     scrollView: {
         padding: 10,
