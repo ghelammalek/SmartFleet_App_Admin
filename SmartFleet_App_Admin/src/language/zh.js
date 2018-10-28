@@ -87,6 +87,13 @@ export default {
     level5: '严重告警',
     clear_event: '消除事件',
     successful: '成功',
+    before_minutes: '分钟前',
+    distance: '行驶里程',
+    duration: '行驶时间',
+
+    car_list: '列表',
+    car_map: '地图',
+
     common: {
         name: '名称',
         all: '全部',

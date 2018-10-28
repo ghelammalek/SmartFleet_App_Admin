@@ -22,7 +22,7 @@ export default fullViewStyle = StyleSheet.create({
     },
     itemView: {
         flexDirection: 'row',
-        height: 50,
+        height: 44,
         width: Dimensions.get('window').width,
         paddingLeft: 8,
         justifyContent: 'space-between',
@@ -31,8 +31,8 @@ export default fullViewStyle = StyleSheet.create({
         borderBottomWidth: 1,
     },
     itemTitle: {
-        marginRight: 16,
-        fontSize: 16,
+        marginRight: 14,
+        fontSize: 14,
         color: '#9797a3',
     },
     itemRightView: {
@@ -44,7 +44,7 @@ export default fullViewStyle = StyleSheet.create({
     itemTextInput: {
         flex: 1,
         textAlign: 'right',
-        fontSize: 16,
+        fontSize: 14,
         color: '#1c1c1d',
         padding: 0,
     },
@@ -74,7 +74,7 @@ export default fullViewStyle = StyleSheet.create({
         alignItems: 'center',
     },
     btnTitle: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#fff',
         fontWeight: 'bold',
     },

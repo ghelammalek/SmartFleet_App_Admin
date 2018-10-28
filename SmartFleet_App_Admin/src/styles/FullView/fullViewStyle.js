@@ -10,7 +10,7 @@ export default fullViewStyle = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f7f7f7',
     },
     map: {
         width: Dimensions.get('window').width,
@@ -27,7 +27,7 @@ export default fullViewStyle = StyleSheet.create({
         marginBottom: -1.5,
         width: Dimensions.get('window').width / 2,
         height: 2,
-        backgroundColor: '#FF0000',
+        backgroundColor: '#24ba8e',
     },
     textStyle: {
         flex: 1,
@@ -36,50 +36,94 @@ export default fullViewStyle = StyleSheet.create({
         textAlign: 'center',
     },
 
+
+    bodyView: {
+        backgroundColor: '#f7f7f7',
+        paddingHorizontal: 10,
+        // borderRadius: 3,
+    },
     itemView: {
         flex: 1,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-    },
-    itemviewLeft: {
-        flex: 1,
         flexDirection: 'column',
-        marginRight: 20,
+        backgroundColor: '#fff',
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        borderRadius: 4,
+        marginTop: 10,
     },
-    topView: {
-        flexDirection: 'row',
-        marginBottom: 5,
-    },
-    itemName: {
-        fontSize: 16,
-        color: '#1c1c1d',
-        // fontWeight: 'bold',
-        marginRight: 10,
-    },
-    bodyView: {
+    itemTopView: {
+        height: 40,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingHorizontal: 12,
+        borderBottomColor: '#f3f3f3',
+        borderBottomWidth: 1,
     },
-    textBody: {
-        fontSize: 14,
-        color: '#1c1c1d',
-    },
-    texView: {
-        justifyContent: 'flex-start',
+    itemTopLeft: {
         alignItems: 'center',
-        paddingLeft: 3,
+        flexDirection: 'row',
+        marginRight: 8,
     },
-    image_right: {
-        width: 13,
-        height: 16,
+    itemTopRight: {
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    itemTitle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#2d2d2d',
+    },
+    time: {
+        fontSize: 12,
+        color: '#adadad',
+    },
+    imgagRight: {
+        marginLeft: 3,
+        width: 10,
+        height: 11,
         resizeMode: 'contain',
     },
-    separator: {
-        backgroundColor: '#dfdfdf',
-        height: 0.5,
+    itemBodyView: {
+        paddingTop: 10,
+        paddingHorizontal: 10,
+        flexDirection: 'column',
+        // backgroundColor: 'red',
     },
+    itemTextView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    itemText: {
+        fontSize: 12,
+        color: '#2d2d2d',
+    },
+    itemClear: {
+        marginLeft: 5,
+        fontSize: 12,
+        color: '#fff',
+        padding: 3,
+        backgroundColor: '#adadad',
+    },
+    itemClear_: {
+        marginLeft: 5,
+        fontSize: 12,
+        color: '#fff',
+        padding: 3,
+        backgroundColor: '#24ba8e',
+    },
+    itemLevelImage: {
+        marginLeft: 3,
+        width: 12,
+        height: 12,
+        resizeMode: 'contain',
+    },
+
+    nodataView: {
+        flex: 1,
+        minHeight: 300,
+        backgroundColor: '#fff',
+    }
 });

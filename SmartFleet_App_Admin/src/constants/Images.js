@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-28 13:21:21
+ * @Last Modified time: 2018-10-28 16:19:11
  */
 
 export default {
@@ -37,6 +37,10 @@ export default {
     other_scan: require('../assets/images/other/scan.png'),
     other_default_car: require('../assets/images/other/default_car.png'),
     other_nodata: require('../assets/images/other/nodata.png'),
+    other_list: require('../assets/images/other/list.png'),
+    other_list_select: require('../assets/images/other/list_select.png'),
+    other_map: require('../assets/images/other/map.png'),
+    other_map_select: require('../assets/images/other/map_select.png'),
 
 
     event_level1: require('../assets/images/event/level1.png'),

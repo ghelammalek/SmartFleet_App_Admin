@@ -18,6 +18,7 @@ import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native
 
 import { connect } from '../../routes/dva';
 import NavigationBar from '../../widget/NavigationBar';
+import TabBarTop from "../../widget/TabBarTop";
 import LoadingView from "../../widget/LoadingView";
 import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
@@ -28,7 +29,7 @@ import styles from '../../styles/FullView/fullViewStyle';
 
 class FullView extends Component {
     static navigationOptions = ({ navigation }) => ({
-        tabBarLabel: '车辆',
+        tabBarLabel: I18n.t('tab_cars'),
         headerBackTitle: null,
     });
     constructor(props) {
@@ -38,6 +39,9 @@ class FullView extends Component {
             zoom: 6,
             trafficEnabled: false,
             baiduHeatMapEnabled: false,
+            tabNames: [I18n.t('car_map'), I18n.t('car_list')],
+            tabImages: [Images.other_map, Images.other_list],
+            tabSelectImages: [Images.other_map_select, Images.other_list_select],
         };
     }
     componentDidMount() {
@@ -74,25 +78,35 @@ class FullView extends Component {
     }
     _renderItem = (item) => {
         return (
-            <TouchableOpacity key={item.index} activeOpacity={0.6} onPress={() => this.goSiteDetail(item.item)} >
+            <TouchableOpacity disabled={this.props.isLoad} key={item.index} activeOpacity={0.6} onPress={() => this.goSiteDetail(item.item)} >
                 <View style={styles.itemView}>
-                    <View style={styles.itemviewLeft}>
-                        <View style={styles.topView}>
-                            <Text style={styles.itemName} >{item.item.plateNo}</Text>
+                    <View style={styles.itemTopView}>
+                        <View style={styles.itemTopLeft}>
+                            <Text style={styles.itemTitle} >{item.item.plateNo}</Text>
+                            {/* {
+                                item.item.confirmState ? <Text style={styles.itemClear} >{I18n.t('event_clear')}</Text> :
+                                    <Text style={styles.itemClear_} >{I18n.t('event_unclear')}</Text>
+                            } */}
                         </View>
-                        <View style={styles.bodyView}>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.minutes + ' 分钟'}</Text>
-                            </View>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.distance + ' 千米'}</Text>
-                            </View>
-                            <View style={styles.texView}>
-                                <Text style={styles.textBody} >{item.item.duration + ' 小时'}</Text>
-                            </View>
+                        <View style={styles.itemTopRight}>
+                            <Text style={styles.time} >{item.item.minutes + I18n.t('before_minutes')}</Text>
+                            <Image style={styles.imgagRight} source={Images.other_right} />
                         </View>
                     </View>
-                    <Image style={styles.image_right} source={Images.other_right} />
+                    <View style={styles.itemBodyView}>
+                        <View style={styles.itemTextView}>
+                            <Text style={styles.itemText} >{I18n.t('distance') + '：'}</Text>
+                            <Text style={styles.itemText} >{item.item.distance + I18n.t('km')}</Text>
+                        </View>
+                        <View style={styles.itemTextView}>
+                            <Text style={styles.itemText} >{I18n.t('duration') + '：'}</Text>
+                            <Text style={styles.itemText} >{item.item.duration + I18n.t('hour')}</Text>
+                        </View>
+                        {/* <View style={styles.itemTextView}>
+                            <Text style={styles.itemText} >{I18n.t('event_desc') + '：'}</Text>
+                            <Text style={styles.itemText} >{ihtool.getEventDesc(item.item)}</Text>
+                        </View> */}
+                    </View>
                 </View>
             </TouchableOpacity>
         )
@@ -102,14 +116,20 @@ class FullView extends Component {
 
         return (
             <View style={styles.container}>
-                <NavigationBar title='车辆' rightImage={Images.other_add} rightAction={this.goRegisterCar.bind(this)} />
+                <NavigationBar title={I18n.t('tab_cars')} rightImage={Images.other_add} rightAction={this.goRegisterCar.bind(this)} />
                 <ScrollableTabView
                     locked={true}
                     style={styles.tabbar}
-                    renderTabBar={() => <DefaultTabBar />}
+                    renderTabBar={() =>
+                        <TabBarTop
+                            tabNames={this.state.tabNames}
+                            tabImages={this.state.tabImages}
+                            tabSelectImages={this.state.tabSelectImages}
+                        />
+                    }
                     tabBarUnderlineStyle={styles.lineStyle}
-                    tabBarActiveTextColor='#FF0000'>
-                    <View tabLabel='地图' style={styles.container}>
+                    tabBarActiveTextColor='#24ba8e'>
+                    <View tabLabel={I18n.t('car_map')} style={styles.container}>
                         <MapView
                             trafficEnabled={this.state.trafficEnabled}
                             baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
@@ -127,22 +147,26 @@ class FullView extends Component {
                             <Image style={{ margin: 5, height: 40, width: 40, resizeMode: 'stretch' }} source={Images.ico_refresh} />
                         </TouchableOpacity>
                     </View>
-                    <FlatList
-                        tabLabel='列表'
-                        refreshing={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        data={this.props.data}
-                        keyExtractor={(item, index) => index.toString()}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={false}
-                                onRefresh={() => this.refresh()}
-                                colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
-                                progressBackgroundColor="#ffffff"
-                            />
-                        }
-                    />
+                    <View
+                        tabLabel={I18n.t('car_list')}
+                        style={styles.bodyView}
+                    >
+                        <FlatList
+                            refreshing={false}
+                            ItemSeparatorComponent={this._separator}
+                            renderItem={this._renderItem}
+                            data={this.props.data}
+                            keyExtractor={(item, index) => index.toString()}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={false}
+                                    onRefresh={() => this.refresh()}
+                                    colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
+                                    progressBackgroundColor="#ffffff"
+                                />
+                            }
+                        />
+                    </View>
                 </ScrollableTabView>
                 {
                     this.props.isLoading ? <LoadingView /> : <View />
