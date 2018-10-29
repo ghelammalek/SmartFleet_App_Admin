@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-29 14:50:33
+ * @Last Modified time: 2018-10-29 19:43:25
  */
 
 export default {
@@ -45,7 +45,7 @@ export default {
 
 
     event_level1: require('../assets/images/event/level1.png'),
-    event_level2: require('../assets/images/event/level2.png'),
+    // event_level2: require('../assets/images/event/level2.png'),
     event_level3: require('../assets/images/event/level3.png'),
     event_level4: require('../assets/images/event/level4.png'),
     event_level5: require('../assets/images/event/level5.png'),

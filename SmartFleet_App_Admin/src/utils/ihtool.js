@@ -17,7 +17,7 @@ exports.getEventLevelLabel = function getEventLevelLabel(value) {
     if (value == 1) {
         return I18n.t('level1');
     } else if (value == 2) {
-        return I18n.t('level2');
+        return '';
     } else if (value == 3) {
         return I18n.t('level3');
     } else if (value == 4) {
@@ -156,7 +156,7 @@ exports.getEventLevelImage = function getEventLevelImage(value) {
     if (value == 1) {
         return Images.event_level1;
     } else if (value == 2) {
-        return Images.event_level2;
+        return null;
     } else if (value == 3) {
         return Images.event_level3;
     } else if (value == 4) {
