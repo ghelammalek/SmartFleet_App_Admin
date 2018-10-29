@@ -30,10 +30,10 @@ class RegisterCar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            plateNo: '豫G98333',
-            asset_no: '11021212',
-            sn: 'IR911-338299',
-            type: 'IR911',
+            plateNo: '',
+            asset_no: '',
+            sn: '',
+            type: '',
             email: Global.cfg.userInfo.email,
         }
     }
