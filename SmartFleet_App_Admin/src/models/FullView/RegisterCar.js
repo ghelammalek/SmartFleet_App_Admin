@@ -29,7 +29,7 @@ export default {
                     Alert.alert('', I18n.t('register_failed'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 }
             } else {
-                Alert.alert('', I18n.t('register_successul'), [{
+                Alert.alert('', I18n.t('register_successful'), [{
                     text: I18n.t('okText'), onPress: () => {
                         that.props.navigation.goBack();
                     }
