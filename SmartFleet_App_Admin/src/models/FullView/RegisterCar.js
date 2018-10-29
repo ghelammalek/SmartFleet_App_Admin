@@ -31,6 +31,7 @@ export default {
             } else {
                 Alert.alert('', I18n.t('register_successful'), [{
                     text: I18n.t('okText'), onPress: () => {
+                        that.props.navigation.state.params.callback();
                         that.props.navigation.goBack();
                     }
                 },]);

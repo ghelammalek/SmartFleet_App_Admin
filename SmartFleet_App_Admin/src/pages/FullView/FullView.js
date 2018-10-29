@@ -71,7 +71,12 @@ class FullView extends Component {
         this.props.navigation.navigate('SiteDetail', { item: item });
     }
     goRegisterCar() {
-        this.props.navigation.navigate('RegisterCar');
+        this.props.navigation.navigate('RegisterCar', {
+            callback: () => {
+                this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
+                this.props.dispatch(createAction('fullView/getSites')({}));
+            }
+        });
     }
     _separator = () => {
         return <View style={styles.separator} />;
