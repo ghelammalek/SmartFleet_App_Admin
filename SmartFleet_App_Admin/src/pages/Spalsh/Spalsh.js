@@ -53,7 +53,7 @@ class Spalsh extends Component {
             I18n.locale = Global.cfg.language;
         }
         if (isEmpty(Global.cfg.serverIP)) {
-            if (Global.cfg.language.indexOf('zh')) {
+            if (Global.cfg.language.indexOf('zh') > -1) {
                 Global.cfg.serverIP = 'http://cd.inhandcloud.com:20080';
                 Global.cfg.serverName = '国内';
             } else {
