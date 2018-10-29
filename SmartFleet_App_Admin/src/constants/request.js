@@ -145,7 +145,8 @@ function request_(method, url1, header, body, hasToken) {
                 // console.log('失败了' + url);
                 return data;
             }
-            // console.log('成功了' + url);
+            console.log('成功了' + url);
+            console.log(data);
             return data;
         })
         .catch((err) => {

@@ -8,6 +8,8 @@ import api from '../../constants/api';
 export default {
     namespace: 'setting',
     state: {
+        isLoading: false,
+        version: '',
     },
     reducers: {
         updateState(state, { payload }) {
@@ -20,5 +22,30 @@ export default {
             console.log(data);
 
         },
+        * getVersion({ payload }, { call, put, select }) {
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: true,
+                }
+            })
+            const data = yield call(api.getVersion);
+            if (data.error) {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        isLoading: false,
+                    }
+                })
+            } else {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        version: data.version,
+                        isLoading: false,
+                    }
+                })
+            }
+        }
     },
 }

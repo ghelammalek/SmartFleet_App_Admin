@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-28 16:19:11
+ * @Last Modified time: 2018-10-29 14:50:33
  */
 
 export default {
@@ -41,6 +41,7 @@ export default {
     other_list_select: require('../assets/images/other/list_select.png'),
     other_map: require('../assets/images/other/map.png'),
     other_map_select: require('../assets/images/other/map_select.png'),
+    other_logo: require('../assets/images/other/logo.png'),
 
 
     event_level1: require('../assets/images/event/level1.png'),

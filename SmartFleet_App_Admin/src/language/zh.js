@@ -93,7 +93,19 @@ export default {
 
     car_list: '列表',
     car_map: '地图',
-
+    setting: '常规设置',
+    userInfo: '个人信息',
+    notification: '消息通知',
+    about: '关于',
+    about_us: '关于我们',
+    version_info: '版本信息',
+    help_and_feek: '帮助与反馈',
+    loginOut: '退出登录',
+    current_version: '当前版本',
+    new_version: '最新版本',
+    upgrade_version: '更新版本',
+    check_version: '检查版本',
+    check_versioning: '检查中...',
     common: {
         name: '名称',
         all: '全部',

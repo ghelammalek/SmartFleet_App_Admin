@@ -13,6 +13,7 @@ import {
 import { connect } from '../../routes/dva';
 import NavigationBar from '../../widget/NavigationBar';
 import LoadingView from "../../widget/LoadingView";
+import NoDataView from "../../widget/NoDataView";
 import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
@@ -122,23 +123,30 @@ class Events extends Component {
             <View style={styles.container}>
                 <NavigationBar title={I18n.t('tab_events')} />
                 <View style={[styles.container, { paddingHorizontal: 10 }]}>
-                    <FlatList
-                        refreshing={this.props.isLoad}
-                        // ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        data={this.props.data}
-                        keyExtractor={(item, index) => index.toString()}
-                        onEndReachedThreshold={0.3}
-                        onEndReached={(info) => this.loadMore()}
-                        refreshControl={
-                            <RefreshControl
+                    {
+                        this.props.data && this.props.data.length > 0 ?
+                            <FlatList
                                 refreshing={this.props.isLoad}
-                                onRefresh={() => this.refresh()}
-                                colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
-                                progressBackgroundColor="#ffffff"
-                            />
-                        }
-                    />
+                                // ItemSeparatorComponent={this._separator}
+                                renderItem={this._renderItem}
+                                data={this.props.data}
+                                keyExtractor={(item, index) => index.toString()}
+                                onEndReachedThreshold={0.3}
+                                onEndReached={(info) => this.loadMore()}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.props.isLoad}
+                                        onRefresh={() => this.refresh()}
+                                        colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
+                                        progressBackgroundColor="#ffffff"
+                                    />
+                                }
+                            /> :
+                            <TouchableOpacity disabled={this.props.isLoading} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.refresh()} >
+                                <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
+                            </TouchableOpacity>
+                    }
+
                     {
                         this.props.isLoading ? <LoadingView /> : <View />
                     }

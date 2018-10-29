@@ -157,6 +157,15 @@ exports.getUserInfo = function () {
     return request.get(url, null, true, HEADER_JSON);
 }
 
+/**
+ *   获取版本号
+ *
+ * @returns
+ */
+exports.getVersion = function () {
+    const url = Global.ios_version_url;
+    return request.getServerIps(url, null, false, HEADER_JSON);
+}
 
 /** 
  *   退出登录

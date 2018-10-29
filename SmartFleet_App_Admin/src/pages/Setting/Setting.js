@@ -28,62 +28,66 @@ const signin = StackActions.reset({
 
 class Setting extends Component {
     static navigationOptions = ({ navigation }) => ({
-        tabBarLabel: '我',
+        tabBarLabel: I18n.t('tab_owner'),
     });
     constructor(props) {
         super(props);
     }
     componentDidMount() {
-        // console.log(VersionNumber.appVersion);
-        // console.log(VersionNumber.buildVersion);
-        // console.log(VersionNumber.bundleIdentifier);
+        this.props.dispatch(createAction('setting/getVersion')({}));
     }
     render() {
         return (
             <View style={styles.container}>
-                <NavigationBar title='我' />
+                <NavigationBar title={I18n.t('tab_owner')} />
                 <ScrollView showsVerticalScrollIndicator={false} bounces={false} >
                     <View style={styles.scrollView}>
                         <View style={styles.view_20} />
                         <View style={styles.titleView} >
-                            <Text style={styles.title1} >常规设置</Text>
+                            <Text style={styles.title1} >{I18n.t('setting')}</Text>
                         </View>
-                        <TouchableOpacity opacity={0.8} onPress={() => { this.changeCompanys() }}>
+                        <TouchableOpacity opacity={0.8} onPress={() => this.changeCompanys()}>
                             <View style={styles.bodyView} >
-                                <Text style={styles.title2} >个人信息</Text>
+                                <Text style={styles.title2} >{I18n.t('userInfo')}</Text>
                                 <Text style={styles.title3} >{}</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity opacity={0.8} onPress={() => { this.notification() }}>
+                        <TouchableOpacity opacity={0.8} onPress={() => this.notification()}>
                             <View style={styles.bodyView} >
-                                <Text style={styles.title2} >消息通知</Text>
+                                <Text style={styles.title2} >{I18n.t('notification')}</Text>
                                 <Text style={styles.title3} >{}</Text>
                             </View>
                         </TouchableOpacity>
                         <View style={styles.view_30} />
                         <View style={styles.titleView} >
-                            <Text style={styles.title1} >关于</Text>
+                            <Text style={styles.title1} >{I18n.t('about')}</Text>
                         </View>
-                        <TouchableOpacity opacity={0.8} onPress={() => { this.about() }}>
+                        <TouchableOpacity opacity={0.8} onPress={() => this.about()}>
                             <View style={styles.bodyView} >
-                                <Text style={styles.title2} >关于我们</Text>
+                                <Text style={styles.title2} >{I18n.t('about_us')}</Text>
                                 <Text style={styles.title3} >{}</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity opacity={0.8} onPress={() => { this.update() }}>
+                        <TouchableOpacity opacity={0.8} onPress={() => this.update()}>
                             <View style={styles.bodyView} >
-                                <Text style={styles.title2} >版本更新</Text>
-                                <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
+                                <Text style={styles.title2} >{I18n.t('version_info')}</Text>
+                                {
+                                    ihtool.getVersion(VersionNumber.appVersion, this.props.version) ?
+                                        <View style={styles.versionView}>
+                                            <Text style={styles.versionText}>{'new'}</Text>
+                                        </View> :
+                                        <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
+                                }
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity opacity={0.8} onPress={() => { this.help() }}>
+                        <TouchableOpacity opacity={0.8} onPress={() => this.help()}>
                             <View style={styles.bodyView} >
-                                <Text style={styles.title2} >帮助与反馈</Text>
+                                <Text style={styles.title2} >{I18n.t('help_and_feek')}</Text>
                                 <Text style={styles.title3} >{}</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.btnView} opacity={0.8} onPress={() => { this.loginOut() }}>
-                            <Text style={styles.btnTitle} >退出登录</Text>
+                            <Text style={styles.btnTitle} >{I18n.t('loginOut')}</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -105,8 +109,7 @@ class Setting extends Component {
      * 切换用户单位
      */
     changeCompanys() {
-        // alert(ihtool.getSimpleDate(new Date()));
-        // this.props.navigation.navigate('SelectCompany');
+        // 
     }
     /**
      * 消息提醒
@@ -131,7 +134,7 @@ class Setting extends Component {
      * 更新检查
      */
     update() {
-
+        this.props.navigation.navigate('UpgradeVersionView');
     }
     /**
      * 帮助和反馈
@@ -143,7 +146,8 @@ class Setting extends Component {
 }
 function mapStateToProps(state) {
     return {
-        ...state,
+        isLoading: state.setting.isLoading,
+        version: state.setting.version,
     }
 }
 export default connect(mapStateToProps)(Setting);

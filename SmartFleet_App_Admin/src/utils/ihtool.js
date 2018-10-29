@@ -2,6 +2,7 @@ import Images from '../constants/Images';
 import I18n from '../language/index';
 import Global from '../utils/Global';
 import moment from 'moment';
+import { isEmpty } from '../utils/index';
 
 
 
@@ -240,4 +241,38 @@ exports.getSimpleDate = function getSimpleDate(date) {
         str = moment(date).format('YYYY-MM-DD');
     }
     return str;
+}
+
+
+/**
+ *   判断是否有新版本
+ *
+ * @param {*} currentVersion
+ * @param {*} newVersion
+ * @returns
+ */
+exports.getVersion = function getVersion(currentVersion, newVersion) {
+    if (isEmpty(newVersion)) {
+        return false;
+    } else {
+        let currentArr = currentVersion.split('.');
+        let newArr = newVersion.split('.');
+        if (newArr[0] > currentArr[0]) {
+            return true;
+        } else if (newArr[0] == currentArr[0]) {
+            if (newArr[1] > currentArr[1]) {
+                return true;
+            } else if (newArr[1] == currentArr[1]) {
+                if (newArr[2] > currentArr[2]) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

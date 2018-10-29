@@ -6,6 +6,7 @@ import FullView from '../pages/FullView/FullView';
 import SiteDetail from '../pages/FullView/SiteDetail';
 import Events from '../pages/Events/Events';
 import Setting from '../pages/Setting/Setting';
+import UpgradeVersionView from '../pages/Setting/UpgradeVersionView';
 import EventDetail from '../pages/Events/EventDetail';
 import ScanView from '../pages/FullView/ScanView';
 import RegisterCar from '../pages/FullView/RegisterCar';
@@ -19,4 +20,5 @@ export default {
     EventDetail: { screen: EventDetail },
     ScanView: { screen: ScanView },
     RegisterCar: { screen: RegisterCar },
+    UpgradeVersionView: { screen: UpgradeVersionView },
 }
