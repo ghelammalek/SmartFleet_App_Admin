@@ -106,6 +106,7 @@ export default {
     upgrade_version: '更新版本',
     check_version: '检查版本',
     check_versioning: '检查中...',
+    logo_title: '打造智能车辆管理系统',
     common: {
         name: '名称',
         all: '全部',

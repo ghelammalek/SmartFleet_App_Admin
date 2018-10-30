@@ -142,11 +142,15 @@ class Events extends Component {
                                     />
                                 }
                             /> :
-                            <TouchableOpacity disabled={this.props.isLoading} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.refresh()} >
-                                <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
-                            </TouchableOpacity>
+                            <View style={styles.container}>
+                                {
+                                    this.props.isLoading ? <View /> :
+                                        <TouchableOpacity disabled={this.props.isLoading} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.refresh()} >
+                                            <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
+                                        </TouchableOpacity>
+                                }
+                            </View>
                     }
-
                     {
                         this.props.isLoading ? <LoadingView /> : <View />
                     }

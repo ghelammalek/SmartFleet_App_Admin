@@ -40,16 +40,19 @@ class UpgradeVersionView extends Component {
                     <View style={styles.scrollView}>
                         <View style={styles.logo} >
                             <Image style={styles.logoImage} source={Images.other_logo} />
+                            <Text style={styles.logoTitle} >{I18n.t('logo_title')}</Text>
                         </View>
-                        <View style={styles.bodyView} >
-                            <Text style={styles.title2} >{I18n.t('current_version')}</Text>
-                            <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
+                        <View style={styles.bodyView}>
+                            <View style={styles.itemView} >
+                                <Text style={styles.title2} >{I18n.t('current_version')}</Text>
+                                <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
+                            </View>
+                            <View style={styles.space} />
+                            <View style={styles.itemView} >
+                                <Text style={styles.title2} >{I18n.t('new_version')}</Text>
+                                <Text style={styles.title3} >{this.props.version}</Text>
+                            </View>
                         </View>
-                        <View style={styles.bodyView} >
-                            <Text style={styles.title2} >{I18n.t('new_version')}</Text>
-                            <Text style={styles.title3} >{this.props.version}</Text>
-                        </View>
-                        <View style={styles.view_30} />
                         {
                             ihtool.getVersion(VersionNumber.appVersion, this.props.version) ?
                                 <TouchableOpacity style={styles.btnView_} opacity={0.8} onPress={() => this.upgrade()}>

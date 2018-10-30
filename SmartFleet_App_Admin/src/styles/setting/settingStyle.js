@@ -3,27 +3,40 @@ import { StyleSheet, Dimensions } from "react-native";
 export default settingStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f7f7f7',
     },
     scrollView: {
         flex: 1,
+        backgroundColor: '#f7f7f7',
         paddingHorizontal: 15,
     },
+    bodyView: {
+        width: Dimensions.get('window').width - 30,
+        marginTop: 15,
+        // paddingHorizontal: 15,
+        backgroundColor: '#fff',
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        borderRadius: 5,
+    },
     title1: {
-        fontSize: 14,
+        fontSize: 12,
         color: '#1c1c1d',
         fontWeight: 'bold',
     },
     title2: {
         fontSize: 14,
         color: '#1c1c1d',
+        fontWeight: 'bold',
     },
     title3: {
         fontSize: 14,
-        color: '#9797a3',
+        color: '#1c1c1d',
     },
     btnView: {
-        marginTop: 70,
+        marginTop: 60,
         marginBottom: 40,
         marginHorizontal: 5,
         borderRadius: 5,
@@ -46,16 +59,20 @@ export default settingStyle = StyleSheet.create({
         height: 30,
     },
     titleView: {
-        height: 40,
+        height: 50,
         justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#f7f7f7',
+        paddingHorizontal: 15,
     },
-    bodyView: {
+    itemView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 50,
-        borderBottomWidth: 1,
-        borderBottomColor: '#dfdfdf',
+        paddingHorizontal: 15,
+        // borderBottomWidth: 1,
+        // borderBottomColor: '#dfdfdf',
     },
     versionView: {
         height: 22,
@@ -73,20 +90,29 @@ export default settingStyle = StyleSheet.create({
     },
 
     logo: {
-        width: Dimensions.get('window').width,
-        height: 100,
-        marginVertical: 30,
+        width: Dimensions.get('window').width - 30,
+        height: 200,
+        marginBottom: 30,
         justifyContent: 'center',
         alignItems: 'center',
     },
     logoImage: {
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         resizeMode: 'contain',
+        borderWidth: 1,
+        borderColor: '#f3f3f3',
+        borderRadius: 15,
+        marginBottom: 15,
+        overflow: 'hidden',
+    },
+    logoTitle: {
+        fontSize: 16,
+        color: '#1c1c1d',
     },
     btnView_: {
-        marginTop: 30,
-        // marginBottom: 40,
+        marginTop: 40,
+        marginBottom: 40,
         marginHorizontal: 5,
         borderRadius: 5,
         height: 40,
@@ -94,5 +120,9 @@ export default settingStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
+    space: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#f7f7f7',
+    }
 })

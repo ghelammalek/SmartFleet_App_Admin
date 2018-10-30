@@ -42,50 +42,52 @@ class Setting extends Component {
                 <NavigationBar title={I18n.t('tab_owner')} />
                 <ScrollView showsVerticalScrollIndicator={false} bounces={false} >
                     <View style={styles.scrollView}>
-                        <View style={styles.view_20} />
-                        <View style={styles.titleView} >
-                            <Text style={styles.title1} >{I18n.t('setting')}</Text>
+                        <View style={styles.bodyView}>
+                            <View style={styles.titleView} >
+                                <Text style={styles.title1} >{I18n.t('setting')}</Text>
+                            </View>
+                            <TouchableOpacity opacity={0.8} onPress={() => this.changeCompanys()}>
+                                <View style={styles.itemView} >
+                                    <Text style={styles.title2} >{I18n.t('userInfo')}</Text>
+                                    <Text style={styles.title3} >{}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity opacity={0.8} onPress={() => this.notification()}>
+                                <View style={styles.itemView} >
+                                    <Text style={styles.title2} >{I18n.t('notification')}</Text>
+                                    <Text style={styles.title3} >{}</Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity opacity={0.8} onPress={() => this.changeCompanys()}>
-                            <View style={styles.bodyView} >
-                                <Text style={styles.title2} >{I18n.t('userInfo')}</Text>
-                                <Text style={styles.title3} >{}</Text>
+                        <View style={styles.bodyView}>
+                            <View style={styles.titleView} >
+                                <Text style={styles.title1} >{I18n.t('about')}</Text>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity opacity={0.8} onPress={() => this.notification()}>
-                            <View style={styles.bodyView} >
-                                <Text style={styles.title2} >{I18n.t('notification')}</Text>
-                                <Text style={styles.title3} >{}</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={styles.view_30} />
-                        <View style={styles.titleView} >
-                            <Text style={styles.title1} >{I18n.t('about')}</Text>
+                            <TouchableOpacity opacity={0.8} onPress={() => this.about()}>
+                                <View style={styles.itemView} >
+                                    <Text style={styles.title2} >{I18n.t('about_us')}</Text>
+                                    <Text style={styles.title3} >{}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity opacity={0.8} onPress={() => this.update()}>
+                                <View style={styles.itemView} >
+                                    <Text style={styles.title2} >{I18n.t('version_info')}</Text>
+                                    {
+                                        ihtool.getVersion(VersionNumber.appVersion, this.props.version) ?
+                                            <View style={styles.versionView}>
+                                                <Text style={styles.versionText}>{'new'}</Text>
+                                            </View> :
+                                            <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
+                                    }
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity opacity={0.8} onPress={() => this.help()}>
+                                <View style={styles.itemView} >
+                                    <Text style={styles.title2} >{I18n.t('help_and_feek')}</Text>
+                                    <Text style={styles.title3} >{}</Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity opacity={0.8} onPress={() => this.about()}>
-                            <View style={styles.bodyView} >
-                                <Text style={styles.title2} >{I18n.t('about_us')}</Text>
-                                <Text style={styles.title3} >{}</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity opacity={0.8} onPress={() => this.update()}>
-                            <View style={styles.bodyView} >
-                                <Text style={styles.title2} >{I18n.t('version_info')}</Text>
-                                {
-                                    ihtool.getVersion(VersionNumber.appVersion, this.props.version) ?
-                                        <View style={styles.versionView}>
-                                            <Text style={styles.versionText}>{'new'}</Text>
-                                        </View> :
-                                        <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
-                                }
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity opacity={0.8} onPress={() => this.help()}>
-                            <View style={styles.bodyView} >
-                                <Text style={styles.title2} >{I18n.t('help_and_feek')}</Text>
-                                <Text style={styles.title3} >{}</Text>
-                            </View>
-                        </TouchableOpacity>
                         <TouchableOpacity style={styles.btnView} opacity={0.8} onPress={() => { this.loginOut() }}>
                             <Text style={styles.btnTitle} >{I18n.t('loginOut')}</Text>
                         </TouchableOpacity>
