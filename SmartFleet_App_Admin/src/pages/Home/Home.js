@@ -49,6 +49,7 @@ class Home extends Component {
         }));
     }
     refresh() {
+        Global.cfg.access_token = 'lskdjflksdjflskdfj';
         this.props.dispatch(createAction('home/getStatistics')({ queryType: '1' }));
         this.props.dispatch(createAction('home/getAlerts')({
             cursor: 0,
@@ -191,7 +192,7 @@ class Home extends Component {
                         <View style={homeStyle.staticView_}>
                             <Image style={homeStyle.static_image} source={Images.home_fuelConsumption} />
                             <View style={homeStyle.static_titleView}>
-                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_cars')}</Text>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_fuelConsumption')}</Text>
                                 <View style={homeStyle.static_subView}>
                                     <Text style={homeStyle.static_title}>{data.fuelConsumption}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('sheng')}</Text>
@@ -201,7 +202,7 @@ class Home extends Component {
                         <View style={homeStyle.staticView_}>
                             <Image style={homeStyle.static_image} source={Images.home_cars} />
                             <View style={homeStyle.static_titleView}>
-                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_fuelConsumption')}</Text>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_cars')}</Text>
                                 <View style={homeStyle.static_subView}>
                                     <Text style={homeStyle.static_title}>{data.workPerson}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('liang')}</Text>

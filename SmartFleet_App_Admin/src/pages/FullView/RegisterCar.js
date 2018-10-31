@@ -125,7 +125,7 @@ class RegisterCar extends Component {
                         </View>
                     </View>
                     <View style={styles.itemView}>
-                        <Text style={styles.itemTitle}>{'gateway_no'}</Text>
+                        <Text style={styles.itemTitle}>{I18n.t('gateway_no')}</Text>
                         <View style={styles.itemRightView}>
                             <TextInput
                                 style={styles.itemTextInput}

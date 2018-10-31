@@ -57,6 +57,8 @@ function refreshToken(method, url1, header, body, hasToken) {
         .then((data) => {
             try {
                 if (data.error === undefined) {
+                    console.log('刷新token成功了');
+                    console.log(data);
                     Global.cfg.access_token = data.access_token;
                     Global.cfg.refresh_token = data.refresh_token;
                     Global.cfg.expires_in = data.expires_in;
@@ -65,8 +67,8 @@ function refreshToken(method, url1, header, body, hasToken) {
                     Global.cfg.setRunningConfig();
                     return request(method, url1, header, body, hasToken);
                 } else {
-                    // console.log('刷新token失败了');
-                    // console.log(data);
+                    console.log('刷新token失败了');
+                    console.log(data);
 
                     Global.cfg.access_token = '';
                     Global.cfg.refresh_token = '';
@@ -75,8 +77,8 @@ function refreshToken(method, url1, header, body, hasToken) {
                     return data;
                 }
             } catch (e) {
-                // console.log('刷新token崩溃了');
-                // console.log(e);
+                console.log('刷新token崩溃了');
+                console.log(e);
                 Global.cfg.access_token = '';
                 Global.cfg.refresh_token = '';
                 Global.cfg.setRunningConfig();
@@ -88,8 +90,8 @@ function refreshToken(method, url1, header, body, hasToken) {
             Global.cfg.refresh_token = '';
             Global.cfg.setRunningConfig();
             Global.global.navigation.dispatch(signin);
-            // console.log('刷新token崩溃了');
-            // console.log(e);
+            console.log('刷新token崩溃了');
+            console.log(e);
             return { error: e };
         });
 }

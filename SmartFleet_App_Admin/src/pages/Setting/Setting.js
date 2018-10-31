@@ -48,13 +48,19 @@ class Setting extends Component {
                             </View>
                             <TouchableOpacity opacity={0.8} onPress={() => this.changeCompanys()}>
                                 <View style={styles.itemView} >
-                                    <Text style={styles.title2} >{I18n.t('userInfo')}</Text>
+                                    <View style={styles.itemLeftView}>
+                                        <Image style={styles.itemLeftImage} source={Images.setting_owner} />
+                                        <Text style={styles.title2} >{I18n.t('userInfo')}</Text>
+                                    </View>
                                     <Text style={styles.title3} >{}</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity opacity={0.8} onPress={() => this.notification()}>
                                 <View style={styles.itemView} >
-                                    <Text style={styles.title2} >{I18n.t('notification')}</Text>
+                                    <View style={styles.itemLeftView}>
+                                        <Image style={styles.itemLeftImage} source={Images.setting_notification} />
+                                        <Text style={styles.title2} >{I18n.t('notification')}</Text>
+                                    </View>
                                     <Text style={styles.title3} >{}</Text>
                                 </View>
                             </TouchableOpacity>
@@ -65,13 +71,19 @@ class Setting extends Component {
                             </View>
                             <TouchableOpacity opacity={0.8} onPress={() => this.about()}>
                                 <View style={styles.itemView} >
-                                    <Text style={styles.title2} >{I18n.t('about_us')}</Text>
+                                    <View style={styles.itemLeftView}>
+                                        <Image style={styles.itemLeftImage} source={Images.setting_about_us} />
+                                        <Text style={styles.title2} >{I18n.t('about_us')}</Text>
+                                    </View>
                                     <Text style={styles.title3} >{}</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity opacity={0.8} onPress={() => this.update()}>
                                 <View style={styles.itemView} >
-                                    <Text style={styles.title2} >{I18n.t('version_info')}</Text>
+                                    <View style={styles.itemLeftView}>
+                                        <Image style={styles.itemLeftImage} source={Images.setting_version} />
+                                        <Text style={styles.title2} >{I18n.t('version_info')}</Text>
+                                    </View>
                                     {
                                         ihtool.getVersion(VersionNumber.appVersion, this.props.version) ?
                                             <View style={styles.versionView}>
@@ -83,7 +95,10 @@ class Setting extends Component {
                             </TouchableOpacity>
                             <TouchableOpacity opacity={0.8} onPress={() => this.help()}>
                                 <View style={styles.itemView} >
-                                    <Text style={styles.title2} >{I18n.t('help_and_feek')}</Text>
+                                    <View style={styles.itemLeftView}>
+                                        <Image style={styles.itemLeftImage} source={Images.setting_help} />
+                                        <Text style={styles.title2} >{I18n.t('help_and_feek')}</Text>
+                                    </View>
                                     <Text style={styles.title3} >{}</Text>
                                 </View>
                             </TouchableOpacity>

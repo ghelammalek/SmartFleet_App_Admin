@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-29 19:57:24
+ * @Last Modified time: 2018-10-31 09:33:35
  */
 
 export default {
@@ -44,11 +44,11 @@ export default {
     other_logo: require('../assets/images/other/logo.png'),
 
 
-    // setting_owner: require('../assets/images/setting/owner.png'),
-    // setting_notification: require('../assets/images/setting/notification.png'),
-    // setting_about_us: require('../assets/images/setting/about_us.png'),
-    // setting_version: require('../assets/images/setting/version.png'),
-    // setting_help: require('../assets/images/setting/help.png'),
+    setting_owner: require('../assets/images/setting/owner.png'),
+    setting_notification: require('../assets/images/setting/notification.png'),
+    setting_about_us: require('../assets/images/setting/about_us.png'),
+    setting_version: require('../assets/images/setting/version.png'),
+    setting_help: require('../assets/images/setting/help.png'),
 
 
     event_level1: require('../assets/images/event/level1.png'),

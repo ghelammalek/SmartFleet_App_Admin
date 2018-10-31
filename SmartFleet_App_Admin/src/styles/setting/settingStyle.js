@@ -10,12 +10,11 @@ export default settingStyle = StyleSheet.create({
     scrollView: {
         flex: 1,
         backgroundColor: '#f7f7f7',
-        paddingHorizontal: 15,
+        paddingHorizontal: 12,
     },
     bodyView: {
         width: Dimensions.get('window').width - 30,
-        marginTop: 15,
-        // paddingHorizontal: 15,
+        marginTop: 12,
         backgroundColor: '#fff',
         borderColor: '#f3f3f3',
         borderWidth: 1,
@@ -23,17 +22,17 @@ export default settingStyle = StyleSheet.create({
     },
     title1: {
         fontSize: 12,
-        color: '#1c1c1d',
+        color: '#2d2d2d',
         fontWeight: 'bold',
     },
     title2: {
         fontSize: 14,
-        color: '#1c1c1d',
+        color: '#2d2d2d',
         fontWeight: 'bold',
     },
     title3: {
         fontSize: 14,
-        color: '#1c1c1d',
+        color: '#2d2d2d',
     },
     btnView: {
         marginTop: 60,
@@ -63,16 +62,25 @@ export default settingStyle = StyleSheet.create({
         justifyContent: 'center',
         borderBottomWidth: 1,
         borderBottomColor: '#f7f7f7',
-        paddingHorizontal: 15,
+        paddingHorizontal: 12,
     },
     itemView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 50,
-        paddingHorizontal: 15,
-        // borderBottomWidth: 1,
-        // borderBottomColor: '#dfdfdf',
+        paddingHorizontal: 12,
+    },
+    itemLeftView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    itemLeftImage: {
+        width: 20,
+        height: 20,
+        resizeMode: 'contain',
+        marginRight: 5,
     },
     versionView: {
         height: 22,
@@ -91,14 +99,14 @@ export default settingStyle = StyleSheet.create({
 
     logo: {
         width: Dimensions.get('window').width - 30,
-        height: 200,
-        marginBottom: 30,
+        height: 250,
+        marginBottom: 40,
         justifyContent: 'center',
         alignItems: 'center',
     },
     logoImage: {
-        width: 80,
-        height: 80,
+        width: 88,
+        height: 88,
         resizeMode: 'contain',
         borderWidth: 1,
         borderColor: '#f3f3f3',
@@ -107,8 +115,8 @@ export default settingStyle = StyleSheet.create({
         overflow: 'hidden',
     },
     logoTitle: {
-        fontSize: 16,
-        color: '#1c1c1d',
+        fontSize: 18,
+        color: '#2d2d2d',
     },
     btnView_: {
         marginTop: 40,
