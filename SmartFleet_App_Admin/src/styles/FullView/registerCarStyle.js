@@ -18,7 +18,7 @@ export default fullViewStyle = StyleSheet.create({
         height: 100,
         borderRadius: 5,
         resizeMode: 'contain',
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#f3f3f3',
     },
     itemView: {
         flexDirection: 'row',

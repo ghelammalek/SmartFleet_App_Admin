@@ -21,14 +21,14 @@ export default navigationBarStyle = StyleSheet.create({
         fontWeight: 'bold',
     },
     imageView: {
-        width: TITLE_OFFSET,
+        width: Platform.OS === 'android' ? 56 : 44,
         height: 44,
         justifyContent: 'center',
         alignItems: 'center',
     },
     image: {
-        width: 20,
-        height: 20,
+        width: 16,
+        height: 16,
         resizeMode: 'contain',
     }
 });

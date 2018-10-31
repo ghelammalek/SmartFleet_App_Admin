@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         resizeMode: 'contain',
         marginBottom: 3,
     },
     text: {
         marginTop: 3,
         fontSize: 12,
-        color: '#9797a3',
+        color: '#adadad',
     }
 })

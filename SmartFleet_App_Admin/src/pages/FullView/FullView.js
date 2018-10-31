@@ -64,8 +64,10 @@ class FullView extends Component {
                 break;
             }
         }
-
         this.props.navigation.navigate('SiteDetail', { item: item });
+    }
+    searchAction() {
+
     }
     goSiteDetail(item) {
         this.props.navigation.navigate('SiteDetail', { item: item });
@@ -88,10 +90,6 @@ class FullView extends Component {
                     <View style={styles.itemTopView}>
                         <View style={styles.itemTopLeft}>
                             <Text style={styles.itemTitle} >{item.item.plateNo}</Text>
-                            {/* {
-                                item.item.confirmState ? <Text style={styles.itemClear} >{I18n.t('event_clear')}</Text> :
-                                    <Text style={styles.itemClear_} >{I18n.t('event_unclear')}</Text>
-                            } */}
                         </View>
                         <View style={styles.itemTopRight}>
                             <Text style={styles.time} >{item.item.minutes + I18n.t('before_minutes')}</Text>
@@ -107,10 +105,6 @@ class FullView extends Component {
                             <Text style={styles.itemText} >{I18n.t('duration') + '：'}</Text>
                             <Text style={styles.itemText} >{item.item.duration + I18n.t('hour')}</Text>
                         </View>
-                        {/* <View style={styles.itemTextView}>
-                            <Text style={styles.itemText} >{I18n.t('event_desc') + '：'}</Text>
-                            <Text style={styles.itemText} >{ihtool.getEventDesc(item.item)}</Text>
-                        </View> */}
                     </View>
                 </View>
             </TouchableOpacity>
@@ -118,10 +112,15 @@ class FullView extends Component {
     }
     render() {
         var center = this.state.center;
-
         return (
             <View style={styles.container}>
-                <NavigationBar title={I18n.t('tab_cars')} rightImage={Images.other_add} rightAction={this.goRegisterCar.bind(this)} />
+                <NavigationBar
+                    title={I18n.t('tab_cars')}
+                    rightImage={Images.other_search}
+                    rightAction={this.searchAction.bind(this)}
+                    letfImage={Images.other_add}
+                    leftAction={this.goRegisterCar.bind(this)}
+                />
                 <ScrollableTabView
                     locked={true}
                     style={styles.tabbar}
@@ -148,8 +147,8 @@ class FullView extends Component {
                             }}
                         />
 
-                        <TouchableOpacity disabled={this.props.isLoading} onPress={() => this.refresh_()} style={{ position: 'absolute', bottom: 30, right: 20, height: 50, width: 50 }}>
-                            <Image style={{ margin: 5, height: 40, width: 40, resizeMode: 'stretch' }} source={Images.ico_refresh} />
+                        <TouchableOpacity disabled={this.props.isLoading} activeOpacity={0.7} onPress={() => this.refresh_()} style={styles.refreshView}>
+                            <Image style={styles.refreshImage} source={Images.ico_refresh} />
                         </TouchableOpacity>
                     </View>
                     <View

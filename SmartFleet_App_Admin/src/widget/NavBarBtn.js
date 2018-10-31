@@ -39,11 +39,12 @@ export default class NavBarBtn extends Component {
 }
 const styles = StyleSheet.create({
     imageView: {
-        width: TITLE_OFFSET,
-        height: Platform.OS === 'android' ? 56 : 44,
+        width: Platform.OS === 'android' ? 56 : 44,
+        height: 44,
         justifyContent: 'center',
         alignItems: 'center',
-
+        paddingLeft: 12,
+        backgroundColor: 'red',
     },
     image: {
         width: 24,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     title: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         color: 'blue',
     }

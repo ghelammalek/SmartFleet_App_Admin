@@ -10,7 +10,7 @@ export default fullViewStyle = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#f3f3f3',
     },
     map: {
         width: Dimensions.get('window').width,
@@ -38,7 +38,7 @@ export default fullViewStyle = StyleSheet.create({
 
 
     bodyView: {
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#f3f3f3',
         paddingHorizontal: 10,
         // borderRadius: 3,
     },
@@ -125,5 +125,23 @@ export default fullViewStyle = StyleSheet.create({
         flex: 1,
         minHeight: 300,
         backgroundColor: '#fff',
-    }
+    },
+
+
+    refreshView: {
+        position: 'absolute',
+        bottom: 24,
+        right: 16,
+        height: 40,
+        width: 40,
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    refreshImage: {
+        height: 19,
+        width: 19,
+        resizeMode: 'contain',
+    },
 });

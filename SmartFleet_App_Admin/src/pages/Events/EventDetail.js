@@ -59,21 +59,18 @@ class EventDetail extends Component {
                     <View style={homeStyle.itemTopView}>
                         <View style={homeStyle.itemTopLeft}>
                             <Text style={homeStyle.itemTitle} >{item.moduleName}</Text>
-                            {
-                                item.confirmState ? <Text style={homeStyle.itemClear} >{I18n.t('event_clear')}</Text> :
-                                    <Text style={homeStyle.itemClear_} >{I18n.t('event_unclear')}</Text>
-                            }
-
+                            <View style={item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
+                                <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_clear') : I18n.t('event_unclear')}</Text>
+                            </View>
                         </View>
                         <View style={homeStyle.itemTopRight}>
                             <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.startsAt)}</Text>
-                            {/* <Image style={homeStyle.imgagRight} source={Images.other_right} /> */}
                         </View>
                     </View>
                     <View style={homeStyle.itemBodyView}>
                         <View style={homeStyle.itemTextView}>
                             <Text style={homeStyle.itemText} >{I18n.t('event_type') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{item.labels.code}</Text>
+                            <Text style={homeStyle.itemText} >{ihtool.getEventType(item)}</Text>
                         </View>
                         <View style={homeStyle.itemTextView}>
                             <Text style={homeStyle.itemText} >{I18n.t('event_level') + '：'}</Text>

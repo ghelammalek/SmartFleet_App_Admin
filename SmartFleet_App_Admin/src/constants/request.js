@@ -116,19 +116,25 @@ function request(method, url1, header, body, hasToken) {
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {
-            if (data.error_code === 21327 || data.error_code === 21336 || data.error_code === 21337 || data.error_code === 21338) {
-                console.log('失败了' + url);
-                console.log(data);
-                return refreshToken(method, url1, header, body, hasToken);
-            } else {
-                if (data.error) {
+            try {
+                if (data.error_code === 21327 || data.error_code === 21336 || data.error_code === 21337 || data.error_code === 21338) {
                     console.log('失败了' + url);
+                    console.log(data);
+                    return refreshToken(method, url1, header, body, hasToken);
+                } else {
+                    if (data.error) {
+                        console.log('失败了' + url);
+                        console.log(data);
+                        return data;
+                    }
+                    console.log('成功了' + url);
                     console.log(data);
                     return data;
                 }
-                console.log('成功了' + url);
-                console.log(data);
-                return data;
+            } catch (err) {
+                console.log('失败了' + url);
+                console.log({ error: err });
+                return { error: err };
             }
         })
         .catch((err) => {
@@ -138,21 +144,26 @@ function request(method, url1, header, body, hasToken) {
         });
 }
 function request_(method, url1, header, body, hasToken) {
-    var url = url1;
+    var url = url1 + '1';
     return RNFetchBlob.config({ timeout: 15000 })
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {
-            if (data.error) {
-                // console.log('失败了' + url);
+            try {
+                if (data.error) {
+                    // console.log('失败了' + url);
+                    return data;
+                }
+                console.log('成功了' + url);
+                console.log(data);
                 return data;
+            } catch (err) {
+                console.log('失败了' + url);
+                return { error: err };
             }
-            console.log('成功了' + url);
-            console.log(data);
-            return data;
         })
         .catch((err) => {
-            // console.log('崩溃了' + url);
+            console.log('崩溃了' + url);
             return { error: err };
         });
 }
@@ -226,37 +237,36 @@ exports.delete = function (url, body, hasToken, header = HEADER_JSON) {
 /**
  * 启动时刷新token用
  */
-exports.getNewToken = function () {
-    const url = getServerIP() + "/oauth2/access_token?" +
-        "client_id=" + Global.client_id +
-        "&client_secret=" + Global.client_secret +
-        "&grant_type=refresh_token" +
-        "&refresh_token=" + Global.cfg.refresh_token;
+// exports.getNewToken = function () {
+//     const url = getServerIP() + "/oauth2/access_token?" +
+//         "client_id=" + Global.client_id +
+//         "&client_secret=" + Global.client_secret +
+//         "&grant_type=refresh_token" +
+//         "&refresh_token=" + Global.cfg.refresh_token;
 
-    RNFetchBlob.config({ timeout: 20000 })
-        .fetch(POST, url, HEADER_FORM)
-        .then((response) => response.json())
-        .then((data) => {
-            try {
-                if (data.error === undefined) {
+//     RNFetchBlob.config({ timeout: 20000 })
+//         .fetch(POST, url, HEADER_FORM)
+//         .then((response) => response.json())
+//         .then((data) => {
+//             try {
+//                 if (data.error === undefined) {
+//                     Global.cfg.access_token = data.access_token;
+//                     Global.cfg.refresh_token = data.refresh_token;
+//                     Global.cfg.expires_in = data.expires_in;
+//                     Global.cfg.create_token_time = moment().unix();
 
-                    Global.cfg.access_token = data.access_token;
-                    Global.cfg.refresh_token = data.refresh_token;
-                    Global.cfg.expires_in = data.expires_in;
-                    Global.cfg.create_token_time = moment().unix();
-
-                    Global.cfg.setRunningConfig();
-                    Global.global.navigation.dispatch(main);
-                } else {
-                    Global.global.navigation.dispatch(signin);
-                }
-            } catch (e) {
-                return { error: e };
-            }
-        })
-        .catch(function (e) {
-            Global.global.navigation.dispatch(signin);
-        });
-};
+//                     Global.cfg.setRunningConfig();
+//                     Global.global.navigation.dispatch(main);
+//                 } else {
+//                     Global.global.navigation.dispatch(signin);
+//                 }
+//             } catch (e) {
+//                 return { error: e };
+//             }
+//         })
+//         .catch(function (e) {
+//             Global.global.navigation.dispatch(signin);
+//         });
+// };
 
 

@@ -89,10 +89,9 @@ class Events extends Component {
                     <View style={homeStyle.itemTopView}>
                         <View style={homeStyle.itemTopLeft}>
                             <Text style={homeStyle.itemTitle} >{item.item.moduleName}</Text>
-                            {
-                                item.item.confirmState ? <Text style={homeStyle.itemClear} >{I18n.t('event_clear')}</Text> :
-                                    <Text style={homeStyle.itemClear_} >{I18n.t('event_unclear')}</Text>
-                            }
+                            <View style={item.item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
+                                <Text style={homeStyle.itemClear} >{item.item.confirmState ? I18n.t('event_clear') : I18n.t('event_unclear')}</Text>
+                            </View>
                         </View>
                         <View style={homeStyle.itemTopRight}>
                             <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.item.startsAt)}</Text>

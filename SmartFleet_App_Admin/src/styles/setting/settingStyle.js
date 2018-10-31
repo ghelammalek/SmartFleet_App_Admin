@@ -5,11 +5,11 @@ export default settingStyle = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#f3f3f3',
     },
     scrollView: {
         flex: 1,
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#f3f3f3',
         paddingHorizontal: 12,
     },
     bodyView: {
@@ -61,7 +61,7 @@ export default settingStyle = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#f7f7f7',
+        borderBottomColor: '#f3f3f3',
         paddingHorizontal: 12,
     },
     itemView: {
@@ -131,6 +131,6 @@ export default settingStyle = StyleSheet.create({
     space: {
         flex: 1,
         height: 1,
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#f3f3f3',
     }
 })

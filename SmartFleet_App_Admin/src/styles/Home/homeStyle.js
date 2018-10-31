@@ -9,7 +9,7 @@ export default homeStyle = StyleSheet.create({
         backgroundColor: '#f3f3f3',
     },
     scrollView: {
-        padding: 10,
+        paddingHorizontal: 10,
     },
     separator: {
         backgroundColor: '#dfdfdf',
@@ -123,7 +123,7 @@ export default homeStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 12,
+        paddingHorizontal: 10,
         borderBottomColor: '#f3f3f3',
         borderBottomWidth: 1,
     },
@@ -138,7 +138,7 @@ export default homeStyle = StyleSheet.create({
     },
     itemTitle: {
         fontSize: 14,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: '#2d2d2d',
     },
     time: {
@@ -147,7 +147,7 @@ export default homeStyle = StyleSheet.create({
     },
     imgagRight: {
         marginLeft: 3,
-        width: 10,
+        width: 9,
         height: 11,
         resizeMode: 'contain',
     },
@@ -155,33 +155,33 @@ export default homeStyle = StyleSheet.create({
         paddingTop: 8,
         paddingHorizontal: 8,
         flexDirection: 'column',
-        // backgroundColor: 'red',
     },
     itemTextView: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 12,
+        marginBottom: 15,
     },
     itemText: {
         fontSize: 12,
         color: '#2d2d2d',
     },
-    itemClear: {
+    itemClearView: {
         marginLeft: 5,
-        fontSize: 12,
-        color: '#fff',
         paddingHorizontal: 5,
-        paddingVertical: 3,
         backgroundColor: '#adadad',
+        borderRadius: 3,
     },
-    itemClear_: {
+    itemClearView_: {
         marginLeft: 5,
-        fontSize: 12,
-        color: '#fff',
         paddingHorizontal: 5,
         paddingVertical: 3,
         backgroundColor: '#24ba8e',
+        borderRadius: 3,
+    },
+    itemClear: {
+        fontSize: 12,
+        color: '#fff',
     },
     itemLevelImage: {
         marginLeft: 5,
@@ -194,5 +194,14 @@ export default homeStyle = StyleSheet.create({
         flex: 1,
         minHeight: 300,
         backgroundColor: '#fff',
-    }
+    },
+    moreView: {
+        flex: 1,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderTopColor: '#f3f3f3',
+        borderTopWidth: 1,
+    },
 });

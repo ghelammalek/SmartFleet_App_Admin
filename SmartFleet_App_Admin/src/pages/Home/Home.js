@@ -81,7 +81,7 @@ class Home extends Component {
             }
         });
     }
-    goEvents(value) {
+    refreshEvents(value) {
         this.setState({ eventType: value });
         this.props.dispatch(createAction('home/getAlerts')({
             cursor: 0,
@@ -94,7 +94,22 @@ class Home extends Component {
             }
         }));
     }
+    returnEvents() {
 
+    }
+    getMoreView(items) {
+        if (items && items.length > 0) {
+            return (
+                <TouchableOpacity activeOpacity={0.6} onPress={() => this.returnEvents()} >
+                    <View style={homeStyle.moreView}>
+                        <Text style={homeStyle.itemTitle}>{I18n.t('common.more')}</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        } else {
+            return <View />
+        }
+    }
     getItems(items) {
         if (items && items.length > 0) {
             return items.map((item, index) =>
@@ -103,11 +118,9 @@ class Home extends Component {
                         <View style={homeStyle.itemTopView}>
                             <View style={homeStyle.itemTopLeft}>
                                 <Text style={homeStyle.itemTitle} >{item.moduleName}</Text>
-                                {
-                                    item.confirmState ? <Text style={homeStyle.itemClear} >{I18n.t('event_clear')}</Text> :
-                                        <Text style={homeStyle.itemClear_} >{I18n.t('event_unclear')}</Text>
-                                }
-
+                                <View style={item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
+                                    <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_clear') : I18n.t('event_unclear')}</Text>
+                                </View>
                             </View>
                             <View style={homeStyle.itemTopRight}>
                                 <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.startsAt)}</Text>
@@ -134,7 +147,7 @@ class Home extends Component {
             )
         } else {
             return (
-                <TouchableOpacity disabled={this.props.isLoading} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.goEvents(this.state.eventType)} >
+                <TouchableOpacity disabled={this.props.isLoading} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.refreshEvents(this.state.eventType)} >
                     <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
                 </TouchableOpacity>
             );
@@ -212,16 +225,16 @@ class Home extends Component {
                     </View>
                     <View style={homeStyle.bodyView}>
                         <View style={homeStyle.titleView}>
-                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 0 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.goEvents(0)} >
+                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 0 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(0)} >
                                 <Text style={this.state.eventType == 0 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_car')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 1 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.goEvents(1)} >
+                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 1 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(1)} >
                                 <Text style={this.state.eventType == 1 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_driving')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 2 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.goEvents(2)} >
+                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 2 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(2)} >
                                 <Text style={this.state.eventType == 2 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_work')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 3 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.goEvents(3)} >
+                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 3 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(3)} >
                                 <Text style={this.state.eventType == 3 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_alarm')}</Text>
                             </TouchableOpacity>
                         </View>
@@ -229,6 +242,10 @@ class Home extends Component {
                             this.getItems(this.props.events)
                         }
                     </View>
+                    {
+                        this.getMoreView(this.props.events)
+                    }
+                    <View style={homeStyle.space_Vertical} />
                 </ScrollView>
             </View>
         );

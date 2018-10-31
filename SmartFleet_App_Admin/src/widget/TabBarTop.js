@@ -45,14 +45,14 @@ class TabBarTop extends Component {
         let tabImage = this.props.activeTab == i ? this.props.tabSelectImages[i] : this.props.tabImages[i];
         let border = this.props.activeTab == i ? { borderBottomColor: '#24ba8e', borderBottomWidth: 2 } : {};
         return (
-            <TouchableOpacity onPress={() => this.props.goToPage(i)} style={styles.tab} key={i}>
-                <View style={[styles.tabItem, border, { width: Dimensions.get('window').width / this.props.tabNames.length }]}>
+            <TouchableOpacity style={[styles.tabItem, { width: Dimensions.get('window').width / this.props.tabNames.length }]} onPress={() => this.props.goToPage(i)} style={styles.tab} key={i}>
+                <View style={[styles.tabItem, border]}>
                     <Image source={tabImage} style={styles.image} />
-                    <Text style={{ color: color, fontSize: 14, marginLeft: 3 }}>
+                    <Text style={{ color: color, fontSize: 14, fontWeight: 'bold', marginLeft: 3 }}>
                         {this.props.tabNames[i]}
                     </Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity >
         );
     }
 
@@ -68,26 +68,25 @@ class TabBarTop extends Component {
 const styles = StyleSheet.create({
     tabs: {
         flexDirection: 'row',
-        height: 50,
+        height: 40,
     },
 
     tab: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        // borderBottomColor: '#f3f3f3',
-        // borderBottomWidth: 1,
     },
     tabItem: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: -0.5,
+        // marginBottom: -0.5,
+        paddingTop: 2,
     },
     image: {
-        width: 14,
-        height: 14,
+        width: 12,
+        height: 12,
         resizeMode: 'contain',
     }
 });
