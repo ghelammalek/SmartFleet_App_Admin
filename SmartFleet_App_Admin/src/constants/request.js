@@ -117,30 +117,30 @@ function request(method, url1, header, body, hasToken) {
         .then((response) => response.json())
         .then((data) => {
             try {
-                console.log(JSON.stringify(body));
+                //console.log(JSON.stringify(body));
                 if (data.error_code === 21327 || data.error_code === 21336 || data.error_code === 21337 || data.error_code === 21338) {
-                    console.log('失败了' + url);
-                    console.log(data);
+                    //console.log('失败了' + url);
+                    //console.log(data);
                     return refreshToken(method, url1, header, body, hasToken);
                 } else {
                     if (data.error) {
-                        console.log('失败了' + url);
-                        console.log(data);
+                        //console.log('失败了' + url);
+                        //console.log(data);
                         return data;
                     }
-                    console.log('成功了' + url);
-                    console.log(data);
+                    //console.log('成功了' + url);
+                    //console.log(data);
                     return data;
                 }
             } catch (err) {
-                console.log('失败了' + url);
-                console.log({ error: err });
+                //console.log('失败了' + url);
+                //console.log({ error: err });
                 return { error: err };
             }
         })
         .catch((err) => {
-            console.log('崩溃了' + url);
-            console.log({ error: err });
+            //console.log('崩溃了' + url);
+            //console.log({ error: err });
             return { error: err };
         });
 }
@@ -152,19 +152,19 @@ function request_(method, url1, header, body, hasToken) {
         .then((data) => {
             try {
                 if (data.error) {
-                    console.log('失败了' + url);
+                    //console.log('失败了' + url);
                     return data;
                 }
-                console.log('成功了' + url);
-                console.log(data);
+                //console.log('成功了' + url);
+                //console.log(data);
                 return data;
             } catch (err) {
-                console.log('失败了' + url);
+                //console.log('失败了' + url);
                 return { error: err };
             }
         })
         .catch((err) => {
-            console.log('崩溃了' + url);
+            //console.log('崩溃了' + url);
             return { error: err };
         });
 }

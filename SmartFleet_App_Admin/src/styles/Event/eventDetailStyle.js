@@ -10,7 +10,11 @@ export default eventDetailStyle = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#f3f3f3',
-        padding: 10,
+        paddingHorizontal: 10,
+    },
+    map: {
+        width: Dimensions.get('window').width,
+        height: 180,
     },
     itemView: {
         width: Dimensions.get('window').width - 20,
@@ -19,7 +23,7 @@ export default eventDetailStyle = StyleSheet.create({
         borderColor: '#f3f3f3',
         borderWidth: 1,
         borderRadius: 3,
-        marginVertical: 5,
+        marginVertical: 10,
     },
     clearBtnView: {
         width: Dimensions.get('window').width - 40,

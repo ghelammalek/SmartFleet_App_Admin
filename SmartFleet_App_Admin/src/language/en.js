@@ -22,14 +22,29 @@ export default {
     event_type: '事件类型',
     event_level: '事件等级',
     event_desc: '事件描述',
+    alarm_state: '告警状态',
+    search_time: '时间搜索',
+    start_time: '开始时间',
+    end_time: '结束时间',
+    select_start_time: '请选择开始时间',
+    select_end_time: '请选择结束时间',
+    start_must_earlier_end: '开始时间必须早于结束时间',
+
     //title
     event_detail: '事件详情',
+    start_location: '开始位置',
+    end_location: '结束位置',
 
+    all: '全部',
     search: "搜索",
     sift: '筛选',
     edit: "编辑",
     okText: '确定',
     cancelText: '取消',
+    confirm: '确定',
+    cancel: '取消',
+    home_upgrade: '升级',
+    reset: '重置',
     failed: "失败",
     none: "无",
     done: '完成',
@@ -91,6 +106,7 @@ export default {
     distance: '行驶里程',
     duration: '行驶时间',
 
+
     car_list: '列表',
     car_map: '地图',
     setting: '常规设置',
@@ -106,6 +122,9 @@ export default {
     upgrade_version: '更新版本',
     check_version: '检查版本',
     check_versioning: '检查中...',
+    new_version_message: '是否立即升级',
+    new_version_title: '发现新版本',
+    logo_title: '打造智能车辆管理系统',
     common: {
         name: '名称',
         all: '全部',

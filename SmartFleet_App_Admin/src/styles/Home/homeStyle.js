@@ -169,6 +169,7 @@ export default homeStyle = StyleSheet.create({
     itemClearView: {
         marginLeft: 5,
         paddingHorizontal: 5,
+        paddingVertical: 3,
         backgroundColor: '#adadad',
         borderRadius: 3,
     },

@@ -32,6 +32,8 @@ export default {
 
     //title
     event_detail: '事件详情',
+    start_location: '开始位置',
+    end_location: '结束位置',
 
     all: '全部',
     search: "搜索",
