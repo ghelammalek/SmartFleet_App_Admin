@@ -145,26 +145,26 @@ function request(method, url1, header, body, hasToken) {
         });
 }
 function request_(method, url1, header, body, hasToken) {
-    var url = url1 + '1';
+    var url = url1;
     return RNFetchBlob.config({ timeout: 15000 })
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {
             try {
                 if (data.error) {
-                    // //console.log('失败了' + url);
+                    console.log('失败了' + url);
                     return data;
                 }
-                //console.log('成功了' + url);
-                //console.log(data);
+                console.log('成功了' + url);
+                console.log(data);
                 return data;
             } catch (err) {
-                //console.log('失败了' + url);
+                console.log('失败了' + url);
                 return { error: err };
             }
         })
         .catch((err) => {
-            //console.log('崩溃了' + url);
+            console.log('崩溃了' + url);
             return { error: err };
         });
 }

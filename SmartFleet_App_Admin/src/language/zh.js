@@ -41,6 +41,7 @@ export default {
     cancelText: '取消',
     confirm: '确定',
     cancel: '取消',
+    home_upgrade: '升级',
     reset: '重置',
     failed: "失败",
     none: "无",
@@ -119,6 +120,8 @@ export default {
     upgrade_version: '更新版本',
     check_version: '检查版本',
     check_versioning: '检查中...',
+    new_version_message: '是否立即升级',
+    new_version_title: '发现新版本',
     logo_title: '打造智能车辆管理系统',
     common: {
         name: '名称',

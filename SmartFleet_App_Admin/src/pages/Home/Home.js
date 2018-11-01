@@ -35,6 +35,9 @@ class Home extends Component {
             selectIndex: 0,
         }
     }
+    componentWillMount() {
+        this.props.dispatch(createAction('home/getVersion')({}));
+    }
     componentDidMount() {
         this.props.dispatch(createAction('home/getStatistics')({ queryType: '1' }));
         this.props.dispatch(createAction('home/getAlerts')({

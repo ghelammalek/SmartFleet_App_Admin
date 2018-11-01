@@ -1,5 +1,6 @@
 import { NavigationActions, StackActions } from 'react-navigation';
 import { Alert } from 'react-native';
+import VersionNumber from 'react-native-version-number';
 import moment from 'moment';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
@@ -9,7 +10,7 @@ export default {
     namespace: 'setting',
     state: {
         isLoading: false,
-        version: '',
+        version: VersionNumber.appVersion,
     },
     reducers: {
         updateState(state, { payload }) {

@@ -163,7 +163,7 @@ exports.getUserInfo = function () {
  * @returns
  */
 exports.getVersion = function () {
-    const url = Global.ios_version_url;
+    const url = Global.ios_version_url + '?ts=' + moment().unix();
     return request.getServerIps(url, null, false, HEADER_JSON);
 }
 
