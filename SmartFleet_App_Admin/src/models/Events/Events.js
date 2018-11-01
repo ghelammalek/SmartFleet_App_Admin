@@ -13,6 +13,10 @@ export default {
         isLoading: false,
         isLoad: false,
         cursor: 0,
+        level: 0,
+        eventType: 0,
+        start_time: '',
+        end_time: '',
     },
     reducers: {
         updateState(state, { payload }) {
@@ -57,15 +61,27 @@ export default {
                 });
             } else {
                 events = events.concat(data.result);
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        cursor: data.cursor,
-                        data: events,
-                        isLoading: false,
-                        isLoad: false,
-                    }
-                });
+                if (data.result.length > 0) {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            cursor: data.cursor,
+                            data: events,
+                            isLoading: false,
+                            isLoad: false,
+                        }
+                    });
+                } else {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            cursor: data.cursor - 20,
+                            data: events,
+                            isLoading: false,
+                            isLoad: false,
+                        }
+                    });
+                }
             }
         },
     },

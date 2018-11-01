@@ -95,7 +95,25 @@ class Home extends Component {
         }));
     }
     returnEvents() {
-
+        this.props.dispatch(createAction('events/updateState')({
+            isLoading: true,
+            data: [],
+            cursor: 0,
+            level: 0,
+            eventType: this.state.eventType + 1,
+            start_time: '',
+            end_time: '',
+        }));
+        this.props.dispatch(createAction('events/getAlerts')({
+            cursor: 0,
+            limit: 20,
+            body: {
+                labels: {
+                    code: eventTypes[this.state.eventType]
+                }
+            }
+        }));
+        this.props.navigation.navigate('Events', { eventsType: this.state.eventType + 1 });
     }
     getMoreView(items) {
         if (items && items.length > 0) {

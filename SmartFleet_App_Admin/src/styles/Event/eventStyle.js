@@ -52,4 +52,8 @@ export default eventStyle = StyleSheet.create({
         marginVertical: 5,
         resizeMode: 'contain',
     },
+    datePicker: {
+        height: 40,
+        width: Dimensions.get('window').width / 2,
+    }
 });

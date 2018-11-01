@@ -86,7 +86,7 @@ exports.getStatistics = function (queryType) {
  * @returns
  */
 exports.getSites = function () {
-    const url = '/api/general/sites?cursor=0&limit=0';
+    const url = '/api/general/sites?cursor=0&limit=100000000';
     return request.get(url, null, true, HEADER_JSON);
 }
 
