@@ -35,16 +35,16 @@ task integration(dependsOn: ['archive', 'package']) {
     // }
 }
 
-task archive(dependsOn: 'integration') {
+task releaseArchive(dependsOn: 'integration') {
     description = 'Performs a build for the device and the resulting ipa is published to GE Store'
 }
 
-task test(dependsOn: 'integration') {
+task releaseTest(dependsOn: 'integration') {
     description = 'Performs a build for the device and the resulting ipa is deploy on GE Test store'
 }
 
-tasks.archive.mustRunAfter tasks.integration
-tasks.test.mustRunAfter tasks.integration
+tasks.releaseArchive.mustRunAfter tasks.integration
+tasks.releaseTest.mustRunAfter tasks.integration
 
 task release(dependsOn: 'archive') {
     description = 'Performs a build for the device that has the same configuration as the AppStore build, but it is signed using the developer certificate'

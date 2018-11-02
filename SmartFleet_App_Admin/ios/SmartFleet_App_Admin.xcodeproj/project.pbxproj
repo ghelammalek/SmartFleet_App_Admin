@@ -40,6 +40,7 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* SmartFleet_App_AdminTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SmartFleet_App_AdminTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		2F422C0E617215E6B72AA66F /* libPods-SmartFleet_App_Admin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 263FAC419B02D1CE032CE9F5 /* libPods-SmartFleet_App_Admin.a */; };
 		3516DDC5A78C4C4F9476DC9B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19D965B36172413FB878DACB /* Entypo.ttf */; };
 		367866178E694146B123239F /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE99F6EBFB042F2A67D5F29 /* libresolv.tbd */; };
 		38F2B48135A640319A57405F /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 051827A1E5004A539C3A6F7C /* libRCTJPushModule.a */; };
@@ -492,10 +493,12 @@
 		1D54BA3C2D8442FBBE34898C /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		1F871A6DEAC245A2AF659D57 /* RCTBaiduMap.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBaiduMap.xcodeproj; path = "../node_modules/react-native-baidu-map/ios/RCTBaiduMap.xcodeproj"; sourceTree = "<group>"; };
 		22CACF8C64D84F25B9297FE5 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		263FAC419B02D1CE032CE9F5 /* libPods-SmartFleet_App_Admin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SmartFleet_App_Admin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE40FCDE9EC41758D3B4A45 /* RCTJCoreModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJCoreModule.xcodeproj; path = "../node_modules/jcore-react-native/ios/RCTJCoreModule.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* SmartFleet_App_Admin-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SmartFleet_App_Admin-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* SmartFleet_App_Admin-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SmartFleet_App_Admin-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		33A85A506EBD809CD604C9E0 /* Pods-SmartFleet_App_Admin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartFleet_App_Admin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartFleet_App_Admin/Pods-SmartFleet_App_Admin.debug.xcconfig"; sourceTree = "<group>"; };
 		363BB25DA9504623838976B1 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		386E352630B84564AB7EF291 /* libRCTOrientation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTOrientation.a; sourceTree = "<group>"; };
 		4304C10C7FCA4D0DA9145A8D /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -539,6 +542,7 @@
 		9F69A3CC3ADC4CFC8EDFF615 /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B0FC6E9169934D0BB6BC464C /* libRNI18n-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNI18n-tvOS.a"; sourceTree = "<group>"; };
+		BAC616FC2A1E6818B82CD335 /* Pods-SmartFleet_App_Admin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartFleet_App_Admin.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartFleet_App_Admin/Pods-SmartFleet_App_Admin.release.xcconfig"; sourceTree = "<group>"; };
 		BE3EC893F54B4F87AA42BC76 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		C5E6D9DFD80F404583B5A399 /* libRCTBaiduMap.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBaiduMap.a; sourceTree = "<group>"; };
 		C9A643858C884F0D940F1C72 /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -617,6 +621,7 @@
 				89B651A1B6DA44F88AABE136 /* libRNVersionNumber.a in Frameworks */,
 				1D47367F0FD84AA3817862CD /* libRCTBaiduMap.a in Frameworks */,
 				9C04B98F8A0B4423A1D5840E /* libRCTBarcode.a in Frameworks */,
+				2F422C0E617215E6B72AA66F /* libPods-SmartFleet_App_Admin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +798,7 @@
 				4A70431D735B4890A8F297F1 /* UIKit.framework */,
 				DAE99F6EBFB042F2A67D5F29 /* libresolv.tbd */,
 				492B7CABF7BE472BA925550A /* CoreGraphics.framework */,
+				263FAC419B02D1CE032CE9F5 /* libPods-SmartFleet_App_Admin.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -822,6 +828,15 @@
 				5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		71198CD9BAFC926514C19D6F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				33A85A506EBD809CD604C9E0 /* Pods-SmartFleet_App_Admin.debug.xcconfig */,
+				BAC616FC2A1E6818B82CD335 /* Pods-SmartFleet_App_Admin.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -883,6 +898,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				3540C2B6A9D84AB4A614D0C1 /* Resources */,
 				95DF79C62179B62D006EAC15 /* Recovered References */,
+				71198CD9BAFC926514C19D6F /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1053,6 +1069,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SmartFleet_App_Admin" */;
 			buildPhases = (
+				79CE75A24F79C756EC6650AB /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -1693,6 +1710,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		79CE75A24F79C756EC6650AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartFleet_App_Admin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1861,6 +1896,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33A85A506EBD809CD604C9E0 /* Pods-SmartFleet_App_Admin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartFleet_App_Admin/SmartFleet_App_Admin.entitlements;
@@ -1904,6 +1940,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BAC616FC2A1E6818B82CD335 /* Pods-SmartFleet_App_Admin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartFleet_App_Admin/SmartFleet_App_Admin.entitlements;
