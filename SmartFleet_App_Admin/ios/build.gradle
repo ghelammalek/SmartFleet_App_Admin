@@ -1,0 +1,141 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}   
+
+plugins {
+  id "org.openbakery.xcode-plugin" version "0.15.3"
+  id "org.hidetake.ssh" version "2.9.0"
+}
+
+
+xcodebuild {
+
+    version = "9"
+    workspace = 'SmartFleet_App_Admin.xcworkspace'
+    target = 'SmartFleet_App_Admin'
+    scheme = 'SmartFleet_App_Admin'
+    configuration = 'Debug'  
+    destination = ['iPhone 6']
+
+}
+
+
+task continuous(dependsOn:'test') {
+    description = 'Builds the app and runs all unit test in the Simulator for the iPhone and iPad'
+}
+
+task integration(dependsOn: ['archive', 'package']) {
+    description = 'Performs a build for the device and the resulting ipa'
+    // exec{
+    //     executable "/bin/sh"
+    //     args "-c", "exp publish ../";
+    // }
+}
+
+task archive(dependsOn: 'integration') {
+    description = 'Performs a build for the device and the resulting ipa is published to GE Store'
+}
+
+task test(dependsOn: 'integration') {
+    description = 'Performs a build for the device and the resulting ipa is deploy on GE Test store'
+}
+
+tasks.archive.mustRunAfter tasks.integration
+tasks.test.mustRunAfter tasks.integration
+
+task release(dependsOn: 'archive') {
+    description = 'Performs a build for the device that has the same configuration as the AppStore build, but it is signed using the developer certificate'
+}
+
+task appstore(dependsOn: 'archive') {
+    description = 'Build for the AppStore'
+}
+
+tasks.appstore.mustRunAfter tasks.archive
+tasks.appstore.mustRunAfter tasks.package
+
+task appstoreRelease(dependsOn: ['archive', 'package', 'appstore', 'appstoreUpload']) {
+    description = 'Performs a build for the ipa and upload to app store for release'
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+
+// ------------------------------------------------------------------------------------------
+
+    // if (taskGraph.hasTask(continuous) || taskGraph.hasTask(test)) {
+    //     println "Configure device settings for the continuous and test build"
+
+    //     println "CONFIGURE INTEGRATION"
+    //     xcodebuild {
+    //         destination {
+    //             platform = 'iOS Simulator'
+    //             name = 'iPhone 6'
+    //             os='9.*'
+    //         }
+        
+    //     }
+    // }
+
+    // ------------------------------------------------------------------------------------------
+
+    // if (taskGraph.hasTask(tasks.hockeyapp)) {
+    //     println ("using api token: " + "Pengfeis token")
+    //     hockeyapp {
+    //         apiToken = '5967832802814b00b7cb6ab1a16a42d3'
+    //         appID = '62d190efc295442c9fe886ee4f727ab0'
+    //     }
+    // }
+
+    // ------------------------------------------------------------------------------------------
+
+    if (taskGraph.hasTask(integration) || taskGraph.hasTask(release)) {
+        println "Configure sign settings for the integration and release build"
+        xcodebuild {
+            configuration = 'Release'
+            simulator = false
+            signing {
+                certificateURI = 'file://'+ "$System.env.HOME" + '/ioscert/ge_distribution.p12'
+                certificatePassword = '1'
+                mobileProvisionURI = [ 'file://' + "$project.projectDir" +'/archive.mobileprovision' ]  
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------------------------------
+
+    if (taskGraph.hasTask(tasks.appstore)) {
+        println "Configure build settings for release or appstore"
+        xcodebuild {
+            configuration = 'Release'
+            simulator = false
+            workspace = 'SmartFleet_App_Admin.xcworkspace'
+            target = 'SmartFleet_App_Admin'
+            scheme = 'SmartFleet_App_Admin'
+            configuration = 'Release'
+            signing {
+                certificateURI = 'file://'+ "$System.env.HOME" + '/ioscert/ge_distribution.p12'             // e.g 'http://example.com/Provisioning/Development.p12'
+                certificatePassword = '1'     // e.g. 'secret'
+                mobileProvisionURI = [ 'file://' + "$project.projectDir" +'/archive.mobileprovision' ]         // e.g 'http://example.com/Provisioning/Development.mobileprovision'
+            }
+        }
+    }
+    
+    
+    if (taskGraph.hasTask(appstoreValidate) || taskGraph.hasTask(appstoreUpload)) {
+    
+        if (appstore.username == null) {
+            //def username = System.console().readLine("\nPlease enter your Apple-ID that you use for iTunesConnect: ")
+            appstore.username = "13910083973@139.com"
+        }
+        
+        if (appstore.password == null) {
+            //def password = System.console().readPassword("\nPlease enter the password for <" + appstore.username + ">: ")
+            appstore.password = "App4InHandnetworks" //new String(password)
+        }
+    
+    }
+}
+
