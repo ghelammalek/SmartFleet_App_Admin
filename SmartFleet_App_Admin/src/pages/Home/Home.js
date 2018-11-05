@@ -140,7 +140,7 @@ class Home extends Component {
                             <View style={homeStyle.itemTopLeft}>
                                 <Text style={homeStyle.itemTitle} >{item.moduleName}</Text>
                                 <View style={item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
-                                    <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_clear') : I18n.t('event_unclear')}</Text>
+                                    <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_confirm') : I18n.t('event_unconfirm')}</Text>
                                 </View>
                             </View>
                             <View style={homeStyle.itemTopRight}>

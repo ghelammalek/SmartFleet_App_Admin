@@ -112,7 +112,7 @@ function request(method, url1, header, body, hasToken) {
         url += ('access_token=' + Global.cfg.access_token);
     }
     url = getServerIP() + url;
-    return RNFetchBlob.config({ timeout: 15000 })
+    return RNFetchBlob.config({ timeout: 5000 })
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {

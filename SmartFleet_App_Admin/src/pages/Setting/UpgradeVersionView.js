@@ -17,7 +17,7 @@ import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
-import config from '../utils/config';
+import config from '../../utils/config';
 import ihtool from '../../utils/ihtool';
 import setting from '../../utils/setting';
 import NavigationBar from '../../widget/NavigationBar';

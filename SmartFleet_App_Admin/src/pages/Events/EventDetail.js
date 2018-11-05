@@ -93,7 +93,7 @@ class EventDetail extends Component {
         this.props.dispatch(createAction('eventDetail/updateState')({ data: this.state.data }));
     }
     componentWillUnmount() {
-        this.props.dispatch(createAction('eventDetail/updateState')({ data: null }));
+        // this.props.dispatch(createAction('eventDetail/updateState')({ data: null }));
     }
     postAlert() {
         this.props.dispatch(createAction('eventDetail/updateState')({ isLoading: true }));
@@ -111,12 +111,12 @@ class EventDetail extends Component {
             return <View />
         } else {
             return (
-                <View style={styles.itemView}>
+                <View style={this.state.markers.length > 0 ? styles.itemView : styles.itemView_}>
                     <View style={homeStyle.itemTopView}>
                         <View style={homeStyle.itemTopLeft}>
                             <Text style={homeStyle.itemTitle} >{item.moduleName}</Text>
                             <View style={item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
-                                <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_clear') : I18n.t('event_unclear')}</Text>
+                                <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_confirm') : I18n.t('event_unconfirm')}</Text>
                             </View>
                         </View>
                         <View style={homeStyle.itemTopRight}>
@@ -145,9 +145,12 @@ class EventDetail extends Component {
                             <Text style={homeStyle.itemText} >{ihtool.getEventDesc(item)}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={item.confirmState ? styles.clearBtnView_ : styles.clearBtnView} disabled={item.confirmState} activeOpacity={0.6} onPress={() => this.postAlert()} >
-                        <Text style={styles.clearBtn}>{I18n.t('clear_event')}</Text>
-                    </TouchableOpacity>
+                    {
+                        item.confirmState ? <View /> :
+                            <TouchableOpacity style={item.confirmState ? styles.clearBtnView_ : styles.clearBtnView} disabled={item.confirmState} activeOpacity={0.6} onPress={() => this.postAlert()} >
+                                <Text style={styles.clearBtn}>{I18n.t('confirm_event')}</Text>
+                            </TouchableOpacity>
+                    }
                 </View>
             )
         }

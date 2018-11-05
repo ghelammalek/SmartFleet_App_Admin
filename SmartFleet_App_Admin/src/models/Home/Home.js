@@ -4,7 +4,7 @@ import moment from 'moment';
 import VersionNumber from 'react-native-version-number';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
-import config from '../utils/config';
+import config from '../../utils/config';
 import api from '../../constants/api';
 import ihtool from '../../utils/ihtool';
 
