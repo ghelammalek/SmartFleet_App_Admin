@@ -45,7 +45,7 @@ class Home extends Component {
             cursor: 0,
             limit: 5,
             body: {
-                end: moment().utc().format(),
+                end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
                 labels: {
                     code: eventTypes[this.state.eventType],
                 },
@@ -58,7 +58,7 @@ class Home extends Component {
             cursor: 0,
             limit: 5,
             body: {
-                end: moment().utc().format(),
+                end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
                 labels: {
                     code: eventTypes[this.state.eventType],
                 },
@@ -90,7 +90,7 @@ class Home extends Component {
             cursor: 0,
             limit: 5,
             body: {
-                end: moment().utc().format(),
+                end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
                 labels: {
                     code: eventTypes[value],
                 },
@@ -105,14 +105,14 @@ class Home extends Component {
             level: 0,
             eventType: this.state.eventType + 1,
             start_time: moment().add(-1, 'month').utc().format(),
-            end_time: moment().utc().format(),
+            end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
         }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
             limit: 20,
             body: {
                 begin: moment().add(-1, 'month').utc().format(),
-                end: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
+                end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
                 labels: {
                     code: eventTypes[this.state.eventType]
                 }

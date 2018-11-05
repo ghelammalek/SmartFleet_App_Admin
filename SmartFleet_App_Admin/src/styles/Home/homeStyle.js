@@ -64,6 +64,7 @@ export default homeStyle = StyleSheet.create({
     static_sunTitle: {
         fontSize: 12,
         color: '#adadad',
+        marginBottom: 3,
     },
     static_image: {
         width: 40,
@@ -153,7 +154,7 @@ export default homeStyle = StyleSheet.create({
         resizeMode: 'contain',
     },
     itemBodyView: {
-        paddingTop: 8,
+        paddingTop: 20,
         paddingHorizontal: 8,
         flexDirection: 'column',
     },
@@ -161,7 +162,7 @@ export default homeStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 23,
+        marginBottom: 20,
     },
     itemText: {
         fontSize: 12,

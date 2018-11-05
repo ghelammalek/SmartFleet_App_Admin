@@ -95,10 +95,15 @@ class Events extends Component {
         if (this.props.start_time !== '') {
             body.begin = moment(this.props.start_time).utc().format();
         }
-        if (this.props.end_time !== '') {
-            body.end = moment(this.props.end_time).utc().format();
+        var end = this.state.end_time;
+        if (this.state.end_time !== '') {
+            const current = moment().format('YYYY-MM-DD');
+            if (moment(moment(this.state.end_time).format('YYYY-MM-DD')).unix() == moment(current).unix()) {
+                end = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
+            }
+            body.end = moment(end).utc().format();
         }
-        this.props.dispatch(createAction('events/updateState')({ isLoad: true }));
+        this.props.dispatch(createAction('events/updateState')({ isLoad: true, start_time: end }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
             limit: 20,
@@ -379,9 +384,6 @@ class Events extends Component {
         ) {
             Alert.alert('', I18n.t('start_must_earlier_end'), [{ text: I18n.t('okText'), onPress: () => { } },]);
         } else {
-            this.setState({
-                isShow: false,
-            });
             var body = {};
             if (this.state.eventType > 0) {
                 body.labels = { code: eventTypes[this.state.eventType] };
@@ -392,9 +394,19 @@ class Events extends Component {
             if (this.state.start_time !== '') {
                 body.begin = moment(this.state.start_time).utc().format();
             }
+            var end = this.state.end_time;
             if (this.state.end_time !== '') {
-                body.end = moment(this.state.end_time).utc().format();
+                const current = moment().format('YYYY-MM-DD');
+                if (moment(moment(this.state.end_time).format('YYYY-MM-DD')).unix() == moment(current).unix()) {
+                    end = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
+                }
+                body.end = moment(end).utc().format();
             }
+
+            this.setState({
+                isShow: false,
+                end_time: end
+            });
             this.props.dispatch(createAction('events/updateState')({
                 isLoading: true,
                 data: [],
@@ -402,7 +414,7 @@ class Events extends Component {
                 level: this.state.level,
                 eventType: this.state.eventType,
                 start_time: this.state.start_time,
-                end_time: this.state.end_time,
+                end_time: end,
             }));
             this.props.dispatch(createAction('events/getAlerts')({
                 cursor: 0,
