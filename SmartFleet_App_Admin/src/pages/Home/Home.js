@@ -14,8 +14,9 @@ import {
 import { connect } from '../../routes/dva';
 import { isEmpty, createAction } from '../../utils/index';
 import NavigationBar from '../../widget/NavigationBar';
-import LoadingView from "../../widget/LoadingView";
-import NoDataView from "../../widget/NoDataView";
+import LoadingView from '../../widget/LoadingView';
+import NoDataView from '../../widget/NoDataView';
+import moment from 'moment';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
@@ -44,7 +45,7 @@ class Home extends Component {
             cursor: 0,
             limit: 5,
             body: {
-                eventsType: eventTypes[this.state.eventType],
+                end: moment().utc().format(),
                 labels: {
                     code: eventTypes[this.state.eventType],
                 },
@@ -52,13 +53,12 @@ class Home extends Component {
         }));
     }
     refresh() {
-        Global.cfg.access_token = 'lskdjflksdjflskdfj';
         this.props.dispatch(createAction('home/getStatistics')({ queryType: '1' }));
         this.props.dispatch(createAction('home/getAlerts')({
             cursor: 0,
             limit: 5,
             body: {
-                eventsType: eventTypes[this.state.eventType],
+                end: moment().utc().format(),
                 labels: {
                     code: eventTypes[this.state.eventType],
                 },
@@ -90,7 +90,7 @@ class Home extends Component {
             cursor: 0,
             limit: 5,
             body: {
-                eventsType: eventTypes[value],
+                end: moment().utc().format(),
                 labels: {
                     code: eventTypes[value],
                 },
@@ -104,13 +104,15 @@ class Home extends Component {
             cursor: 0,
             level: 0,
             eventType: this.state.eventType + 1,
-            start_time: '',
-            end_time: '',
+            start_time: moment().add(-1, 'month').utc().format(),
+            end_time: moment().utc().format(),
         }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
             limit: 20,
             body: {
+                begin: moment().add(-1, 'month').utc().format(),
+                end: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
                 labels: {
                     code: eventTypes[this.state.eventType]
                 }

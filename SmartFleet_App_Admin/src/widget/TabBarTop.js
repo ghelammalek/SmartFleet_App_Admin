@@ -32,7 +32,7 @@ class TabBarTop extends Component {
     }
 
     setAnimationValue({ value }) {
-        console.log(value);
+        // console.log(value);
     }
 
     componentDidMount() {

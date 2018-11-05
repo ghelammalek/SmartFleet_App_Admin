@@ -243,7 +243,14 @@ exports.getSimpleDate = function getSimpleDate(date) {
     return str;
 }
 
-
+/**
+ *   获取当前的utc时间
+ *
+ * @returns
+ */
+exports.getCurrentUTCDate = function getCurrentUTCDate() {
+    return moment().utc().format();
+}
 /**
  *   判断是否有新版本
  *

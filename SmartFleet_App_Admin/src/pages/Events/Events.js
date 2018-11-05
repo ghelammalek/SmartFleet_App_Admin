@@ -41,8 +41,8 @@ class Events extends Component {
             hasSelect: false,
             eventType: 0,
             level: 0,
-            start_time: '',
-            end_time: '',
+            start_time: moment().add(-1, 'month').format('YYYY-MM-DD'),
+            end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
         }
     }
     // componentWillMount() {
@@ -64,12 +64,24 @@ class Events extends Component {
     //     console.log('componentWillUnmount');
     // }
     componentDidMount() {
-        console.log('componentDidMount');
+        var body = {};
+        if (this.props.eventType > 0) {
+            body.labels = { code: eventTypes[this.props.eventType] };
+        }
+        if (this.props.level > 0) {
+            body.level = this.props.level;
+        }
+        if (this.props.start_time !== '') {
+            body.begin = moment(this.props.start_time).utc().format();
+        }
+        if (this.props.end_time !== '') {
+            body.end = moment(this.props.end_time).utc().format();
+        }
         this.props.dispatch(createAction('events/updateState')({ isLoading: true }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
             limit: 20,
-            body: {}
+            body: body,
         }));
     }
     refresh() {
@@ -330,7 +342,7 @@ class Events extends Component {
                                                         color: '#2d2d2d',
                                                     }
                                                 }}
-                                                onDateChange={(date) => { this.setState({ end_time: date }); }}
+                                                onDateChange={(date) => this.changeEndTime(date)}
                                             />
                                         </View>
                                         <View style={siftStyle.separator} />
@@ -403,9 +415,17 @@ class Events extends Component {
         this.setState({
             level: 0,
             eventType: 0,
-            start_time: '',
-            end_time: '',
+            start_time: moment().add(-1, 'month').format('YYYY-MM-DD'),
+            end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
         })
+    }
+    changeEndTime(date) {
+        const current = moment().format('YYYY-MM-DD');
+        if (moment(date).unix() == moment(current).unix()) {
+            this.setState({ end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS') })
+        } else {
+            this.setState({ end_time: moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 999 }).format('YYYY-MM-DD HH:mm:ss.SSS') })
+        }
     }
 }
 function mapStateToProps(state) {
