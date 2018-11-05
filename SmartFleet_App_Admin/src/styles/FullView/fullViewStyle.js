@@ -94,7 +94,7 @@ export default fullViewStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 12,
     },
     itemText: {
         fontSize: 12,

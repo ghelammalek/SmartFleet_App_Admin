@@ -25,7 +25,7 @@ export default {
             const data = yield call(api.getVersion);
             if (data.error) {
             } else {
-                if (ihtool.getVersion(VersionNumber.appVersion, data.version)) {
+                if (ihtool.getVersion(ihtool.getCurrentVersion(), data.version)) {
                     Alert.alert(I18n.t('new_version_title'), I18n.t('new_version_message'), [
                         { text: I18n.t('cancel'), onPress: () => { } },
                         {

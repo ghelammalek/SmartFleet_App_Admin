@@ -1,8 +1,10 @@
 import Images from '../constants/Images';
 import I18n from '../language/index';
 import Global from '../utils/Global';
+import config from '../utils/config';
 import moment from 'moment';
 import { isEmpty } from '../utils/index';
+import VersionNumber from 'react-native-version-number';
 
 
 
@@ -251,6 +253,20 @@ exports.getSimpleDate = function getSimpleDate(date) {
 exports.getCurrentUTCDate = function getCurrentUTCDate() {
     return moment().utc().format();
 }
+
+
+/**
+ *   获取当前版本号
+ *
+ * @returns
+ */
+exports.getCurrentVersion = function getCurrentVersion() {
+    if (config.type == 'dev') {
+        return VersionNumber.appVersion + '.' + VersionNumber.buildVersion;
+    } else {
+        return VersionNumber.appVersion;
+    }
+}
 /**
  *   判断是否有新版本
  *
@@ -273,7 +289,15 @@ exports.getVersion = function getVersion(currentVersion, newVersion) {
                 if (newArr[2] > currentArr[2]) {
                     return true;
                 } else {
-                    return false;
+                    if (config.type == 'dev') {
+                        if (newArr[3] > currentArr[3]) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
                 }
             } else {
                 return false;

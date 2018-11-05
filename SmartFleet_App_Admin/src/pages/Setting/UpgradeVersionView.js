@@ -46,7 +46,7 @@ class UpgradeVersionView extends Component {
                         <View style={styles.bodyView}>
                             <View style={styles.itemView} >
                                 <Text style={styles.title2} >{I18n.t('current_version')}</Text>
-                                <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
+                                <Text style={styles.title3} >{ihtool.getCurrentVersion()}</Text>
                             </View>
                             <View style={styles.space} />
                             <View style={styles.itemView} >
@@ -55,7 +55,7 @@ class UpgradeVersionView extends Component {
                             </View>
                         </View>
                         {
-                            ihtool.getVersion(VersionNumber.appVersion, this.props.version) ?
+                            ihtool.getVersion(ihtool.getCurrentVersion(), this.props.version) ?
                                 <TouchableOpacity style={styles.btnView_} opacity={0.8} onPress={() => this.upgrade()}>
                                     <Text style={styles.btnTitle} >{I18n.t('upgrade_version')}</Text>
                                 </TouchableOpacity> :
@@ -76,11 +76,10 @@ class UpgradeVersionView extends Component {
      * 更新检查
      */
     check() {
-        // this.props.dispatch(createAction('setting/updateState')({ isLoading: true }));
         this.props.dispatch(createAction('setting/getVersion')({}));
     }
     /**
-     * 更新检查
+     * 升级
      */
     upgrade() {
         var url = config.ios_download_url;

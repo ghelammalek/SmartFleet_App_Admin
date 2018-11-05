@@ -47,7 +47,7 @@ export default {
                         latitude: site.location.y,
                         title: site.plateNo,
                         extenInfo: {
-                            name: 'lskdfjlsd',
+                            name: '',
                         }
                     }
                     if (marker.longitude > maxLng) maxLng = marker.longitude;

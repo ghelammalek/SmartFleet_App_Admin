@@ -4,13 +4,14 @@ import VersionNumber from 'react-native-version-number';
 import moment from 'moment';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
+import ihtool from '../../utils/ihtool';
 import api from '../../constants/api';
 
 export default {
     namespace: 'setting',
     state: {
         isLoading: false,
-        version: VersionNumber.appVersion,
+        version: ihtool.getCurrentVersion(),
     },
     reducers: {
         updateState(state, { payload }) {

@@ -34,6 +34,7 @@ export default homeStyle = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 3,
         flexWrap: 'wrap',
+        paddingVertical: 5,
     },
     staticView_: {
         width: (Dimensions.get('window').width - 32) / 2,
@@ -43,7 +44,7 @@ export default homeStyle = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 3,
         padding: 15,
-        marginBottom: 12,
+        marginTop: 10,
     },
     static_titleView: {
         justifyContent: 'center',
@@ -160,7 +161,7 @@ export default homeStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 15,
+        marginBottom: 23,
     },
     itemText: {
         fontSize: 12,

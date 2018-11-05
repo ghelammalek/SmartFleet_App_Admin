@@ -100,7 +100,8 @@ export default class Router extends Component {
                     },
                     style: {
                         height: 49,
-                        borderTopWidth: 0,
+                        borderTopWidth: 0.5,
+                        borderTopColor: '#e7e7e7',
                         backgroundColor: '#fff',
                     },
                     indicatorStyle: {

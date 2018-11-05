@@ -85,11 +85,11 @@ class Setting extends Component {
                                         <Text style={styles.title2} >{I18n.t('version_info')}</Text>
                                     </View>
                                     {
-                                        ihtool.getVersion(VersionNumber.appVersion, this.props.version) ?
+                                        ihtool.getVersion(ihtool.getCurrentVersion(), this.props.version) ?
                                             <View style={styles.versionView}>
                                                 <Text style={styles.versionText}>{'new'}</Text>
                                             </View> :
-                                            <Text style={styles.title3} >{VersionNumber.appVersion}</Text>
+                                            <Text style={styles.title3} >{ihtool.getCurrentVersion()}</Text>
                                     }
                                 </View>
                             </TouchableOpacity>
