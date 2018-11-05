@@ -1,5 +1,6 @@
 import RNFetchBlob from 'react-native-fetch-blob';
 import Global from '../utils/Global';
+import config from '../utils/config';
 import moment from 'moment';
 import { isEmpty } from '../utils/index';
 import request from './request';
@@ -163,7 +164,7 @@ exports.getUserInfo = function () {
  * @returns
  */
 exports.getVersion = function () {
-    const url = Global.ios_version_url + '?ts=' + moment().unix();
+    const url = config.ios_version_url + '?ts=' + moment().unix();
     return request.getServerIps(url, null, false, HEADER_JSON);
 }
 

@@ -17,6 +17,7 @@ import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
+import config from '../utils/config';
 import ihtool from '../../utils/ihtool';
 import setting from '../../utils/setting';
 import NavigationBar from '../../widget/NavigationBar';
@@ -82,7 +83,7 @@ class UpgradeVersionView extends Component {
      * 更新检查
      */
     upgrade() {
-        var url = Global.ios_download_url;
+        var url = config.ios_download_url;
         Linking.openURL(url).catch((err) => {
         });
     }

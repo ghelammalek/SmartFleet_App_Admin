@@ -4,6 +4,7 @@ import moment from 'moment';
 import VersionNumber from 'react-native-version-number';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
+import config from '../utils/config';
 import api from '../../constants/api';
 import ihtool from '../../utils/ihtool';
 
@@ -29,7 +30,7 @@ export default {
                         { text: I18n.t('cancel'), onPress: () => { } },
                         {
                             text: I18n.t('home_upgrade'), onPress: () => {
-                                Linking.openURL(Global.ios_download_url).catch((err) => { });
+                                Linking.openURL(config.ios_download_url).catch((err) => { });
                             }
                         }]);
                 }
