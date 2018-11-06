@@ -8,7 +8,8 @@ import api from '../../constants/api';
 export default {
     namespace: 'siteDetail',
     state: {
-        data: null,
+        statistics: {},
+        event: [],
         isLoading: false,
         marker: {
 
@@ -24,21 +25,26 @@ export default {
         }
     },
     effects: {
-        * getAlerts({ payload }, { call, put, select }) {
-            const data = yield call(api.getAlerts, payload);
+        * getStatistics({ payload }, { call, put, select }) {
+            const data = yield call(api.getStatistics, payload.queryType, payload.plateNo);
             if (data.error) {
-                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        isLoading: false,
-                    }
-                });
             } else {
                 yield put({
                     type: 'updateState',
                     payload: {
-                        data: data.result,
+                        statistics: data.result,
+                    }
+                });
+            }
+        },
+        * getAlerts({ payload }, { call, put, select }) {
+            const data = yield call(api.getAlerts, payload);
+            if (data.error) {
+            } else {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        event: data.result,
                         isLoading: false,
                     }
                 });

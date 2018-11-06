@@ -14,6 +14,8 @@ export default {
     hour: '小时',
     liang: '辆',
     sheng: '升',
+    ci: '次',
+
 
     event_for_car: '车辆事件',
     event_for_driving: '驾驶事件',
@@ -77,6 +79,7 @@ export default {
     get_code_limit: '操作过于频繁已被禁止，请联系管理员',
 
 
+    car_detail: '车辆详情',
     add_car: '添加车辆',
     please_entry_plateNo: '请填写车牌号',
     please_entry_sn: '请填写网关序列号',
@@ -376,7 +379,7 @@ export default {
         weather: '天气',
         clear: '晴',
         current_speed: '当前时速',
-        engine_RPM: '发动机RPM',
+        engine_RPM: 'RPM',
     },
     management: {
         site: '现场',

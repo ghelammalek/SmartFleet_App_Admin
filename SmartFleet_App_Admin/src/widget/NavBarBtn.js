@@ -18,33 +18,24 @@ export default class NavBarBtn extends Component {
     }
     render() {
         return (
-            <View>
+            <TouchableOpacity style={[styles.container, this.props.style]} activeOpacity={0.6} disabled={isEmpty(this.props.disabled) ? false : this.props.disabled} onPress={this.props.onPress}>
                 {
                     this.props.title ?
-                        <TouchableOpacity activeOpacity={0.6} disabled={isEmpty(this.props.disabled) ? false : this.props.disabled} onPress={this.props.onPress}>
-                            <View style={styles.imageView}>
-                                <Text style={styles.title}>{this.props.title}</Text>
-                            </View>
-                        </TouchableOpacity> :
+                        <Text style={[styles.title, this.props.titleStyle]}>{this.props.title}</Text> :
                         this.props.source ?
-                            <TouchableOpacity activeOpacity={0.6} disabled={isEmpty(this.props.disabled) ? false : this.props.disabled} onPress={this.props.onPress}>
-                                <View style={styles.imageView}>
-                                    <Image source={this.props.source} style={styles.image} />
-                                </View>
-                            </TouchableOpacity> : <View style={[styles.imageView]} />
+                            <Image source={this.props.source} style={[styles.image, this.props.imageStyle]} /> : <View />
                 }
-            </View>
+            </TouchableOpacity>
         )
     }
 }
 const styles = StyleSheet.create({
-    imageView: {
-        width: Platform.OS === 'android' ? 56 : 44,
+    container: {
+        minWidth: Platform.OS === 'android' ? 56 : 44,
         height: 44,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingLeft: 12,
-        backgroundColor: 'red',
+        paddingHorizontal: 8,
     },
     image: {
         width: 24,
@@ -52,8 +43,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     title: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: 'blue',
+        fontSize: 12,
+        color: '#2d2d2d',
+        fontWeight: 'bold'
     }
 });

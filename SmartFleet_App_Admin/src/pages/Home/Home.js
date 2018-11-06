@@ -177,18 +177,7 @@ class Home extends Component {
         }
     }
     render() {
-        const data = {
-            id: this.props.data.id == undefined ? '--' : this.props.data.id,
-            distance: this.props.data.distance == undefined ? '--' : this.props.data.distance,
-            duration: this.props.data.duration == undefined ? '--' : this.props.data.duration,
-            fuelConsumption: this.props.data.fuelConsumption == undefined ? '--' : this.props.data.fuelConsumption,
-            illegal: this.props.data.illegal == undefined ? '--' : this.props.data.illegal,
-            accident: this.props.data.accident == undefined ? '--' : this.props.data.accident,
-            createTime: this.props.data.createTime == undefined ? '--' : this.props.data.createTime,
-            queryType: this.props.data.queryType == undefined ? '--' : this.props.data.queryType,
-            cars: this.props.data.cars == undefined ? '--' : this.props.data.cars,
-            workPerson: this.props.data.workPerson == undefined ? '--' : this.props.data.workPerson
-        }
+        const data = ihtool.getStatistics(this.props.data);
         return (
             <View style={homeStyle.container}>
                 <NavigationBar title={I18n.t('tab_home')} />

@@ -19,7 +19,9 @@ import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native
 
 import { connect } from '../../routes/dva';
 import NavigationBar from '../../widget/NavigationBar';
-import LoadingView from "../../widget/LoadingView";
+import NavBarBtn from '../../widget/NavBarBtn';
+import LoadingView from '../../widget/LoadingView';
+import moment from 'moment';
 import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
@@ -27,11 +29,13 @@ import Global from '../../utils/Global';
 import setting from '../../utils/setting';
 import ihtool from '../../utils/ihtool';
 import styles from '../../styles/FullView/siteDetailStyle';
+import homeStyle from '../../styles/Home/homeStyle';
 
 class SiteDetail extends Component {
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: navigation.state.params.item.plateNo,
+        headerTitle: I18n.t('car_detail'),
         headerBackTitle: null,
+        headerRight: <NavBarBtn title={I18n.t('detail.history_data')} titleStyle={styles.navBarTitle} onPress={() => navigation.state.params.navAction()} />
     });
     constructor(props) {
         super(props);
@@ -55,216 +59,197 @@ class SiteDetail extends Component {
         };
     }
     componentDidMount() {
-        this.props.dispatch(createAction('siteDetail/updateState')({ isLoading: true }));
-        this.props.dispatch(createAction('siteDetail/getAlerts')({
-            cursor: 0,
-            limit: 20,
-            body: {
-                // start_time: '2017-10-20T16:01:26.399Z',
-                // end_time: '2018-10-20T16:01:26.399Z',
-                // eventsTypes: null,
-                // labels: {
-                //     code: null,
-                // },
-                moduleName: this.state.title,
-            },
-        }));
+        this.props.navigation.setParams({ navAction: this.navAction.bind(this) });
+        this.getAllData();
     }
-    componentWillUnmount() {
+    getAllData() {
         this.props.dispatch(createAction('siteDetail/updateState')({
-            data: null,
+            statistics: {},
+            event: [],
             isLoading: false,
         }));
+        this.props.dispatch(createAction('siteDetail/getStatistics')({ queryType: '1', plateNo: this.state.title }));
+        this.props.dispatch(createAction('siteDetail/getAlerts')({
+            cursor: 0,
+            limit: 1,
+            body: {
+                end: moment().add(1, 'days').utc().format(),
+                moduleName: this.state.title,
+            }
+        }));
+    }
+    navAction() {
+        alert('sfsdf');
+    }
+    pushEventDetail(item) {
+        this.props.navigation.navigate('EventDetail', { item: item });
+    }
+    pushCarInfoView() {
 
     }
     refresh() {
-        this.props.dispatch(createAction('siteDetail/getAlerts')({
-            cursor: 0,
-            limit: 20,
-            body: {
-                // start_time: '2017-10-20T16:01:26.399Z',
-                // end_time: '2018-10-20T16:01:26.399Z',
-                // eventsTypes: null,
-                // labels: {
-                //     code: null,
-                // },
-                moduleName: this.state.title,
-            },
-        }));
+        this.getAllData();
     }
-    goEventDetail(item) {
-        // this.props.navigation.navigate('EventDetail', { item: item });
-    }
-    _separator = () => {
-        return <View style={styles.separator} />;
-    }
-    _renderItem = (item) => {
-        return (
-            <TouchableOpacity key={item.index} activeOpacity={0.6} onPress={() => this.goEventDetail(item.item)} >
-                <View style={styles.itemView}>
-                    <View style={styles.itemviewLeft}>
-                        <View style={styles.itemTitleView}>
-                            <Text style={styles.itemName} >{item.item.moduleName}</Text>
-                        </View>
-                        <View style={styles.texView}>
-                            {
-                                isEmpty(item.item.desc) ? <View /> :
-                                    <Text style={styles.textBody} >{item.item.desc}</Text>
-                            }
-                        </View>
-                    </View>
-                    <View style={styles.texView}>
-                        <Text style={styles.textBody} >{ihtool.getSimpleDate(item.item.startsAt)}</Text>
-                    </View>
-                    <Image style={styles.image_right} source={Images.other_right} />
-                </View>
-            </TouchableOpacity>
-        )
+    getEventItem(items) {
+        if (items && items.length > 0) {
+            const item = items[0];
+            return (
+                <TouchableOpacity style={styles.eventItemView} disabled={this.props.isLoading} activeOpacity={0.6} onPress={() => this.pushEventDetail(item)} >
+                    <Image style={styles.eventImage} source={ihtool.getEventLevelImage(item.level)} />
+                    <Text style={styles.message} >{ihtool.getEventDesc(item)}</Text>
+                    <Text style={styles.eventTime} >{ihtool.getSimpleDate(item.startsAt)}</Text>
+                    <Image style={styles.eventRightImage} source={Images.other_right} />
+                </TouchableOpacity>
+            )
+        } else {
+            return <View />;
+        }
     }
     render() {
+        const statistics = ihtool.getStatistics(this.props.statistics);
         return (
             <View style={styles.container}>
-
-                <ScrollableTabView
-                    locked={true}
-                    style={styles.tabbar}
-                    renderTabBar={() => <DefaultTabBar />}
-                    tabBarUnderlineStyle={styles.lineStyle}
-                    tabBarActiveTextColor='#FF0000'
+                <TouchableOpacity style={styles.topItemView} activeOpacity={0.6} onPress={() => this.pushCarInfoView()}>
+                    <Text style={styles.topTitle}>{this.state.title}</Text>
+                    <Image style={styles.topImage} source={Images.other_right} />
+                </TouchableOpacity>
+                <ScrollView
+                    style={homeStyle.scrollView}
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={false}
+                            onRefresh={() => this.refresh()}
+                            colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
+                            progressBackgroundColor="#ffffff"
+                        />
+                    }
                 >
-                    <View tabLabel='实时状态' style={styles.container}>
-                        <View style={styles.mapView}>
-                            <MapView
-                                trafficEnabled={this.state.trafficEnabled}
-                                baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
-                                zoom={this.state.zoom}
-                                mapType={this.state.mapType}
-                                center={this.state.center}
-                                marker={this.state.marker}
-                                style={styles.mapView}
-                                onMapClick={(e) => {
-                                }}
-                            />
+                    <View style={homeStyle.staticView}>
+                        <View style={homeStyle.staticView_}>
+                            <Image style={homeStyle.static_image} source={Images.home_distance} />
+                            <View style={homeStyle.static_titleView}>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_distance')}</Text>
+                                <View style={homeStyle.static_subView}>
+                                    <Text style={homeStyle.static_title}>{statistics.distance}</Text>
+                                    <Text style={homeStyle.static_sunTitle}>{I18n.t('km')}</Text>
+                                </View>
+                            </View>
                         </View>
-                        <ScrollView style={{ flex: 0, paddingLeft: 8 }}>
-                            <Text style={styles.textFont} >{'基本信息'}</Text>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'车牌号:'}</Text>
-                                    <Text style={styles.subTitle} >{this.state.title}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'资产编号:'}</Text>
-                                    <Text style={styles.subTitle} >{'123112'}</Text>
+                        <View style={homeStyle.staticView_}>
+                            <Image style={homeStyle.static_image} source={Images.home_duration} />
+                            <View style={homeStyle.static_titleView}>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_duration')}</Text>
+                                <View style={homeStyle.static_subView}>
+                                    <Text style={homeStyle.static_title}>{statistics.working}</Text>
+                                    <Text style={homeStyle.static_sunTitle}>{I18n.t('hour')}</Text>
                                 </View>
                             </View>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'车型:'}</Text>
-                                    <Text style={styles.subTitle} >{'沃尔沃XC90'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'网关序列号:'}</Text>
-                                    <Text style={styles.subTitle} >{'IR915-5993481'}</Text>
-                                </View>
-                            </View>
-                            <Text style={styles.textFont} >{'最近状态(5分钟前)'}</Text>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'当前状态:'}</Text>
-                                    <Text style={styles.subTitle} >{'行驶中'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'车况:'}</Text>
-                                    <Text style={styles.subTitle} >{'正常'}</Text>
+                        </View>
+                        <View style={homeStyle.staticView_}>
+                            <Image style={homeStyle.static_image} source={Images.home_fuelConsumption} />
+                            <View style={homeStyle.static_titleView}>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_fuelConsumption')}</Text>
+                                <View style={homeStyle.static_subView}>
+                                    <Text style={homeStyle.static_title}>{statistics.fuelConsumption}</Text>
+                                    <Text style={homeStyle.static_sunTitle}>{I18n.t('sheng')}</Text>
                                 </View>
                             </View>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'司机:'}</Text>
-                                    <Text style={styles.subTitle} >{'李四'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'地点:'}</Text>
-                                    <Text style={styles.subTitle} >{'朝阳望京科技园附近'}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'天气:'}</Text>
-                                    <Text style={styles.subTitle} >{'晴'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'温度:'}</Text>
-                                    <Text style={styles.subTitle} >{'24℃'}</Text>
+                        </View>
+                        <View style={homeStyle.staticView_}>
+                            <Image style={homeStyle.static_image} source={Images.home_illegal} />
+                            <View style={homeStyle.static_titleView}>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('dashboard.day_illegal_drive')}</Text>
+                                <View style={homeStyle.static_subView}>
+                                    <Text style={homeStyle.static_title}>{statistics.illegal}</Text>
+                                    <Text style={homeStyle.static_sunTitle}>{I18n.t('common.times')}</Text>
                                 </View>
                             </View>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'里程表:'}</Text>
-                                    <Text style={styles.subTitle} >{'362千米'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'环境温度:'}</Text>
-                                    <Text style={styles.subTitle} >{'24℃'}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'邮箱余量:'}</Text>
-                                    <Text style={styles.subTitle} >{'45%'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'当前速度:'}</Text>
-                                    <Text style={styles.subTitle} >{'76千米/小时'}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'电池电压:'}</Text>
-                                    <Text style={styles.subTitle} >{'48V'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'发动机RPM:'}</Text>
-                                    <Text style={styles.subTitle} >{'1200转/分钟'}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.horizontal}>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'刹车状态:'}</Text>
-                                    <Text style={styles.subTitle} >{'关'}</Text>
-                                </View>
-                                <View style={[styles.horizontal, styles.frame]} >
-                                    <Text style={styles.title} >{'制动液位:'}</Text>
-                                    <Text style={styles.subTitle} >{'34%'}</Text>
-                                </View>
-                            </View>
-                        </ScrollView>
-                    </View>
-                    <View tabLabel='车辆事件' style={styles.container}>
-                        <View style={styles.container}>
-                            <FlatList
-                                refreshing={false}
-                                ItemSeparatorComponent={this._separator}
-                                renderItem={this._renderItem}
-                                data={this.props.data}
-                                keyExtractor={(item, index) => item._id}
-                                refreshControl={
-                                    <RefreshControl
-                                        refreshing={false}
-                                        onRefresh={() => this.refresh()}
-                                        colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
-                                        progressBackgroundColor="#ffffff"
-                                    />
-                                }
-                            />
                         </View>
                     </View>
-                </ScrollableTabView>
-
-                {
-                    this.props.isLoading ? <LoadingView /> : <View />
-                }
+                    <View style={styles.bodyItemView}>
+                        <View style={styles.addressView}>
+                            <View style={styles.row_left}>
+                                <Image source={Images.other_location} style={styles.markImage} />
+                                <View style={{ flex: 1, marginRight: 5 }}>
+                                    <Text numberOfLines={1} style={styles.message}>{'朝阳区望江科技附近朝阳区望江科技附近朝阳区望江科技附近朝阳区望江科技附近'}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row_right}>
+                                <Text style={styles.weatherValue}>{'24°'}</Text>
+                                <Image source={Images.weather_fine} style={styles.weatherImage} />
+                            </View>
+                        </View>
+                        <View style={{ flex: 1, margin: 3 }}>
+                            <Text style={styles.message}>{'行驶中，正常，司机张三'}</Text>
+                        </View>
+                        {
+                            this.getEventItem(this.props.event)
+                        }
+                        <MapView
+                            trafficEnabled={this.state.trafficEnabled}
+                            baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
+                            zoom={this.state.zoom}
+                            mapType={this.state.mapType}
+                            center={this.state.center}
+                            marker={this.state.marker}
+                            style={styles.mapView}
+                            onMapClick={(e) => {
+                            }}
+                        />
+                        <View style={styles.detailView}>
+                            <View style={styles.detailItemView}>
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.odometer') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                                <View style={styles.line_vertical} />
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('detail.environment_temperature') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.line_horizontal} />
+                            <View style={styles.detailItemView}>
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.fuel_residue') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                                <View style={styles.line_vertical} />
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.current_speed') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.line_horizontal} />
+                            <View style={styles.detailItemView}>
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.engine_RPM') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                                <View style={styles.line_vertical} />
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.voltage') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.line_horizontal} />
+                            <View style={styles.detailItemView}>
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.brake_state') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                                <View style={styles.line_vertical} />
+                                <View style={styles.detailItem}>
+                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.brake_fluid_level') + '：'}</Text>
+                                    <Text style={styles.message}>{'9666km'}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.bodyItemView}>
+                    </View>
+                </ScrollView>
             </View>
         );
     }
@@ -272,7 +257,8 @@ class SiteDetail extends Component {
 function mapStateToProps(state) {
     return {
         isLoading: state.siteDetail.isLoading,
-        data: state.siteDetail.data,
+        statistics: state.siteDetail.statistics,
+        event: state.siteDetail.event,
         markers: state.siteDetail.markers,
         center: state.siteDetail.center,
     }

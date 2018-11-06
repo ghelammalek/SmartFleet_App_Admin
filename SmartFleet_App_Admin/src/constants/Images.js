@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-31 12:09:23
+ * @Last Modified time: 2018-11-06 14:24:52
  */
 
 export default {
@@ -30,6 +30,12 @@ export default {
     home_illegal: require('../assets/images/home/illegal.png'),
     home_workPerson: require('../assets/images/home/workPerson.png'),
 
+    weather_wind: require('../assets/images/weather/wind.png'),
+    weather_snow: require('../assets/images/weather/snow.png'),
+    weather_rain: require('../assets/images/weather/rain.png'),
+    weather_fine: require('../assets/images/weather/fine.png'),
+    weather_cloudy_fine: require('../assets/images/weather/cloudy_fine.png'),
+
     other_right: require('../assets/images/other/right.png'),
     ico_refresh: require('../assets/images/other/ico_refresh.png'),
     other_more: require('../assets/images/other/more.png'),
@@ -45,6 +51,7 @@ export default {
     other_search: require('../assets/images/other/search.png'),
     other_sift: require('../assets/images/other/sift.png'),
     other_sift_select: require('../assets/images/other/sift_select.png'),
+    other_location: require('../assets/images/other/location.png'),
 
 
     setting_owner: require('../assets/images/setting/owner.png'),

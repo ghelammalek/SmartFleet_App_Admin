@@ -8,12 +8,12 @@ import md5 from '../utils/md5';
 
 
 const HEADER_FORM = {
-    'Accept': 'application/json',
+    'Accept': 'application/json;charset=utf-8',
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
 };
 
 const HEADER_JSON = {
-    'Accept': 'application/json',
+    'Accept': 'application/json;charset=utf-8',
     'Content-Type': 'application/json;charset=utf-8'
 };
 
@@ -75,8 +75,12 @@ exports.getAccessToken = function (username, password) {
  *  * @param {*} queryType
  * @returns
  */
-exports.getStatistics = function (queryType) {
-    const url = '/api/statistics/vehicle/accumulation?queryType=' + queryType;
+exports.getStatistics = function (queryType, plateNo) {
+
+    let url = '/api/statistics/vehicle/accumulation?queryType=' + queryType;
+    if (plateNo) {
+        url = url + '&plateNo=' + encodeURIComponent(plateNo);
+    }
     return request.get(url, null, true, HEADER_JSON);
 }
 

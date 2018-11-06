@@ -9,6 +9,40 @@ import VersionNumber from 'react-native-version-number';
 
 
 
+exports.changeNum = function changeNum(num) {
+    let value = '';
+    if (num / 10000 < 1) {
+        value = num;
+    } else {
+        value = (num / 10000).toFixed(2);
+    }
+    return value;
+}
+/**
+ *   获取统计数据
+ *
+ * @param {*} params
+ * @returns
+ */
+exports.getStatistics = function getStatistics(params) {
+    const statistics = {
+        id: params.id == undefined ? '--' : params.id,
+        distance: params.distance == undefined ? '--' : params.distance,
+        duration: params.duration == undefined ? '--' : params.duration,
+        fuelConsumption: params.fuelConsumption == undefined ? '--' : params.fuelConsumption,
+        illegal: params.illegal == undefined ? '--' : params.illegal,
+        accident: params.accident == undefined ? '--' : params.accident,
+        createTime: params.createTime == undefined ? '--' : params.createTime,
+        queryType: params.queryType == undefined ? '--' : params.queryType,
+        cars: params.cars == undefined ? '--' : params.cars,
+        workPerson: params.workPerson == undefined ? '--' : params.workPerson,
+        working: params.working == undefined ? '--' : params.working,
+        plateNo: params.plateNo == undefined ? '--' : params.plateNo,
+        maintainCount: params.maintainCount == undefined ? '--' : params.maintainCount,
+    }
+    return statistics;
+}
+
 /**
  *   获取告警级别label
  *
