@@ -10,13 +10,20 @@ export default {
     state: {
         statistics: {},
         event: [],
+        siteData: {
+            metrics: {
+                iot_data: {},
+                location_data: {}
+            }
+        },
+        siteDetail: {},
         isLoading: false,
         marker: {
 
         },
         center: {
-            longitude: 113.981718,
-            latitude: 22.542449
+            longitude: 116.981718,
+            latitude: 39.542449
         },
     },
     reducers: {
@@ -45,6 +52,33 @@ export default {
                     type: 'updateState',
                     payload: {
                         event: data.result,
+                        isLoading: false,
+                    }
+                });
+            }
+        },
+        *getSiteDetail({ payload }, { call, put, select }) {
+            const data = yield call(api.getSiteDetail, payload);
+            if (data.error) {
+            } else {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        siteDetail: data.result,
+                        isLoading: false,
+                    }
+                });
+            }
+        },
+        *getSiteData({ payload }, { call, put, select }) {
+            const data = yield call(api.getSiteData, payload);
+            if (data.error || data.result == undefined) {
+                // alert('sdf');
+            } else {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        siteData: data.result,
                         isLoading: false,
                     }
                 });

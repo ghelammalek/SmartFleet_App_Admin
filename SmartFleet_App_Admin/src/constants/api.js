@@ -91,9 +91,34 @@ exports.getStatistics = function (queryType, plateNo) {
  * @returns
  */
 exports.getSites = function () {
-    const url = '/api/general/sites?cursor=0&limit=100000000';
+    const url = '/api/general/sites?cursor=0&limit=100000000&mapType=' + config.mapType;
     return request.get(url, null, true, HEADER_JSON);
 }
+
+
+/**
+ *    获取车辆的详情
+ *
+ * @param {*} params
+ * @returns
+ */
+exports.getSiteDetail = function getSiteDetail(params) {
+    const url = '/api/v2/sites/' + encodeURIComponent(params.plateNo) + '?mapType=' + config.mapType;
+    return request.get(url, null, true, HEADER_JSON);
+}
+
+
+/**
+ *    获取车辆的实时数据
+ *
+ * @param {*} params
+ * @returns
+ */
+exports.getSiteData = function getSiteData(params) {
+    const url = '/api/iot/modules/' + params.mid + '/sense';
+    return request.get(url, null, true, HEADER_JSON);
+}
+
 
 /**
  *   获取车辆的事件列表
@@ -103,7 +128,7 @@ exports.getSites = function () {
  */
 exports.getAlerts = function (params) {
     const url = '/api/alerts?cursor=' + params.cursor +
-        '&limit=' + params.limit;
+        '&limit=' + params.limit + '&mapType=' + config.mapType;
     return request.post(url, params.body, true, HEADER_JSON);
 }
 

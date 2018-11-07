@@ -1,5 +1,6 @@
 var config = {
     type: 'release',
+    mapType: 3,
     serverIP: 'http://cd.inhandcloud.com:20080',
     client_id: '17953450251798098136',
     client_secret: '08E9EC6793345759456CB8BAE52615F3',

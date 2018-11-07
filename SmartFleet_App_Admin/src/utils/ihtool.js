@@ -11,12 +11,20 @@ import VersionNumber from 'react-native-version-number';
 
 exports.changeNum = function changeNum(num) {
     let value = '';
-    if (num / 10000 < 1) {
-        value = num;
+    if (num < 10000) {
+        value = num.toFixed(2);
     } else {
-        value = (num / 10000).toFixed(2);
+        value = (num / 1000).toFixed(2) + 'k';
     }
     return value;
+}
+
+exports.placeholderStr = function placeholderStr(str) {
+    if (isEmpty(str)) {
+        return '--';
+    } else {
+        return str;
+    }
 }
 /**
  *   获取统计数据

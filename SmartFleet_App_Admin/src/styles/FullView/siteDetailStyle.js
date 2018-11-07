@@ -55,6 +55,7 @@ export default siteDetailStyle = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        alignItems: 'center',
         // backgroundColor: 'red'
     },
     row_right: {
@@ -67,12 +68,13 @@ export default siteDetailStyle = StyleSheet.create({
         height: 14,
         resizeMode: 'contain',
         marginRight: 3,
+        // backgroundColor: 'blue'
     },
     message: {
         flex: 1,
         fontSize: 14,
         color: '#2d2d2d',
-        // lineHeight: 16,
+        lineHeight: 16,
     },
     weatherImage: {
         width: 21,
