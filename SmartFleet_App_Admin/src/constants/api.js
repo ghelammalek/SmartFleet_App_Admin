@@ -121,6 +121,18 @@ exports.getSiteData = function getSiteData(params) {
 
 
 /**
+ *    获取车辆的趋势数据
+ *
+ * @param {*} params
+ * @returns
+ */
+exports.getSiteTrend = function getSiteTrend(params) {
+    const url = '';
+    return request.get(url, null, true, HEADER_JSON);
+}
+
+
+/**
  *   获取车辆的事件列表
  *
  * @param {*} 

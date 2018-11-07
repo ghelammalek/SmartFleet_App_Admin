@@ -93,6 +93,7 @@ class SiteDetail extends Component {
                 }
             },
             siteDetail: {},
+            speedData: [],
             isLoading: false,
             marker: marker,
             center: center,
@@ -151,7 +152,7 @@ class SiteDetail extends Component {
             serieses.push({
                 type: 'area',
                 name: name,
-                data: [[1541561406000, 22222222222222], [1541561407000, 12], [1541561408000, 11], [1541561409000, 4], [1541561410000, 12]],
+                data: [[1541561406000, 43], [1541561407000, 34], [1541561408000, 43], [1541561409000, 33], [1541561410000, 55]],
                 lineWidth: 1,
             });
         } else {
@@ -357,6 +358,7 @@ function mapStateToProps(state) {
         event: state.siteDetail.event,
         siteDetail: state.siteDetail.siteDetail,
         siteData: state.siteDetail.siteData,
+        speedData: state.siteData.speedData,
         marker: state.siteDetail.marker,
         center: state.siteDetail.center,
     }

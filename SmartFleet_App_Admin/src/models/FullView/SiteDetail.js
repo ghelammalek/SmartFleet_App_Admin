@@ -17,6 +17,7 @@ export default {
             }
         },
         siteDetail: {},
+        speedData: [],
         isLoading: false,
         marker: {
 
@@ -79,6 +80,20 @@ export default {
                     type: 'updateState',
                     payload: {
                         siteData: data.result,
+                        isLoading: false,
+                    }
+                });
+            }
+        },
+        *getSiteTrend({ payload }, { call, put, select }) {
+            const data = yield call(api.getSiteTrend, payload);
+            if (data.error || data.result == undefined) {
+                // alert('sdf');
+            } else {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        speedData: data.result,
                         isLoading: false,
                     }
                 });
