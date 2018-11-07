@@ -107,10 +107,16 @@ class SiteDetail extends Component {
 
     }
     navAction() {
-        alert('sfsdf');
+        // alert('sfsdf');
     }
     pushEventDetail(item) {
-        this.props.navigation.navigate('EventDetail', { item: item });
+        // this.props.navigation.navigate('EventDetail', { item: item, callback: (backdata) => { } });
+        this.props.navigation.navigate('EventDetail', {
+            item: item,
+            callback: (backdata) => {
+                this.props.dispatch(createAction('events/updateState')({ event: [backdata] }));
+            }
+        });
     }
     pushCarInfoView() {
 

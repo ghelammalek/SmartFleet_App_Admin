@@ -66,7 +66,7 @@ class Home extends Component {
         }));
     }
 
-    goEventDetail(item, index) {
+    pushEventDetail(item, index) {
         this.setState({ selectIndex: index });
         this.props.navigation.navigate('EventDetail', {
             item: item,
@@ -136,7 +136,7 @@ class Home extends Component {
     getItems(items) {
         if (items && items.length > 0) {
             return items.map((item, index) =>
-                <TouchableOpacity disabled={this.props.isLoading} key={index} activeOpacity={0.6} onPress={() => this.goEventDetail(item, index)} >
+                <TouchableOpacity disabled={this.props.isLoading} key={index} activeOpacity={0.6} onPress={() => this.pushEventDetail(item, index)} >
                     <View style={homeStyle.itemView}>
                         <View style={homeStyle.itemTopView}>
                             <View style={homeStyle.itemTopLeft}>

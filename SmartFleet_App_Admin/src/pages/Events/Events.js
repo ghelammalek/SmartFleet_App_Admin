@@ -148,7 +148,7 @@ class Events extends Component {
             });
         }
     }
-    goEventDetail(item) {
+    pushEventDetail(item) {
         this.setState({ selectIndex: item.index });
         this.props.navigation.navigate('EventDetail', {
             item: item.item,
@@ -172,7 +172,7 @@ class Events extends Component {
 
     _renderItem = (item) => {
         return (
-            <TouchableOpacity disabled={this.props.isLoad} key={item.index} activeOpacity={0.6} onPress={() => this.goEventDetail(item)} >
+            <TouchableOpacity disabled={this.props.isLoad} key={item.index} activeOpacity={0.6} onPress={() => this.pushEventDetail(item)} >
                 <View style={homeStyle.itemView}>
                     <View style={homeStyle.itemTopView}>
                         <View style={homeStyle.itemTopLeft}>
