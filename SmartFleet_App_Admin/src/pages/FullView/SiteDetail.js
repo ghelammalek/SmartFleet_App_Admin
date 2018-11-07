@@ -30,7 +30,10 @@ import setting from '../../utils/setting';
 import ihtool from '../../utils/ihtool';
 import styles from '../../styles/FullView/siteDetailStyle';
 import homeStyle from '../../styles/Home/homeStyle';
+import ChartView from '../../widget/react-native-highcharts';
 
+const names = [I18n.t('detail.speed'), I18n.t('detail.voltage'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
+const units = ['km/h', 'v', '℃', ''];
 class SiteDetail extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: I18n.t('car_detail'),
@@ -48,6 +51,7 @@ class SiteDetail extends Component {
             trafficEnabled: false,
             baiduHeatMapEnabled: false,
             address: '',
+            btnSelect: 1,
         };
     }
     componentDidMount() {
@@ -56,7 +60,7 @@ class SiteDetail extends Component {
         this.getAllData();
     }
     getAddress(latitude, longitude) {
-        Geolocation.reverseGeoCodeGPS(latitude, longitude)
+        Geolocation.reverseGeoCode(latitude, longitude)
             .then(data => {
                 this.setState({ address: data.address });
             })
@@ -139,7 +143,29 @@ class SiteDetail extends Component {
             return <View />;
         }
     }
+    getSeries() {
+        var serieses = [];
+        const name = names[this.state.btnSelect - 1];
+        const unit = units[this.state.btnSelect - 1];
+        if (this.state.btnSelect == 1) {
+            serieses.push({
+                type: 'area',
+                name: name,
+                data: [[1541561406000, 22222222222222], [1541561407000, 12], [1541561408000, 11], [1541561409000, 4], [1541561410000, 12]],
+                lineWidth: 1,
+            });
+        } else {
+            serieses.push({
+                type: 'area',
+                name: name,
+                data: [],
+                lineWidth: 1,
+            });
+        }
+        return ihtool.getConf(serieses, unit);
+    }
     render() {
+        const conf = this.getSeries();
         const statistics = ihtool.getStatistics(this.props.statistics);
         const { siteData } = this.props;
         const { metrics } = siteData;
@@ -282,10 +308,46 @@ class SiteDetail extends Component {
                         </View>
                     </View>
                     <View style={styles.bodyItemView}>
+                        <View style={styles.trendTitleView}>
+                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(1)}>
+                                <View style={this.state.btnSelect == 1 ? styles.btn : styles.btn_}>
+                                    <Text style={this.state.btnSelect == 1 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.speed')}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(2)}>
+                                <View style={this.state.btnSelect == 2 ? styles.btn : styles.btn_}>
+                                    <Text style={this.state.btnSelect == 2 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.voltage')}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(3)}>
+                                <View style={this.state.btnSelect == 3 ? styles.btn : styles.btn_}>
+                                    <Text style={this.state.btnSelect == 3 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.temperature')}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(4)}>
+                                <View style={this.state.btnSelect == 4 ? styles.btn : styles.btn_}>
+                                    <Text style={this.state.btnSelect == 4 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.braking_sign')}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.moreView} activeOpacity={0.6} onPress={() => this.more()}>
+                                <Text style={styles.more}>{I18n.t('common.more')}</Text>
+                                <Image style={styles.moreBtn} source={Images.other_right} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.line} />
+                        <View style={styles.chartView} >
+                            <ChartView style={{ flex: 1 }} config={conf} stock={true}></ChartView>
+                        </View>
                     </View>
                 </ScrollView>
             </View>
         );
+    }
+    more() {
+
+    }
+    btnAction(value) {
+        this.setState({ btnSelect: value });
     }
 }
 function mapStateToProps(state) {

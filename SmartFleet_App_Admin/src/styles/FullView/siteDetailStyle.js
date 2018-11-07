@@ -153,7 +153,72 @@ export default siteDetailStyle = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: '#2d2d2d',
-    }
+    },
 
+    chartView: {
+        flex: 1,
+        height: 178,
+        marginTop: 12,
+    },
 
+    trendTitleView: {
+        flex: 1,
+        flexDirection: 'row',
+        height: 40,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        // backgroundColor: 'green'
+    },
+    btnView: {
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        height: 40,
+        marginRight: 5,
+        // backgroundColor: 'red'
+    },
+    btn: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: '#24ba8e',
+        borderBottomWidth: 2,
+        height: 40,
+        paddingBottom: 5,
+    },
+    btn_: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 40,
+        paddingBottom: 5,
+    },
+    btnTitle: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#24ba8e',
+    },
+    btnTitle_: {
+        fontSize: 12,
+        color: '#2d2d2d',
+    },
+    line: {
+        width: Dimensions.get('window').width,
+        height: 1,
+        backgroundColor: '#f3f3f3',
+        marginLeft: -12,
+    },
+    moreView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        height: 40,
+        paddingBottom: 5,
+    },
+    more: {
+        fontSize: 12,
+        color: '#9797a3',
+    },
+    moreBtn: {
+        width: 14,
+        height: 16,
+        resizeMode: 'contain',
+    },
 });

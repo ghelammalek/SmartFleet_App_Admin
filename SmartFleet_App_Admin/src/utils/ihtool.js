@@ -349,3 +349,101 @@ exports.getVersion = function getVersion(currentVersion, newVersion) {
         }
     }
 }
+
+
+
+exports.getConf = function getConf(series, name) {
+    var conf = {
+        chart: {
+            backgroundColor: '#fff',
+            zoomType: 'x',
+        },
+        // colors: [
+        //     '#dbd31f', '#1cc593', '#d02424', '#1398dd', '#3b68c9', '#561fca', '#b633c3', '#5ab34e', '#eb8951', '#1eb9c9'
+        // ],
+        boost: {
+            useGPUTranslations: true
+        },
+        exporting: {
+            enabled: false,
+        },
+        rangeSelector: {
+            enabled: false,
+        },
+        credits: {
+            enabled: false,
+        },
+        tooltip: {
+            shared: true,
+            valueDecimals: 4,
+            backgroundColor: 'rgba(151,151,163,0.9)',
+            borderWidth: 0,
+            borderRadius: 3,
+            shadow: false,
+            style: {                      // 文字内容相关样式
+                color: "#fff",
+                fontSize: "12px",
+                fontWeight: "blod",
+            },
+            formatter: function () {
+                var num = (parseFloat(this.x) / 1000).toFixed(3);
+                var str = num.toString().split('.');
+
+                var s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', (parseFloat(this.x) + 3600000 * 8)) + '</b>';
+                $.each(this.points, function () {
+                    s += '<br/>' + this.series.name + ': ' + parseFloat(this.y).toFixed(2);
+                });
+
+                return s;
+            }
+        },
+        scrollbar: {
+            enabled: false,
+            height: 0,
+        },
+        navigator: {
+            enabled: false,
+            height: 0,
+            xAxis: {
+                dateTimeLabelFormats: {
+                    millisecond: ' ',
+                    second: ' ',
+                    minute: ' ',
+                    hour: ' ',
+                    day: ' ',
+                    week: ' ',
+                    month: ' ',
+                    year: ' '
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                text: name,
+                x: -16,
+            },
+            labels: {
+                align: 'left',
+                x: -20,
+            },
+            lineWidth: 1,
+            gridLineWidth: 0,
+            opposite: false,
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                millisecond: '%M:%S',
+                second: '%M:%S',
+                minute: '%H:%M:%S',
+                hour: '%H:%M',
+                day: '%m-%d',
+                week: '%m-%d',
+                month: '%Y-%m',
+                year: '%Y'
+            }
+        },
+        series: series,
+    };
+    return conf;
+}
