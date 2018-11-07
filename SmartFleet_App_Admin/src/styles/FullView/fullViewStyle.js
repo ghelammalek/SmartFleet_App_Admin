@@ -18,7 +18,7 @@ export default fullViewStyle = StyleSheet.create({
     },
     tabbar: {
         width: Dimensions.get('window').width,
-        height: 30,
+        height: 50,
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#fff',

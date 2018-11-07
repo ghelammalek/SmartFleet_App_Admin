@@ -16,7 +16,7 @@ export default siteDetailStyle = StyleSheet.create({
     },
     topItemView: {
         // flex: 1,
-        height: 40,
+        height: 50,
         backgroundColor: '#fff',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -89,7 +89,7 @@ export default siteDetailStyle = StyleSheet.create({
     },
     eventItemView: {
         flex: 1,
-        height: 40,
+        height: 50,
         borderWidth: 1,
         borderColor: '#f3f3f3',
         borderRadius: 5,

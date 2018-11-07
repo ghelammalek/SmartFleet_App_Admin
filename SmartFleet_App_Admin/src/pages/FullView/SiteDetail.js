@@ -104,9 +104,9 @@ class SiteDetail extends Component {
             limit: 1,
             body: {
                 end: moment().add(1, 'days').utc().format(),
-                labels: {
-                    site_name: this.state.title,
-                }
+                // labels: {
+                site_name: this.state.title,
+                // }
             }
         }));
         this.props.dispatch(createAction('siteDetail/getSiteDetail')({ plateNo: this.state.title }));

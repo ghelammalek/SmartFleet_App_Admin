@@ -126,6 +126,7 @@ class FullView extends Component {
                     style={styles.tabbar}
                     renderTabBar={() =>
                         <TabBarTop
+                            style={{ height: 50 }}
                             tabNames={this.state.tabNames}
                             tabImages={this.state.tabImages}
                             tabSelectImages={this.state.tabSelectImages}
