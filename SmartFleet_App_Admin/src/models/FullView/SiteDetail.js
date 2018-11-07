@@ -76,10 +76,26 @@ export default {
             if (data.error || data.result == undefined) {
                 // alert('sdf');
             } else {
+                let siteData = {
+                    metrics: {
+                        iot_data: {},
+                        location_data: {}
+                    }
+                }
+                if (data.result) {
+                    if (data.result.metrics) {
+                        if (data.result.metrics.iot_data) {
+                            siteData.metrics.iot_data = data.result.metrics.iot_data;
+                        }
+                        if (data.result.metrics.location_data) {
+                            siteData.metrics.location_data = data.result.metrics.location_data;
+                        }
+                    }
+                }
                 yield put({
                     type: 'updateState',
                     payload: {
-                        siteData: data.result,
+                        siteData: siteData,
                         isLoading: false,
                     }
                 });

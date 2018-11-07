@@ -139,7 +139,7 @@ exports.getSiteTrend = function getSiteTrend(params) {
  * @returns
  */
 exports.getAlerts = function (params) {
-    const url = '/api/alerts?cursor=' + params.cursor +
+    const url = '/api/sites/alerts?cursor=' + params.cursor +
         '&limit=' + params.limit + '&mapType=' + config.mapType;
     return request.post(url, params.body, true, HEADER_JSON);
 }

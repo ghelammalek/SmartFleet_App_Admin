@@ -250,6 +250,7 @@ class Home extends Component {
                                 <Text style={this.state.eventType == 3 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_alarm')}</Text>
                             </TouchableOpacity>
                         </View>
+                        <View style={homeStyle.line} />
                         {
                             this.getItems(this.props.events)
                         }

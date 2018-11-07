@@ -125,24 +125,24 @@ class EventDetail extends Component {
                     </View>
                     <View style={homeStyle.itemBodyView}>
                         <View style={homeStyle.itemTextView}>
-                            <Text style={homeStyle.itemText} >{I18n.t('event_type') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{ihtool.getEventType(item)}</Text>
+                            <Text style={styles.itemText} >{I18n.t('event_type') + '：'}</Text>
+                            <Text style={styles.itemText} >{ihtool.getEventType(item)}</Text>
                         </View>
                         <View style={homeStyle.itemTextView}>
-                            <Text style={homeStyle.itemText} >{I18n.t('event_level') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{ihtool.getEventLevelLabel(item.level)}</Text>
+                            <Text style={styles.itemText} >{I18n.t('event_level') + '：'}</Text>
+                            <Text style={styles.itemText} >{ihtool.getEventLevelLabel(item.level)}</Text>
                             <Image style={homeStyle.itemLevelImage} source={ihtool.getEventLevelImage(item.level)} />
                         </View>
                         {
                             item.confirmState ?
                                 <View style={homeStyle.itemTextView}>
-                                    <Text style={homeStyle.itemText} >{I18n.t('notice.confirm_time') + '：'}</Text>
-                                    <Text style={homeStyle.itemText} >{moment(item.confirmedAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
+                                    <Text style={styles.itemText} >{I18n.t('notice.confirm_time') + '：'}</Text>
+                                    <Text style={styles.itemText} >{moment(item.confirmedAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
                                 </View> : null
                         }
                         <View style={homeStyle.itemTextView}>
-                            <Text style={homeStyle.itemText} >{I18n.t('event_desc') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{ihtool.getEventDesc(item)}</Text>
+                            <Text style={styles.itemText} >{I18n.t('event_desc') + '：'}</Text>
+                            <Text style={styles.itemText} >{ihtool.getEventDesc(item)}</Text>
                         </View>
                     </View>
                     {

@@ -104,7 +104,9 @@ class SiteDetail extends Component {
             limit: 1,
             body: {
                 end: moment().add(1, 'days').utc().format(),
-                moduleName: this.state.title,
+                labels: {
+                    site_name: this.state.title,
+                }
             }
         }));
         this.props.dispatch(createAction('siteDetail/getSiteDetail')({ plateNo: this.state.title }));
@@ -112,7 +114,7 @@ class SiteDetail extends Component {
 
     }
     navAction() {
-        // alert('sfsdf');
+        alert(moment('2018-10-10T00:00:00Z').unix());
     }
     pushEventDetail(item) {
         // this.props.navigation.navigate('EventDetail', { item: item, callback: (backdata) => { } });
@@ -358,7 +360,7 @@ function mapStateToProps(state) {
         event: state.siteDetail.event,
         siteDetail: state.siteDetail.siteDetail,
         siteData: state.siteDetail.siteData,
-        speedData: state.siteData.speedData,
+        speedData: state.siteDetail.speedData,
         marker: state.siteDetail.marker,
         center: state.siteDetail.center,
     }

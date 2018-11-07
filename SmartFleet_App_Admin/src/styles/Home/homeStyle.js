@@ -89,18 +89,20 @@ export default homeStyle = StyleSheet.create({
         marginRight: 25,
         justifyContent: 'center',
         alignItems: 'center',
+        // backgroundColor: 'red',
     },
     btnView_: {
-        height: 30,
+        height: 40,
         marginRight: 25,
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomColor: '#24ba8e',
         borderBottomWidth: 2,
+        // backgroundColor: 'red',
     },
     btnTitle: {
         fontSize: 12,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: '#2d2d2d',
     },
     btnTitle_: {
@@ -118,7 +120,7 @@ export default homeStyle = StyleSheet.create({
         borderColor: '#f3f3f3',
         borderWidth: 1,
         borderRadius: 3,
-        marginVertical: 5,
+        marginTop: 10,
     },
     itemTopView: {
         height: 40,
@@ -207,4 +209,11 @@ export default homeStyle = StyleSheet.create({
         borderTopColor: '#f3f3f3',
         borderTopWidth: 1,
     },
+    line: {
+        width: Dimensions.get('window').width,
+        height: 1,
+        backgroundColor: '#f3f3f3',
+        marginLeft: -12,
+        // marginBottom: 6,
+    }
 });

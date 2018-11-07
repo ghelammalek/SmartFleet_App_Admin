@@ -39,6 +39,10 @@ export default eventDetailStyle = StyleSheet.create({
         marginVertical: 10,
         // top: 10,
     },
+    itemText: {
+        fontSize: 14,
+        color: '#2d2d2d',
+    },
     clearBtnView: {
         width: Dimensions.get('window').width - 40,
         height: 40,
