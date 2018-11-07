@@ -123,7 +123,7 @@ export default homeStyle = StyleSheet.create({
         marginTop: 10,
     },
     itemTopView: {
-        height: 40,
+        height: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
