@@ -150,14 +150,14 @@ class SiteDetail extends Component {
         const unit = units[this.state.btnSelect - 1];
         if (this.state.btnSelect == 1) {
             serieses.push({
-                type: 'area',
+                type: 'areaspline',
                 name: name,
                 data: [[1541561406000, 43], [1541561407000, 34], [1541561408000, 43], [1541561409000, 33], [1541561410000, 55]],
                 lineWidth: 1,
             });
         } else {
             serieses.push({
-                type: 'area',
+                type: 'areaspline',
                 name: name,
                 data: [],
                 lineWidth: 1,
