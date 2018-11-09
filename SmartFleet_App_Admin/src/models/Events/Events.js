@@ -28,7 +28,6 @@ export default {
         * getAlerts({ payload }, { call, put, select }) {
             const data = yield call(api.getAlerts, payload);
             if (data.error) {
-                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 yield put({
                     type: 'updateState',
                     payload: {
@@ -36,6 +35,7 @@ export default {
                         isLoad: false,
                     }
                 });
+                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
             } else {
                 yield put({
                     type: 'updateState',
@@ -52,7 +52,6 @@ export default {
             var events = yield select(state => state.events.data);
             const data = yield call(api.getAlerts, payload);
             if (data.error) {
-                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 yield put({
                     type: 'updateState',
                     payload: {
@@ -60,6 +59,7 @@ export default {
                         isLoad: false,
                     }
                 });
+                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
             } else {
                 events = events.concat(data.result);
                 if (data.result.length > 0) {

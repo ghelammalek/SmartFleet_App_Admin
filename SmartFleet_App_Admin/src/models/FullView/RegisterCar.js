@@ -22,6 +22,10 @@ export default {
                 isLoading: true,
             })
             const data = yield call(api.register, payload);
+            yield put({
+                type: 'updateState',
+                isLoading: false,
+            })
             if (data.error) {
                 if (data.result) {
                     Alert.alert('', I18n.t('register_car_exist'), [{ text: I18n.t('okText'), onPress: () => { } },]);
@@ -36,10 +40,6 @@ export default {
                     }
                 },]);
             }
-            yield put({
-                type: 'updateState',
-                isLoading: false,
-            })
         },
     },
 }

@@ -29,13 +29,13 @@ export default {
             var markers = [];
             const data = yield call(api.getSites);
             if (data.error) {
-                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 yield put({
                     type: 'updateState',
                     payload: {
                         isLoading: false,
                     }
                 });
+                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
             } else {
                 var maxLng = 116.4136103013;
                 var minLng = 116.4136103013;

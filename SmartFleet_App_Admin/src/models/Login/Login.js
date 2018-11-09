@@ -49,6 +49,12 @@ export default {
             });
             const data = yield call(api.getAccessToken, payload.username, payload.password);
             if (data.error) {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        visible: false,
+                    }
+                });
                 if (data.error_code === 20013) {
                     Alert.alert('', I18n.t('20013'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 } else if (data.error_code === 100001) {
@@ -56,12 +62,6 @@ export default {
                 } else {
                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 }
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        visible: false,
-                    }
-                });
             } else {
                 Global.cfg.access_token = data.access_token;
                 Global.cfg.refresh_token = data.refresh_token;
@@ -72,13 +72,13 @@ export default {
                 if (userInfo.error) {
                     Global.cfg.access_token = '';
                     Global.cfg.refresh_token = '';
-                    Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     yield put({
                         type: 'updateState',
                         payload: {
                             visible: false,
                         }
                     });
+                    Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 } else {
                     Global.cfg.userInfo = userInfo.result;
                     Global.cfg.setRunningConfig();
