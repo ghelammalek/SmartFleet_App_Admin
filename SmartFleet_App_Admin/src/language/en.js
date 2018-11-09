@@ -79,6 +79,7 @@ export default {
 
     add_car: '添加车辆',
     please_entry_plateNo: '请填写车牌号',
+    pleaseholder_plateNo: '请输入车牌号',
     please_entry_sn: '请填写网关序列号',
     plateNo: '车牌号',
     please_entry: '请填写',

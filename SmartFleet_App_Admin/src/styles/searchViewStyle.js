@@ -1,79 +1,49 @@
-import { StyleSheet } from "react-native";
-import Dime from '../../constants/dimission';
-import { Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
 export default selectCompanyStyle = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
+        height: 40,
         backgroundColor: 'white',
-    },
-    searchView: {
+        justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
-        height: 80,
-        paddingLeft: 20,
+        borderBottomColor: '#f3f3f3',
+        borderBottomWidth: 1,
+        paddingHorizontal: 12,
     },
     image: {
-        width: 20,
-        height: 16,
-        margin: 10,
+        width: 14,
+        height: 14,
         resizeMode: 'contain',
     },
-    searchBar: {
+    textInput: {
         flex: 1,
         height: 40,
-        marginLeft: -40,
-        marginRight: 10,
-        paddingLeft: 40,
         fontSize: 14,
-        borderColor: '#979797',
-        borderWidth: 1,
-        borderRadius: 5,
+        color: '#2d2d2d',
+        marginLeft: 8,
     },
     searchBtn: {
-        fontSize: 16,
-        color: '#1c1c1d',
+        fontSize: 14,
+        color: '#2d2d2d',
         fontWeight: "bold",
     },
     searchBtnView: {
         paddingRight: 20,
         paddingLeft: 10,
-        height: 60,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    separator: {
-        backgroundColor: '#dfdfdf',
-        height: 1,
-    },
-    itemView: {
-        flex: 1,
-        paddingLeft: 20,
-        paddingRight: 20,
-        justifyContent: 'center',
-        height: 55,
-    },
-    itemText: {
+    text: {
         fontSize: 14,
-        color: '#1c1c1d',
+        color: '#2d2d2d',
+        marginLeft: 8,
     },
-    loadingBg: {
-
-        width: Dimensions.get('window').width,
-        height: Dime.window.height,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        backgroundColor: 'rgba(0,0,0,0.0)',
-    },
-    loadingView: {
-        width: 100,
-        height: 100,
-        marginBottom: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        borderRadius: 15,
-    },
+    text_: {
+        fontSize: 14,
+        color: '#adadad',
+        marginLeft: 8,
+    }
 })

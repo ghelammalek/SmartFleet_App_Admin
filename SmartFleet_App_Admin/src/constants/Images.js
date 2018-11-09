@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-11-06 14:24:52
+ * @Last Modified time: 2018-11-09 15:29:10
  */
 
 export default {
@@ -49,6 +49,7 @@ export default {
     other_map_select: require('../assets/images/other/map_select.png'),
     other_logo: require('../assets/images/other/logo.png'),
     other_search: require('../assets/images/other/search.png'),
+    other_search_light: require('../assets/images/other/search_light.png'),
     other_sift: require('../assets/images/other/sift.png'),
     other_sift_select: require('../assets/images/other/sift_select.png'),
     other_location: require('../assets/images/other/location.png'),

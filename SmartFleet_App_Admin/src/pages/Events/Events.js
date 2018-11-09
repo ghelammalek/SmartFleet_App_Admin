@@ -15,8 +15,9 @@ import {
 import DatePicker from 'react-native-datepicker';
 import { connect } from '../../routes/dva';
 import NavigationBar from '../../widget/NavigationBar';
-import LoadingView from "../../widget/LoadingView";
-import NoDataView from "../../widget/NoDataView";
+import LoadingView from '../../widget/LoadingView';
+import NoDataView from '../../widget/NoDataView';
+import SearchView from '../../widget/SearchView';
 import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
@@ -77,6 +78,9 @@ class Events extends Component {
         if (this.props.end_time !== '') {
             body.end = moment(this.props.end_time).utc().format();
         }
+        if (this.props.plateNo !== '') {
+            body.site_name = this.props.plateNo;
+        }
         this.props.dispatch(createAction('events/updateState')({ isLoading: true }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
@@ -103,7 +107,10 @@ class Events extends Component {
             }
             body.end = moment(end).utc().format();
         }
-        this.props.dispatch(createAction('events/updateState')({ isLoad: true, start_time: end }));
+        if (this.props.plateNo !== '') {
+            body.site_name = this.props.plateNo;
+        }
+        this.props.dispatch(createAction('events/updateState')({ isLoad: true, end_time: end }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
             limit: 20,
@@ -123,6 +130,9 @@ class Events extends Component {
         }
         if (this.props.end_time !== '') {
             body.end = moment(this.props.end_time).utc().format();
+        }
+        if (this.props.plateNo !== '') {
+            body.site_name = this.props.plateNo;
         }
         this.props.dispatch(createAction('events/loadMore')({
             cursor: this.props.cursor + 20,
@@ -211,6 +221,11 @@ class Events extends Component {
                 <NavigationBar title={I18n.t('tab_events')}
                     rightImage={this.state.isShow ? Images.other_sift_select : Images.other_sift}
                     rightAction={this.siftAction.bind(this)}
+                />
+                <SearchView
+                    placeholder={I18n.t('pleaseholder_plateNo')}
+                    value={this.props.plateNo}
+                    onSubmitEditing={(evt) => this.onSubmitEditing(evt.nativeEvent.text)}
                 />
                 <View style={styles.container}>
                     {
@@ -371,6 +386,45 @@ class Events extends Component {
             </View>
         );
     }
+    onSubmitEditing(text) {
+        var body = {};
+        if (this.props.eventType > 0) {
+            body.labels = { code: eventTypes[this.props.eventType] };
+        }
+        if (this.props.level > 0) {
+            body.level = this.props.level;
+        }
+        if (this.props.start_time !== '') {
+            body.begin = moment(this.props.start_time).utc().format();
+        }
+        var end = this.state.end_time;
+        if (this.state.end_time !== '') {
+            const current = moment().format('YYYY-MM-DD');
+            if (moment(moment(this.state.end_time).format('YYYY-MM-DD')).unix() == moment(current).unix()) {
+                end = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
+            }
+            body.end = moment(end).utc().format();
+        }
+        if (!isEmpty(text)) {
+            body.site_name = text;
+        }
+
+        this.setState({
+            end_time: end
+        });
+        this.props.dispatch(createAction('events/updateState')({
+            isLoading: true,
+            data: [],
+            cursor: 0,
+            plateNo: text,
+            end_time: end,
+        }));
+        this.props.dispatch(createAction('events/getAlerts')({
+            cursor: 0,
+            limit: 20,
+            body: body,
+        }));
+    }
     selectAlarmType(value) {
         this.setState({ level: value })
     }
@@ -402,7 +456,9 @@ class Events extends Component {
                 }
                 body.end = moment(end).utc().format();
             }
-
+            if (this.props.plateNo !== '') {
+                body.site_name = this.props.plateNo;
+            }
             this.setState({
                 isShow: false,
                 end_time: end
@@ -447,6 +503,7 @@ function mapStateToProps(state) {
         isLoad: state.events.isLoad,
         cursor: state.events.cursor,
         level: state.events.level,
+        plateNo: state.events.plateNo,
         eventType: state.events.eventType,
         start_time: state.events.start_time,
         end_time: state.events.end_time,

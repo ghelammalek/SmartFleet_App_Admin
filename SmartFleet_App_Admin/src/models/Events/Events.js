@@ -15,6 +15,7 @@ export default {
         cursor: 0,
         level: 0,
         eventType: 0,
+        plateNo: '',
         start_time: moment().add(-1, 'month').format('YYYY-MM-DD'),
         end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
     },
