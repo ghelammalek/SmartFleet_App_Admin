@@ -8,6 +8,7 @@ import {
     FlatList,
     ScrollView,
     Dimensions,
+    Keyboard,
     RefreshControl,
     TouchableOpacity,
 } from 'react-native';
@@ -65,9 +66,10 @@ class Events extends Component {
     //     console.log('componentWillUnmount');
     // }
     componentDidMount() {
-        var body = {};
+        let body = {};
+        let labels = {};
         if (this.props.eventType > 0) {
-            body.labels = { code: eventTypes[this.props.eventType] };
+            labels.code = eventTypes[this.props.eventType];
         }
         if (this.props.level > 0) {
             body.level = this.props.level;
@@ -79,8 +81,9 @@ class Events extends Component {
             body.end = moment(this.props.end_time).utc().format();
         }
         if (this.props.plateNo !== '') {
-            body.site_name = this.props.plateNo;
+            labels.site_name = this.props.plateNo;
         }
+        body.labels = labels;
         this.props.dispatch(createAction('events/updateState')({ isLoading: true }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
@@ -89,9 +92,10 @@ class Events extends Component {
         }));
     }
     refresh() {
-        var body = {};
+        let body = {};
+        let labels = {};
         if (this.props.eventType > 0) {
-            body.labels = { code: eventTypes[this.props.eventType] };
+            labels.code = eventTypes[this.props.eventType];
         }
         if (this.props.level > 0) {
             body.level = this.props.level;
@@ -108,8 +112,9 @@ class Events extends Component {
             body.end = moment(end).utc().format();
         }
         if (this.props.plateNo !== '') {
-            body.site_name = this.props.plateNo;
+            labels.site_name = this.props.plateNo;
         }
+        body.labels = labels;
         this.props.dispatch(createAction('events/updateState')({ isLoad: true, end_time: end }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
@@ -118,9 +123,10 @@ class Events extends Component {
         }));
     }
     loadMore() {
-        var body = {};
+        let body = {};
+        let labels = {};
         if (this.props.eventType > 0) {
-            body.labels = { code: eventTypes[this.props.eventType] };
+            labels.code = eventTypes[this.props.eventType];
         }
         if (this.props.level > 0) {
             body.level = this.props.level;
@@ -132,8 +138,9 @@ class Events extends Component {
             body.end = moment(this.props.end_time).utc().format();
         }
         if (this.props.plateNo !== '') {
-            body.site_name = this.props.plateNo;
+            labels.site_name = this.props.plateNo;
         }
+        body.labels = labels;
         this.props.dispatch(createAction('events/loadMore')({
             cursor: this.props.cursor + 20,
             limit: 20,
@@ -141,6 +148,7 @@ class Events extends Component {
         }));
     }
     siftAction() {
+        Keyboard.dismiss();
         const { eventType, level, start_time, end_time } = this.props;
         this.setState({
             eventType: eventType,
@@ -222,12 +230,12 @@ class Events extends Component {
                     rightImage={this.state.isShow ? Images.other_sift_select : Images.other_sift}
                     rightAction={this.siftAction.bind(this)}
                 />
-                <SearchView
-                    placeholder={I18n.t('pleaseholder_plateNo')}
-                    value={this.props.plateNo}
-                    onSubmitEditing={(evt) => this.onSubmitEditing(evt.nativeEvent.text)}
-                />
                 <View style={styles.container}>
+                    <SearchView
+                        placeholder={I18n.t('pleaseholder_plateNo')}
+                        value={this.props.plateNo}
+                        onSubmitEditing={(evt) => this.onSubmitEditing(evt.nativeEvent.text)}
+                    />
                     {
                         this.props.data && this.props.data.length > 0 ?
                             <View style={[styles.container, { paddingHorizontal: 10 }]}>
@@ -387,9 +395,10 @@ class Events extends Component {
         );
     }
     onSubmitEditing(text) {
-        var body = {};
+        let body = {};
+        let labels = {};
         if (this.props.eventType > 0) {
-            body.labels = { code: eventTypes[this.props.eventType] };
+            labels.code = eventTypes[this.props.eventType];
         }
         if (this.props.level > 0) {
             body.level = this.props.level;
@@ -406,9 +415,9 @@ class Events extends Component {
             body.end = moment(end).utc().format();
         }
         if (!isEmpty(text)) {
-            body.site_name = text;
+            labels.site_name = text;
         }
-
+        body.labels = labels;
         this.setState({
             end_time: end
         });
@@ -438,9 +447,10 @@ class Events extends Component {
         ) {
             Alert.alert('', I18n.t('start_must_earlier_end'), [{ text: I18n.t('okText'), onPress: () => { } },]);
         } else {
-            var body = {};
+            let body = {};
+            let labels = {};
             if (this.state.eventType > 0) {
-                body.labels = { code: eventTypes[this.state.eventType] };
+                labels.code = eventTypes[this.state.eventType];
             }
             if (this.state.level > 0) {
                 body.level = this.state.level;
@@ -457,8 +467,9 @@ class Events extends Component {
                 body.end = moment(end).utc().format();
             }
             if (this.props.plateNo !== '') {
-                body.site_name = this.props.plateNo;
+                labels.site_name = this.props.plateNo;
             }
+            body.labels = labels;
             this.setState({
                 isShow: false,
                 end_time: end

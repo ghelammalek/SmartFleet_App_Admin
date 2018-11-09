@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-11-09 15:29:10
+ * @Last Modified time: 2018-11-09 18:32:51
  */
 
 export default {
@@ -40,6 +40,7 @@ export default {
     ico_refresh: require('../assets/images/other/ico_refresh.png'),
     other_more: require('../assets/images/other/more.png'),
     other_add: require('../assets/images/other/add.png'),
+    other_add_select: require('../assets/images/other/add_select.png'),
     other_scan: require('../assets/images/other/scan.png'),
     other_default_car: require('../assets/images/other/default_car.png'),
     other_nodata: require('../assets/images/other/nodata.png'),

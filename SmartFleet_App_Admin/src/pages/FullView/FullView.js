@@ -20,6 +20,7 @@ import { connect } from '../../routes/dva';
 import NavigationBar from '../../widget/NavigationBar';
 import TabBarTop from "../../widget/TabBarTop";
 import LoadingView from "../../widget/LoadingView";
+import SearchView from '../../widget/SearchView';
 import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
@@ -66,13 +67,10 @@ class FullView extends Component {
         }
         this.props.navigation.navigate('SiteDetail', { item: item });
     }
-    searchAction() {
-
-    }
-    goSiteDetail(item) {
+    pushSiteDetailView(item) {
         this.props.navigation.navigate('SiteDetail', { item: item });
     }
-    goRegisterCar() {
+    pushRegisterCarView() {
         this.props.navigation.navigate('RegisterCar', {
             callback: () => {
                 this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
@@ -85,7 +83,7 @@ class FullView extends Component {
     }
     _renderItem = (item) => {
         return (
-            <TouchableOpacity disabled={this.props.isLoad} key={item.index} activeOpacity={0.6} onPress={() => this.goSiteDetail(item.item)} >
+            <TouchableOpacity disabled={this.props.isLoad} key={item.index} activeOpacity={0.6} onPress={() => this.pushSiteDetailView(item.item)} >
                 <View style={styles.itemView}>
                     <View style={styles.itemTopView}>
                         <View style={styles.itemTopLeft}>
@@ -114,22 +112,24 @@ class FullView extends Component {
         var center = this.state.center;
         return (
             <View style={styles.container}>
-                <NavigationBar
+                {/* <NavigationBar
                     title={I18n.t('tab_cars')}
-                    rightImage={Images.other_search}
-                    rightAction={this.searchAction.bind(this)}
-                    letfImage={Images.other_add}
-                    leftAction={this.goRegisterCar.bind(this)}
-                />
+                /> */}
                 <ScrollableTabView
                     locked={true}
                     style={styles.tabbar}
                     renderTabBar={() =>
                         <TabBarTop
-                            style={{ height: 50 }}
+                            style={{ height: Platform.OS == 'ios' ? 64 : 44 }}
                             tabNames={this.state.tabNames}
                             tabImages={this.state.tabImages}
                             tabSelectImages={this.state.tabSelectImages}
+                            customView={() =>
+                                <SearchView
+                                    placeholder={I18n.t('pleaseholder_plateNo')}
+                                    value={this.props.plateNo}
+                                    onSubmitEditing={this.onSubmitEditing.bind(this)}
+                                />}
                         />
                     }
                     tabBarUnderlineStyle={styles.lineStyle}
@@ -148,7 +148,7 @@ class FullView extends Component {
                             }}
                         />
 
-                        <TouchableOpacity disabled={this.props.isLoading} activeOpacity={0.7} onPress={() => this.refresh_()} style={styles.refreshView}>
+                        <TouchableOpacity style={styles.refreshView} disabled={this.props.isLoading} activeOpacity={0.7} onPress={() => this.refresh_()}>
                             <Image style={styles.refreshImage} source={Images.ico_refresh} />
                         </TouchableOpacity>
                     </View>
@@ -173,19 +173,68 @@ class FullView extends Component {
                         />
                     </View>
                 </ScrollableTabView>
+                <TouchableOpacity style={styles.addView} disabled={this.props.isLoading} activeOpacity={0.7} onPress={() => this.pushRegisterCarView()}>
+                    <Image style={styles.refreshImage} source={Images.other_add_select} />
+                </TouchableOpacity>
                 {
                     this.props.isLoading ? <LoadingView /> : <View />
                 }
             </View>
         );
     }
+    onSubmitEditing(evt) {
+
+        var maxLng = 116.4136103013;
+        var minLng = 116.4136103013;
+        var maxLat = 39.9110666857;
+        var minLat = 39.9110666857;
+        let markers = [];
+        let data = [];
+        for (let i = 0; i < this.props.rootData.length; i++) {
+            const site = this.props.rootData[i];
+            if (site.plateNo.indexOf(evt.nativeEvent.text) > -1) {
+                const marker = {
+                    longitude: site.location.x,
+                    latitude: site.location.y,
+                    title: site.plateNo,
+                    extenInfo: {
+                        name: '',
+                    }
+                }
+                if (marker.longitude > maxLng) maxLng = marker.longitude;
+                if (marker.longitude < minLng) minLng = marker.longitude;
+                if (marker.latitude > maxLat) maxLat = marker.latitude;
+                if (marker.latitude < minLat) minLat = marker.latitude;
+
+                markers.push(marker);
+                data.push(site);
+            }
+        }
+        var cenLng = (parseFloat(maxLng) + parseFloat(minLng)) / 2;
+        var cenLat = (parseFloat(maxLat) + parseFloat(minLat)) / 2;
+        var centerPoint = {
+            latitude: cenLat,
+            longitude: cenLng
+        }
+        this.props.dispatch({
+            type: 'fullView/updateState',
+            payload: {
+                plateNo: evt.nativeEvent.text,
+                data: data,
+                markers: markers,
+                center: centerPoint,
+            }
+        });
+    }
 }
 function mapStateToProps(state) {
     return {
         isLoading: state.fullView.isLoading,
         data: state.fullView.data,
+        rootData: state.fullView.rootData,
         markers: state.fullView.markers,
         center: state.fullView.center,
+        plateNo: state.fullView.plateNo,
     }
 }
 export default connect(mapStateToProps)(FullView);

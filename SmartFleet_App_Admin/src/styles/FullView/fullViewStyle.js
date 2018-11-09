@@ -38,6 +38,7 @@ export default fullViewStyle = StyleSheet.create({
 
 
     bodyView: {
+        flex: 1,
         backgroundColor: '#f3f3f3',
         paddingHorizontal: 10,
         // borderRadius: 3,
@@ -130,18 +131,29 @@ export default fullViewStyle = StyleSheet.create({
 
     refreshView: {
         position: 'absolute',
-        bottom: 24,
-        right: 16,
-        height: 40,
-        width: 40,
+        bottom: 90,
+        right: 20,
+        height: 50,
+        width: 50,
         backgroundColor: '#fff',
-        borderRadius: 20,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    addView: {
+        position: 'absolute',
+        bottom: 25,
+        right: 20,
+        height: 50,
+        width: 50,
+        backgroundColor: '#fff',
+        borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
     },
     refreshImage: {
-        height: 19,
-        width: 19,
+        height: 24,
+        width: 24,
         resizeMode: 'contain',
     },
 });

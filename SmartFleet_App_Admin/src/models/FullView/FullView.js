@@ -10,8 +10,10 @@ export default {
     namespace: 'fullView',
     state: {
         data: null,
+        rootData: null,
         isLoading: false,
         markers: [],
+        plateNo: '',
         center: {
             longitude: 113.981718,
             latitude: 22.542449
@@ -67,6 +69,7 @@ export default {
                     type: 'updateState',
                     payload: {
                         data: data.result,
+                        rootData: data.result,
                         markers: markers,
                         isLoading: false,
                         center: centerPoint,

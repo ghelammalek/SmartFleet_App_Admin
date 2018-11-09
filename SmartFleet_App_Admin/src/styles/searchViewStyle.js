@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 export default selectCompanyStyle = StyleSheet.create({
     container: {
         // flex: 1,
+        width: Dimensions.get('window').width,
         height: 40,
         backgroundColor: 'white',
         justifyContent: 'flex-start',
@@ -11,6 +12,7 @@ export default selectCompanyStyle = StyleSheet.create({
         borderBottomColor: '#f3f3f3',
         borderBottomWidth: 1,
         paddingHorizontal: 12,
+        // backgroundColor: 'red'
     },
     image: {
         width: 14,

@@ -47,7 +47,7 @@ class TabBarTop extends Component {
 
         console.log(tabImage);
         return (
-            <TouchableOpacity style={[styles.tabItem, { width: Dimensions.get('window').width / this.props.tabNames.length }]} onPress={() => this.props.goToPage(i)} style={styles.tab} key={i}>
+            <TouchableOpacity style={[styles.tabItem, { width: Dimensions.get('window').width / this.props.tabNames.length }]} onPress={() => this.props.goToPage(i)} key={i}>
                 <View style={[styles.tabItem, border]}>
                     {
                         tabImage == null ? <View /> : <Image source={tabImage} style={[styles.image, this.props.imageStyle]} />
@@ -63,37 +63,45 @@ class TabBarTop extends Component {
     render() {
         console.log(this.props.tabImages);
         return (
-            <View style={[styles.tabs, this.props.style]}>
-                {this.props.tabs.map((tab, i) => this.renderTabOption(tab, i))}
+            <View style={styles.container}>
+                <View style={[styles.tabs, this.props.style]}>
+                    {this.props.tabs.map((tab, i) => this.renderTabOption(tab, i))}
+                </View>
+                <View>
+                    {
+                        this.props.customView()
+                    }
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        backgroundColor: '#fff'
+    },
     tabs: {
         flexDirection: 'row',
-        height: 40,
-    },
+        alignItems: 'flex-end'
 
-    tab: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     tabItem: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        // marginBottom: -0.5,
         paddingTop: 2,
         paddingHorizontal: 5,
+        height: 40,
+        // backgroundColor: 'green'
     },
     image: {
         width: 12,
         height: 12,
-        resizeMode: 'contain',
+        // resizeMode: 'contain',
     }
 });
 

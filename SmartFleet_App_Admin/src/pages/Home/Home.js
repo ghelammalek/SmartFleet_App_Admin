@@ -103,6 +103,7 @@ class Home extends Component {
             data: [],
             cursor: 0,
             level: 0,
+            plateNo: '',
             eventType: this.state.eventType + 1,
             start_time: moment().add(-1, 'month').utc().format(),
             end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
