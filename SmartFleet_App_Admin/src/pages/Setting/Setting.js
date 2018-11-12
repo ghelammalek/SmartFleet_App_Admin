@@ -37,6 +37,7 @@ class Setting extends Component {
         this.props.dispatch(createAction('setting/getVersion')({}));
     }
     render() {
+
         return (
             <View style={styles.container}>
                 <NavigationBar title={I18n.t('tab_owner')} />
@@ -52,7 +53,7 @@ class Setting extends Component {
                                         <Image style={styles.itemLeftImage} source={Images.setting_owner} />
                                         <Text style={styles.title2} >{I18n.t('userInfo')}</Text>
                                     </View>
-                                    <Text style={styles.title3} >{}</Text>
+                                    <Text style={styles.title3} >{Global.cfg.userInfo.email}</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity opacity={0.8} onPress={() => this.notification()}>

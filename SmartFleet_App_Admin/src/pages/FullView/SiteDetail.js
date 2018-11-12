@@ -104,9 +104,9 @@ class SiteDetail extends Component {
             limit: 1,
             body: {
                 end: moment().add(1, 'days').utc().format(),
-                // labels: {
-                site_name: this.state.title,
-                // }
+                labels: {
+                    site_name: this.state.title,
+                }
             }
         }));
         this.props.dispatch(createAction('siteDetail/getSiteDetail')({ plateNo: this.state.title }));
@@ -121,7 +121,7 @@ class SiteDetail extends Component {
         this.props.navigation.navigate('EventDetail', {
             item: item,
             callback: (backdata) => {
-                this.props.dispatch(createAction('events/updateState')({ event: [backdata] }));
+                this.props.dispatch(createAction('siteDetail/updateState')({ event: [backdata] }));
             }
         });
     }
@@ -132,6 +132,7 @@ class SiteDetail extends Component {
         this.getAllData();
     }
     getEventItem(items) {
+        console.log(items);
         if (items && items.length > 0) {
             const item = items[0];
             return (
