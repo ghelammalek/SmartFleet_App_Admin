@@ -127,7 +127,13 @@ exports.getSiteData = function getSiteData(params) {
  * @returns
  */
 exports.getSiteTrend = function getSiteTrend(params) {
-    const url = '';
+    const url = '/api/iot/modules/' + encodeURIComponent(params.plateNo) + '/series?'
+        + 'metric=' + params.metric
+        + '&fields=' + params.fields
+        + '&start=' + params.start
+        + '&end=' + params.end
+        + '&function=' + params.function
+        + '&interval=' + params.interval;
     return request.get(url, null, true, HEADER_JSON);
 }
 

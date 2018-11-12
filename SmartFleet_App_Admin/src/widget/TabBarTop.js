@@ -45,7 +45,6 @@ class TabBarTop extends Component {
         let tabImage = this.props.tabImages.length == 0 ? null : this.props.activeTab == i ? this.props.tabSelectImages[i] : this.props.tabImages[i];
         let border = this.props.activeTab == i ? { borderBottomColor: '#24ba8e', borderBottomWidth: 2 } : {};
 
-        console.log(tabImage);
         return (
             <TouchableOpacity style={[styles.tabItem, { width: Dimensions.get('window').width / this.props.tabNames.length }]} onPress={() => this.props.goToPage(i)} key={i}>
                 <View style={[styles.tabItem, border]}>
@@ -61,7 +60,6 @@ class TabBarTop extends Component {
     }
 
     render() {
-        console.log(this.props.tabImages);
         return (
             <View style={styles.container}>
                 <View style={[styles.tabs, this.props.style]}>

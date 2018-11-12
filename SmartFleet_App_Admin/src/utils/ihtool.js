@@ -221,7 +221,7 @@ exports.getTime10 = function getTime(date) {
 }
 
 /**
- *   获取10位的时间戳
+ *   获取13位的时间戳
  *
  * @param {*} date
  * @returns

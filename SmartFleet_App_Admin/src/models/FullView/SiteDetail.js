@@ -8,6 +8,8 @@ import api from '../../constants/api';
 export default {
     namespace: 'siteDetail',
     state: {
+        isLoading: false,
+        loadData: false,
         statistics: {},
         event: [],
         siteData: {
@@ -18,7 +20,6 @@ export default {
         },
         siteDetail: {},
         speedData: [],
-        isLoading: false,
         marker: {
 
         },
@@ -102,15 +103,37 @@ export default {
             }
         },
         *getSiteTrend({ payload }, { call, put, select }) {
+            yield put({
+                type: 'updateState',
+                payload: {
+                    loadData: true,
+                    speedData: [],
+                }
+            });
             const data = yield call(api.getSiteTrend, payload);
             if (data.error || data.result == undefined) {
-                // alert('sdf');
-            } else {
                 yield put({
                     type: 'updateState',
                     payload: {
-                        speedData: data.result,
-                        isLoading: false,
+                        loadData: false
+                    }
+                });
+            } else {
+                let values = [];
+                if (data.result.values) {
+                    for (let i = 0; i < data.result.values.length; i++) {
+                        let value = [];
+                        const element = data.result.values[i];
+                        value.push(moment(element[0]).valueOf());
+                        value.push(element[1]);
+                        values.push(value);
+                    }
+                }
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        speedData: values,
+                        loadData: false
                     }
                 });
             }

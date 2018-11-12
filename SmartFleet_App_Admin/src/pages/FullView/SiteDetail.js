@@ -34,6 +34,7 @@ import ChartView from '../../widget/react-native-highcharts';
 
 const names = [I18n.t('detail.speed'), I18n.t('detail.voltage'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
 const units = ['km/h', 'v', '℃', ''];
+const params = ['speed', '', '', ''];
 class SiteDetail extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: I18n.t('car_detail'),
@@ -103,7 +104,7 @@ class SiteDetail extends Component {
             cursor: 0,
             limit: 1,
             body: {
-                end: moment().add(1, 'days').utc().format(),
+                end: moment().add(1, 'day').utc().format(),
                 labels: {
                     site_name: this.state.title,
                 }
@@ -112,9 +113,22 @@ class SiteDetail extends Component {
         this.props.dispatch(createAction('siteDetail/getSiteDetail')({ plateNo: this.state.title }));
         this.props.dispatch(createAction('siteDetail/getSiteData')({ mid: this.state.item.id }));
 
+        const fields = params[this.state.btnSelect - 1];
+        this.props.dispatch(createAction('siteDetail/getSiteTrend')({
+            plateNo: this.state.item.id,
+            metric: 'iot_data',
+            fields: fields,
+            start: moment(moment().add(-1, 'day').format('YYYY-MM-DD')).utc().format(),
+            end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
+            interval: 60,
+            function: 'max'
+        }))
+
     }
     navAction() {
-        alert(moment('2018-10-10T00:00:00Z').unix());
+        // let value = moment('2018-10-10T00:00:00Z').unix();
+        // alert(moment('2018-10-10T00:00:00Z').unix());
+        // alert(moment(value * 1000).format())
     }
     pushEventDetail(item) {
         // this.props.navigation.navigate('EventDetail', { item: item, callback: (backdata) => { } });
@@ -132,13 +146,12 @@ class SiteDetail extends Component {
         this.getAllData();
     }
     getEventItem(items) {
-        console.log(items);
         if (items && items.length > 0) {
             const item = items[0];
             return (
                 <TouchableOpacity style={styles.eventItemView} disabled={this.props.isLoading} activeOpacity={0.6} onPress={() => this.pushEventDetail(item)} >
                     <Image style={styles.eventImage} source={ihtool.getEventLevelImage(item.level)} />
-                    <Text style={styles.message} >{ihtool.getEventDesc(item)}</Text>
+                    <Text style={styles.message_} >{ihtool.getEventDesc(item)}</Text>
                     <Text style={styles.eventTime} >{ihtool.getSimpleDate(item.startsAt)}</Text>
                     <Image style={styles.eventRightImage} source={Images.other_right} />
                 </TouchableOpacity>
@@ -151,21 +164,21 @@ class SiteDetail extends Component {
         var serieses = [];
         const name = names[this.state.btnSelect - 1];
         const unit = units[this.state.btnSelect - 1];
-        if (this.state.btnSelect == 1) {
-            serieses.push({
-                type: 'areaspline',
-                name: name,
-                data: [[1541561406000, 43], [1541561407000, 34], [1541561408000, 43], [1541561409000, 33], [1541561410000, 55]],
-                lineWidth: 1,
-            });
-        } else {
-            serieses.push({
-                type: 'areaspline',
-                name: name,
-                data: [],
-                lineWidth: 1,
-            });
-        }
+        // if (this.state.btnSelect == 1) {
+        serieses.push({
+            type: 'spline',
+            name: name,
+            data: this.props.speedData,
+            lineWidth: 1,
+        });
+        // } else {
+        //     serieses.push({
+        //         type: 'spline',
+        //         name: name,
+        //         data: [],
+        //         lineWidth: 1,
+        //     });
+        // }
         return ihtool.getConf(serieses, unit);
     }
     render() {
@@ -239,14 +252,14 @@ class SiteDetail extends Component {
                         <View style={styles.addressView}>
                             <View style={styles.row_left}>
                                 <Image source={Images.other_location} style={styles.markImage} />
-                                <Text numberOfLines={1} style={styles.message}>{this.state.address}</Text>
+                                <Text numberOfLines={1} style={styles.message_}>{this.state.address}</Text>
                             </View>
                             <View style={styles.row_right}>
                                 <Text style={styles.weatherValue}>{'15°'}</Text>
                                 <Image source={Images.weather_fine} style={styles.weatherImage} />
                             </View>
                         </View>
-                        <Text style={styles.message}>{'行驶中，正常，司机张三'}</Text>
+                        <Text style={styles.message_}>{'行驶中，正常，司机张三'}</Text>
                         {
                             this.getEventItem(this.props.event)
                         }
@@ -313,22 +326,22 @@ class SiteDetail extends Component {
                     </View>
                     <View style={styles.bodyItemView}>
                         <View style={styles.trendTitleView}>
-                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(1)}>
+                            <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.btnAction(1)}>
                                 <View style={this.state.btnSelect == 1 ? styles.btn : styles.btn_}>
                                     <Text style={this.state.btnSelect == 1 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.speed')}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(2)}>
+                            <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.btnAction(2)}>
                                 <View style={this.state.btnSelect == 2 ? styles.btn : styles.btn_}>
                                     <Text style={this.state.btnSelect == 2 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.voltage')}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(3)}>
+                            <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.btnAction(3)}>
                                 <View style={this.state.btnSelect == 3 ? styles.btn : styles.btn_}>
                                     <Text style={this.state.btnSelect == 3 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.temperature')}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btnView} activeOpacity={0.6} onPress={() => this.btnAction(4)}>
+                            <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.btnAction(4)}>
                                 <View style={this.state.btnSelect == 4 ? styles.btn : styles.btn_}>
                                     <Text style={this.state.btnSelect == 4 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.braking_sign')}</Text>
                                 </View>
@@ -351,7 +364,19 @@ class SiteDetail extends Component {
 
     }
     btnAction(value) {
+
         this.setState({ btnSelect: value });
+        const fields = params[value - 1];
+
+        this.props.dispatch(createAction('siteDetail/getSiteTrend')({
+            plateNo: this.state.item.id,
+            metric: 'iot_data',
+            fields: fields,
+            start: moment(moment().add(-1, 'day').format('YYYY-MM-DD')).utc().format(),
+            end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
+            interval: 60,
+            function: 'max'
+        }))
     }
 }
 function mapStateToProps(state) {
@@ -364,6 +389,7 @@ function mapStateToProps(state) {
         speedData: state.siteDetail.speedData,
         marker: state.siteDetail.marker,
         center: state.siteDetail.center,
+        loadData: state.siteDetail.loadData,
     }
 }
 export default connect(mapStateToProps)(SiteDetail);

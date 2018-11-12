@@ -75,6 +75,16 @@ export default siteDetailStyle = StyleSheet.create({
         fontSize: 14,
         color: '#2d2d2d',
         lineHeight: 16,
+        textAlign: 'center',
+        // backgroundColor: 'red'
+    },
+    message_: {
+        flex: 1,
+        fontSize: 14,
+        color: '#2d2d2d',
+        lineHeight: 16,
+        textAlignVertical: 'center',
+        // backgroundColor: 'red'
     },
     weatherImage: {
         width: 21,
@@ -135,9 +145,9 @@ export default siteDetailStyle = StyleSheet.create({
     detailItem: {
         flex: 1,
         flexDirection: 'row',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingLeft: 12,
-        paddingRight: 8,
+        marginHorizontal: 3,
     },
     line_vertical: {
         width: 1,
