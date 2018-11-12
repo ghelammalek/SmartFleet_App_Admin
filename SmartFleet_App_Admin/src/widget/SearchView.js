@@ -41,7 +41,7 @@ export default class SearchView extends Component {
                                         editable={!this.props.editable}
                                         value={this.state.value}
                                         autoFocus={this.state.isEdit}
-                                        onFocus={() => this.setState({ value: '' })}
+                                        onFocus={() => this.setState({ value: this.props.value })}
                                         onEndEditing={(evt) => this.setState({ value: evt.nativeEvent.text, isEdit: false })}
                                         clearButtonMode={'while-editing'}
                                         onChangeText={this.props.onChangeText}
@@ -55,7 +55,7 @@ export default class SearchView extends Component {
                                         returnKeyType='search'
                                         editable={!this.props.editable}
                                         value={this.state.value}
-                                        onFocus={() => this.setState({ value: '' })}
+                                        onFocus={() => this.setState({ value: this.props.value })}
                                         onEndEditing={(evt) => this.setState({ value: evt.nativeEvent.text, isEdit: false })}
                                         clearButtonMode={'while-editing'}
                                         onChangeText={this.props.onChangeText}
@@ -63,7 +63,7 @@ export default class SearchView extends Component {
                                     />
                             }
                         </View> :
-                        <TouchableOpacity style={[styles.container, styles.style]} onPress={() => this.setState({ isEdit: true, value: '' })}>
+                        <TouchableOpacity style={[styles.container, styles.style]} activeOpacity={1} onPress={() => this.setState({ isEdit: true, value: this.props.value })}>
                             <Image source={Images.other_search_light} style={styles.image} />
                             {
                                 isEmpty(this.props.value) ?

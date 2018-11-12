@@ -26,6 +26,12 @@ export default {
     },
     effects: {
         * getSites({ payload }, { call, put, select }) {
+            yield put({
+                type: 'updateState',
+                payload: {
+                    plateNo: '',
+                }
+            });
             var markers = [];
             const data = yield call(api.getSites);
             if (data.error) {
