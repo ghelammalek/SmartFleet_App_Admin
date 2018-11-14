@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-11-09 18:32:51
+ * @Last Modified time: 2018-11-14 15:44:40
  */
 
 export default {
@@ -54,6 +54,12 @@ export default {
     other_sift: require('../assets/images/other/sift.png'),
     other_sift_select: require('../assets/images/other/sift_select.png'),
     other_location: require('../assets/images/other/location.png'),
+    other_track: require('../assets/images/other/track.png'),
+    other_track_select: require('../assets/images/other/track_select.png'),
+    other_history_data: require('../assets/images/other/history_data.png'),
+    other_history_data_select: require('../assets/images/other/history_data_select.png'),
+    other_triangle_down_select: require('../assets/images/other/triangle_down_select.png'),
+    other_triangle_up_select: require('../assets/images/other/triangle_up_select.png'),
 
 
     setting_owner: require('../assets/images/setting/owner.png'),

@@ -63,7 +63,11 @@ export default class SearchView extends Component {
                                     />
                             }
                         </View> :
-                        <TouchableOpacity style={[styles.container, styles.style]} activeOpacity={1} onPress={() => this.setState({ isEdit: true, value: this.props.value })}>
+                        <TouchableOpacity
+                            style={[styles.container, styles.style]}
+                            activeOpacity={1}
+                            onPress={() => this.setState({ isEdit: true, value: this.props.value })}
+                        >
                             <Image source={Images.other_search_light} style={styles.image} />
                             {
                                 isEmpty(this.props.value) ?

@@ -140,8 +140,10 @@ export default class Router extends Component {
                 }),
                 navigationOptions: ({ navigation }) => ({
                     gesturesEnabled: true,
-                    style: {
-                        backgroundColor: '#fff',
+                    headerStyle: {
+                        // backgroundColor: 'red',
+                        // borderBottomWidth: 2,
+                        // borderBottomColor: 'red',
                     },
                     headerTitleStyle: {
                         flex: 1,

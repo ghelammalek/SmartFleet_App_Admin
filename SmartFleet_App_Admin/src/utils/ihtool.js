@@ -200,13 +200,15 @@ exports.getEventLevelImage = function getEventLevelImage(value) {
     if (value == 1) {
         return Images.event_level1;
     } else if (value == 2) {
-        return null;
+        return Images.event_level2;
     } else if (value == 3) {
         return Images.event_level3;
     } else if (value == 4) {
         return Images.event_level4;
-    } else {
+    } else if (value == 5) {
         return Images.event_level5;
+    } else {
+        return null;
     }
 }
 
@@ -296,6 +298,25 @@ exports.getCurrentUTCDate = function getCurrentUTCDate() {
     return moment().utc().format();
 }
 
+/**
+ *   获取当前日期的零时
+ *
+ * @returns
+ */
+exports.getDateBegain = function getDateBegain(date) {
+    const time = moment(date).set({ 'hour': 0, 'minute': 0, 'second': 0, 'millisecond': 1 }).format('YYYY-MM-DD HH:mm:ss.SSS')
+    return time;
+}
+
+/**
+ *   获取当前日期的24时
+ *
+ * @returns
+ */
+exports.getDateEnd = function getDateEnd(date) {
+    const time = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 999 }).format('YYYY-MM-DD HH:mm:ss.SSS')
+    return time;
+}
 
 /**
  *   获取当前版本号

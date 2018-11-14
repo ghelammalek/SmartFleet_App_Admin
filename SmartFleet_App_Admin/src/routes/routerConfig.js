@@ -4,6 +4,7 @@ import Login from '../pages/Login/Login';
 import Home from '../pages/Home/Home';
 import FullView from '../pages/FullView/FullView';
 import SiteDetail from '../pages/FullView/SiteDetail';
+import HistoryView from '../pages/FullView/HistoryView';
 import Events from '../pages/Events/Events';
 import Setting from '../pages/Setting/Setting';
 import UpgradeVersionView from '../pages/Setting/UpgradeVersionView';
@@ -21,4 +22,5 @@ export default {
     ScanView: { screen: ScanView },
     RegisterCar: { screen: RegisterCar },
     UpgradeVersionView: { screen: UpgradeVersionView },
+    HistoryView: { screen: HistoryView },
 }

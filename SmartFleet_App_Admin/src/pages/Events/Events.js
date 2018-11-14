@@ -271,7 +271,7 @@ class Events extends Component {
                             <View style={siftStyle.container}>
                                 <ScrollView style={siftStyle.backgroundView}>
                                     <View style={siftStyle.bodyView}>
-                                        <Text style={siftStyle.title} onPress={() => this.setState({ isShow: false })}>{I18n.t('event_type')}</Text>
+                                        <Text style={siftStyle.title}>{I18n.t('event_type')}</Text>
                                         <View style={siftStyle.wrapView}>
                                             <TouchableOpacity style={this.state.eventType == 0 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectEventType(0)}>
                                                 <Text style={this.state.eventType == 0 ? siftStyle.itemText_ : siftStyle.itemText}>{I18n.t('all')}</Text>
@@ -297,6 +297,9 @@ class Events extends Component {
                                             </TouchableOpacity>
                                             <TouchableOpacity style={this.state.level == 1 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectAlarmType(1)}>
                                                 <Text style={this.state.level == 1 ? siftStyle.itemText_ : siftStyle.itemText}>{I18n.t('level1')}</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={this.state.level == 2 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectAlarmType(2)}>
+                                                <Text style={this.state.level == 2 ? siftStyle.itemText_ : siftStyle.itemText}>{I18n.t('level2')}</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity style={this.state.level == 3 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectAlarmType(3)}>
                                                 <Text style={this.state.level == 3 ? siftStyle.itemText_ : siftStyle.itemText}>{I18n.t('level3')}</Text>
@@ -325,8 +328,8 @@ class Events extends Component {
                                                 allowFontScaling={false}
                                                 customStyles={{
                                                     dateIcon: {
-                                                        height: 24,
-                                                        width: 24,
+                                                        height: 0,
+                                                        width: 0,
                                                     },
                                                     dateInput: {
                                                         height: 40,
@@ -357,8 +360,8 @@ class Events extends Component {
                                                 allowFontScaling={false}
                                                 customStyles={{
                                                     dateIcon: {
-                                                        height: 24,
-                                                        width: 24,
+                                                        height: 0,
+                                                        width: 0,
                                                     },
                                                     dateInput: {
                                                         height: 40,
@@ -503,7 +506,7 @@ class Events extends Component {
         if (moment(date).unix() == moment(current).unix()) {
             this.setState({ end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS') })
         } else {
-            this.setState({ end_time: moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 999 }).format('YYYY-MM-DD HH:mm:ss.SSS') })
+            this.setState({ end_time: ihtool.getDateEnd(date) })
         }
     }
 }

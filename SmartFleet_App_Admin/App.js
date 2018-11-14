@@ -12,6 +12,7 @@ import Login from './src/models/Login/Login';
 import Home from './src/models/Home/Home';
 import FullView from './src/models/FullView/FullView';
 import SiteDetail from './src/models/FullView/SiteDetail';
+import HistoryView from './src/models/FullView/HistoryView';
 import RegisterCar from './src/models/FullView/RegisterCar';
 import Events from './src/models/Events/Events';
 import EventDetail from './src/models/Events/EventDetail';
@@ -21,7 +22,7 @@ import Setting from './src/models/Setting/Setting';
 import SplashScreen from 'react-native-splash-screen';
 
 const app = dva({
-  models: [Spalsh, Login, Home, FullView, Events, EventDetail, Setting, SiteDetail, RegisterCar],
+  models: [Spalsh, Login, Home, FullView, Events, EventDetail, Setting, SiteDetail, RegisterCar, HistoryView],
   onError(e) {
     // console.log('onError', e);
   },

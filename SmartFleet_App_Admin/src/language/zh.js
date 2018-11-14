@@ -26,6 +26,8 @@ export default {
     event_desc: '事件描述',
     alarm_state: '告警状态',
     search_time: '时间搜索',
+    select_time: '时间选择',
+    sift_time: '时间筛选',
     start_time: '开始时间',
     end_time: '结束时间',
     select_start_time: '请选择开始时间',
@@ -99,11 +101,11 @@ export default {
 
     event_confirm: '已确认',
     event_unconfirm: '未确认',
-    level1: '提醒',
-    // level2: '告警',
-    level3: '预警',
-    level4: '告警',
-    level5: '故障',
+    level1: '提示',
+    level2: '预警',
+    level3: '故障',
+    level4: '警告',
+    level5: '宕机',
     confirm_event: '确认事件',
     successful: '成功',
     before_minutes: '分钟前',
@@ -129,6 +131,8 @@ export default {
     new_version_message: '是否立即升级',
     new_version_title: '发现新版本',
     logo_title: '打造智能车辆管理系统',
+
+
     common: {
         name: '名称',
         all: '全部',

@@ -117,10 +117,9 @@ class FullView extends Component {
                 /> */}
                 <ScrollableTabView
                     locked={true}
-                    style={styles.tabbar}
                     renderTabBar={() =>
                         <TabBarTop
-                            style={{ height: Platform.OS == 'ios' ? 64 : 44 }}
+                            style={styles.tabBarTop}
                             tabNames={this.state.tabNames}
                             tabImages={this.state.tabImages}
                             tabSelectImages={this.state.tabSelectImages}
@@ -133,7 +132,8 @@ class FullView extends Component {
                         />
                     }
                     tabBarUnderlineStyle={styles.lineStyle}
-                    tabBarActiveTextColor='#24ba8e'>
+                    tabBarActiveTextColor='#24ba8e'
+                >
                     <View tabLabel={I18n.t('car_map')} style={styles.container}>
                         <MapView
                             trafficEnabled={this.state.trafficEnabled}

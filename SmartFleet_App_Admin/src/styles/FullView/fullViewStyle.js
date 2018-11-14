@@ -1,6 +1,7 @@
 import {
     StyleSheet,
-    Dimensions
+    Dimensions,
+    Platform,
 } from 'react-native';
 
 export default fullViewStyle = StyleSheet.create({
@@ -16,12 +17,9 @@ export default fullViewStyle = StyleSheet.create({
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     },
-    tabbar: {
-        width: Dimensions.get('window').width,
-        height: 50,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#fff',
+    tabBarTop: {
+        height: Platform.OS == 'ios' ? 64 : 44,
+        paddingTop: 20,
     },
     lineStyle: {
         marginBottom: -1.5,
@@ -131,29 +129,29 @@ export default fullViewStyle = StyleSheet.create({
 
     refreshView: {
         position: 'absolute',
-        bottom: 90,
+        bottom: 80,
         right: 20,
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         backgroundColor: '#fff',
-        borderRadius: 25,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
     addView: {
         position: 'absolute',
-        bottom: 25,
+        bottom: 20,
         right: 20,
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         backgroundColor: '#fff',
-        borderRadius: 25,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
     refreshImage: {
-        height: 24,
-        width: 24,
+        height: 40,
+        width: 40,
         resizeMode: 'contain',
     },
 });

@@ -39,14 +39,18 @@ class SiteDetail extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: I18n.t('car_detail'),
         headerBackTitle: null,
-        headerRight: <NavBarBtn title={I18n.t('detail.history_data')} titleStyle={styles.navBarTitle} onPress={() => navigation.state.params.navAction()} />
+        headerRight: <NavBarBtn title={I18n.t('detail.history_data')} titleStyle={styles.navBarTitle} onPress={() => navigation.state.params.navAction()} />,
+        headerStyle: {
+            borderBottomWidth: 0,
+        },
     });
     constructor(props) {
         super(props);
+        const item = this.props.navigation.state.params.item;
         this.state = {
-            title: this.props.navigation.state.params.item.plateNo,
-            location: this.props.navigation.state.params.item.location,
-            item: this.props.navigation.state.params.item,
+            title: item.plateNo,
+            location: item.location,
+            item: item,
             mayType: MapTypes.NORMAL,
             zoom: 6,
             trafficEnabled: false,
@@ -102,7 +106,7 @@ class SiteDetail extends Component {
         this.props.dispatch(createAction('siteDetail/getStatistics')({ queryType: '1', plateNo: this.state.title }));
         this.props.dispatch(createAction('siteDetail/getAlerts')({
             cursor: 0,
-            limit: 1,
+            limit: 10,
             body: {
                 end: moment().add(1, 'day').utc().format(),
                 labels: {
@@ -118,7 +122,7 @@ class SiteDetail extends Component {
             plateNo: this.state.item.id,
             metric: 'iot_data',
             fields: fields,
-            start: moment(moment().add(-1, 'day').format('YYYY-MM-DD')).utc().format(),
+            start: moment().add(-24, 'hour').utc().format(),
             end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
             interval: 60,
             function: 'max'
@@ -126,9 +130,7 @@ class SiteDetail extends Component {
 
     }
     navAction() {
-        // let value = moment('2018-10-10T00:00:00Z').unix();
-        // alert(moment('2018-10-10T00:00:00Z').unix());
-        // alert(moment(value * 1000).format())
+        this.props.navigation.navigate('HistoryView');
     }
     pushEventDetail(item) {
         // this.props.navigation.navigate('EventDetail', { item: item, callback: (backdata) => { } });
@@ -372,7 +374,7 @@ class SiteDetail extends Component {
             plateNo: this.state.item.id,
             metric: 'iot_data',
             fields: fields,
-            start: moment(moment().add(-1, 'day').format('YYYY-MM-DD')).utc().format(),
+            start: moment().add(-24, 'hour').utc().format(),
             end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
             interval: 60,
             function: 'max'
