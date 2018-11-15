@@ -73,6 +73,47 @@ exports.getEventLevelLabel = function getEventLevelLabel(value) {
     }
 }
 
+
+
+/**
+ *   获取车辆轨迹历史事件状态
+ *
+ * @param {*} record
+ */
+exports.getTrackTypeImage = function getTrackTypeImage(record) {
+    const { labels, fields, level } = record;
+    const { value, type, category } = fields;
+    const { code } = labels;
+
+    if (code === 'driving') {
+        if (type === 'engine') {
+            if (value) {
+                return Images.other_ico_dianhuo;
+            } else {
+                return Images.other_ico_xihuo;
+            }
+        } else if (level) {
+            if (level == 1) {
+                return Images.event_level1;
+            } else if (level == 2) {
+                return Images.event_level2;
+            } else if (level == 3) {
+                return Images.event_level3;
+            } else if (level == 4) {
+                return Images.event_level4;
+            } else if (level == 5) {
+                return Images.event_level5;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
+}
+
 /**
  *   获取事件类型
  *

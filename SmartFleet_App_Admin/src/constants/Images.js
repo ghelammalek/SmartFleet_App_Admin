@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-11-15 09:21:51
+ * @Last Modified time: 2018-11-15 12:03:26
  */
 
 export default {
@@ -60,6 +60,8 @@ export default {
     other_history_data_select: require('../assets/images/other/history_data_select.png'),
     other_triangle_down_select: require('../assets/images/other/triangle_down_select.png'),
     other_triangle_up_select: require('../assets/images/other/triangle_up_select.png'),
+    other_ico_dianhuo: require('../assets/images/other/ico_dianhuo.png'),
+    other_ico_xihuo: require('../assets/images/other/ico_xihuo.png'),
 
 
     setting_owner: require('../assets/images/setting/owner.png'),

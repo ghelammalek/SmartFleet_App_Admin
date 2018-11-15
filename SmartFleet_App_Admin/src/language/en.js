@@ -31,6 +31,7 @@ export default {
     select_start_time: '请选择开始时间',
     select_end_time: '请选择结束时间',
     start_must_earlier_end: '开始时间必须早于结束时间',
+    time_interval_less_24: '时间间隔请保持在24小时内',
 
     //title
     event_detail: '事件详情',
@@ -53,6 +54,7 @@ export default {
     loading_error: '加载失败',
     no_data: '无数据',
     scan: '扫一扫',
+    custom: '自定义',
 
     //登录
     get_code_err: '获取验证码失败，请重试!',
@@ -128,6 +130,11 @@ export default {
     new_version_message: '是否立即升级',
     new_version_title: '发现新版本',
     logo_title: '打造智能车辆管理系统',
+
+    worktime_duraction: '工作时长及行驶里程',
+    speed: '速度',
+
+
     common: {
         name: '名称',
         all: '全部',

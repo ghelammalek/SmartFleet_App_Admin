@@ -166,13 +166,13 @@ export default siteDetailStyle = StyleSheet.create({
     },
 
     chartView: {
-        flex: 1,
-        height: 178,
+        // flex: 1,
+        height: 240,
         marginTop: 12,
     },
 
     trendTitleView: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         height: 40,
         justifyContent: 'space-between',

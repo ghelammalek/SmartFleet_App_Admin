@@ -130,7 +130,7 @@ class SiteDetail extends Component {
 
     }
     navAction() {
-        this.props.navigation.navigate('HistoryView');
+        this.props.navigation.navigate('HistoryView', { item: this.state.item });
     }
     pushEventDetail(item) {
         // this.props.navigation.navigate('EventDetail', { item: item, callback: (backdata) => { } });

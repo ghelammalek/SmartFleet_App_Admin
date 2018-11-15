@@ -2,15 +2,18 @@ import { Alert } from 'react-native';
 import moment from 'moment';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
+import ihtool from '../../utils/ihtool';
 import api from '../../constants/api';
 
 export default {
     namespace: 'historyView',
     state: {
+        start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
+        end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
         isLoading: false,
         loadData: false,
         statistics: {},
-        event: [],
+        events: [],
         siteData: {
             metrics: {
                 iot_data: {},
@@ -46,26 +49,25 @@ export default {
             }
         },
         * getAlerts({ payload }, { call, put, select }) {
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: true,
+                }
+            });
             const data = yield call(api.getAlerts, payload);
             if (data.error) {
-            } else {
                 yield put({
                     type: 'updateState',
                     payload: {
-                        event: data.result,
                         isLoading: false,
                     }
                 });
-            }
-        },
-        *getSiteDetail({ payload }, { call, put, select }) {
-            const data = yield call(api.getSiteDetail, payload);
-            if (data.error) {
             } else {
                 yield put({
                     type: 'updateState',
                     payload: {
-                        siteDetail: data.result,
+                        events: data.result,
                         isLoading: false,
                     }
                 });

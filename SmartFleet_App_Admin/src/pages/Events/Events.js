@@ -269,7 +269,7 @@ class Events extends Component {
                     {
                         this.state.isShow ?
                             <View style={siftStyle.container}>
-                                <ScrollView style={siftStyle.backgroundView}>
+                                <ScrollView style={siftStyle.backgroundView} bounces={false}>
                                     <View style={siftStyle.bodyView}>
                                         <Text style={siftStyle.title}>{I18n.t('event_type')}</Text>
                                         <View style={siftStyle.wrapView}>
