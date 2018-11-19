@@ -120,7 +120,7 @@ class EventDetail extends Component {
                             </View>
                         </View>
                         <View style={homeStyle.itemTopRight}>
-                            <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.startsAt)}</Text>
+                            <Text style={homeStyle.time} >{moment(item.startAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
                         </View>
                     </View>
                     <View style={homeStyle.itemBodyView}>
