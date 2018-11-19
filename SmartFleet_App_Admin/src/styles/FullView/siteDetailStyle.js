@@ -149,7 +149,7 @@ export default siteDetailStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        // marginHorizontal: 3,
+        marginHorizontal: 3,
         height: 50,
     },
     detailItem_: {
