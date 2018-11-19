@@ -57,6 +57,7 @@ class SiteDetail extends Component {
             baiduHeatMapEnabled: false,
             address: '',
             btnSelect: 1,
+            isUnflod: false,
         };
     }
     componentDidMount() {
@@ -189,7 +190,7 @@ class SiteDetail extends Component {
         const { siteData } = this.props;
         const { metrics } = siteData;
         const { iot_data, location_data } = metrics;
-        const { odo_meter, water_temp, fuel_meter, fuel_capacity, speed, rpm, break_state } = iot_data;
+        // const { odo_meter, water_temp, fuel_meter, fuel_capacity, speed, rpm, break_state } = iot_data;
         return (
             <View style={styles.container}>
                 <TouchableOpacity style={styles.topItemView} activeOpacity={0.6} onPress={() => this.pushCarInfoView()}>
@@ -279,51 +280,191 @@ class SiteDetail extends Component {
                         <View style={styles.detailView}>
                             <View style={styles.detailItemView}>
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.odometer') + '：'}</Text>
-                                    <Text style={styles.message}>{(isEmpty(odo_meter) ? '--' : ihtool.changeNum(odo_meter)) + 'km'}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_speed') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>{ihtool.placeholderStr(iot_data.speed) + 'km'}</Text>
+                                    </View>
                                 </View>
                                 <View style={styles.line_vertical} />
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('detail.environment_temperature') + '：'}</Text>
-                                    <Text style={styles.message}>{ihtool.placeholderStr(water_temp) + '℃'}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_rpm') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>{ihtool.placeholderStr(iot_data.rpm) + 'RPM'}</Text>
+                                    </View>
                                 </View>
                             </View>
                             <View style={styles.line_horizontal} />
                             <View style={styles.detailItemView}>
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.fuel_residue') + '：'}</Text>
-                                    <Text style={styles.message}>{ihtool.placeholderStr(fuel_meter) + '%'}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_fuel_level') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>{ihtool.placeholderStr(iot_data.fuel_level) + '%'}</Text>
+                                    </View>
                                 </View>
                                 <View style={styles.line_vertical} />
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.current_speed') + '：'}</Text>
-                                    <Text style={styles.message}>{ihtool.placeholderStr(speed) + 'km/h'}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_engine_load') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>
+                                            {
+                                                iot_data.engine_load ? iot_data.engine_load > 0 ? I18n.t('event_engine_start') : I18n.t('event_engine_stop') : '--'
+                                            }
+                                        </Text>
+                                    </View>
                                 </View>
                             </View>
                             <View style={styles.line_horizontal} />
                             <View style={styles.detailItemView}>
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.engine_RPM') + '：'}</Text>
-                                    <Text style={styles.message}>{ihtool.placeholderStr(rpm) + 'rpm'}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_brake_switch') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>{ihtool.placeholderStr(iot_data.brake_switch)}</Text>
+                                    </View>
                                 </View>
                                 <View style={styles.line_vertical} />
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.voltage') + '：'}</Text>
-                                    <Text style={styles.message}>{'48v'}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_parking_switch') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>{ihtool.placeholderStr(iot_data.parking_switch)}</Text>
+                                    </View>
                                 </View>
                             </View>
                             <View style={styles.line_horizontal} />
                             <View style={styles.detailItemView}>
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.brake_state') + '：'}</Text>
-                                    <Text style={styles.message}>{break_state == 0 ? I18n.t('vehicle.on') : I18n.t('vehicle.off')}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_coolant_temp') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>{ihtool.placeholderStr(iot_data.coolant_temp) + '℃'}</Text>
+                                    </View>
                                 </View>
                                 <View style={styles.line_vertical} />
                                 <View style={styles.detailItem}>
-                                    <Text style={styles.detailLabel}>{I18n.t('vehicle.brake_fluid_level') + '：'}</Text>
-                                    <Text style={styles.message}>{'45%'}</Text>
+                                    <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_engine_oil_temp') + ':'}</Text></View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.message}>{ihtool.placeholderStr(iot_data.engine_oil_temp) + '℃'}</Text>
+                                    </View>
                                 </View>
                             </View>
+                            <View style={styles.line_horizontal} />
+                            {
+                                this.state.isUnflod ?
+                                    <View style={{ flex: 1 }}>
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_steering_wheel_angle') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.steering_wheel_angle)}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={styles.line_vertical} />
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_dtcs') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.dtcs)}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_mil') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>
+                                                        {iot_data.mil ? iot_data.mil == 1 ? 'on' : 'off' : '--'}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                            <View style={styles.line_vertical} />
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_fuel_pressure') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.fuel_pressure) + 'kPa'}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_battery_volt') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.battery_volt) + 'v'}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={styles.line_vertical} />
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_ambient_air_temp') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.ambient_air_temp) + '℃'}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_throttle_pos') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.throttle_pos) + '%'}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={styles.line_vertical} />
+                                            <View style={styles.detailItem}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_vin') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.vin)}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem_}>
+                                                <View style={styles.detailLabelView}><Text style={styles.detailLabel}>{I18n.t('event_engine_start_time') + ':'}</Text></View>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.engine_start_time) + 'sec'}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem_}>
+                                                <Text style={styles.detailLabel}>{I18n.t('event_mil_activated_dist') + ':'}</Text>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.mil_activated_dist) + 'km'}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem_}>
+                                                <Text style={styles.detailLabel}>{I18n.t('event_dtc_cleared_dist') + ':'}</Text>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.dtc_cleared_dist) + 'km'}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem_}>
+                                                <Text style={styles.detailLabel}>{I18n.t('event_mil_activated_time') + ':'}</Text>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.mil_activated_time) + 'min'}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                        <View style={styles.detailItemView}>
+                                            <View style={styles.detailItem_}>
+                                                <Text style={styles.detailLabel}>{I18n.t('event_dtc_cleared_time') + ':'}</Text>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={styles.message}>{ihtool.placeholderStr(iot_data.dtc_cleared_time) + 'min'}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.line_horizontal} />
+                                    </View> : <View />
+                            }
+                            <TouchableOpacity activeOpacity={0.6} onPress={() => { this.setState({ isUnflod: !this.state.isUnflod }) }} style={styles.unflodBtn} >
+                                <Text style={styles.unflodBtnTitle}>{this.state.isUnflod ? I18n.t('event_hide') : I18n.t('event_unflod')}</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.bodyItemView}>
@@ -363,7 +504,7 @@ class SiteDetail extends Component {
         );
     }
     more() {
-
+        // alert(typeof (true));
     }
     btnAction(value) {
 

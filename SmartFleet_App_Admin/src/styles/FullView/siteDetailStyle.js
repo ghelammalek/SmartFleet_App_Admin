@@ -62,6 +62,7 @@ export default siteDetailStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
+        marginLeft: 8,
     },
     markImage: {
         width: 14,
@@ -70,8 +71,9 @@ export default siteDetailStyle = StyleSheet.create({
         marginRight: 3,
         // backgroundColor: 'blue'
     },
+
     message: {
-        flex: 1,
+        // flex: 1,
         fontSize: 14,
         color: '#2d2d2d',
         lineHeight: 16,
@@ -145,9 +147,18 @@ export default siteDetailStyle = StyleSheet.create({
     detailItem: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 3,
+        // marginHorizontal: 3,
+        height: 50,
+    },
+    detailItem_: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        // marginHorizontal: 3,
+        height: 50,
     },
     line_vertical: {
         width: 1,
@@ -159,10 +170,15 @@ export default siteDetailStyle = StyleSheet.create({
         height: 1,
         backgroundColor: '#f3f3f3',
     },
+    detailLabelView: {
+        maxWidth: Dimensions.get('window').width / 2 - 60,
+    },
     detailLabel: {
+        // flex: 2,
         fontSize: 14,
         fontWeight: 'bold',
         color: '#2d2d2d',
+        // backgroundColor: 'green',
     },
 
     chartView: {
@@ -177,7 +193,6 @@ export default siteDetailStyle = StyleSheet.create({
         height: 40,
         justifyContent: 'space-between',
         alignItems: 'center',
-        // backgroundColor: 'green'
     },
     btnView: {
         justifyContent: 'flex-start',
@@ -230,5 +245,18 @@ export default siteDetailStyle = StyleSheet.create({
         width: 14,
         height: 16,
         resizeMode: 'contain',
+    },
+
+    unflodBtn: {
+        flex: 1,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f3f3f3'
+    },
+    unflodBtnTitle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#24ba8e',
     },
 });

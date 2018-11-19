@@ -23,7 +23,7 @@ exports.placeholderStr = function placeholderStr(str) {
     if (isEmpty(str)) {
         return '--';
     } else {
-        return str;
+        return this.changeNum(str);
     }
 }
 /**

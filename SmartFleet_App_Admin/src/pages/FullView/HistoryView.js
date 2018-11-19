@@ -70,6 +70,29 @@ class HistoryView extends Component {
         }
     }
     componentDidMount() {
+        this.props.dispatch(createAction('historyView/getAlerts')({
+            start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
+            end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
+            isLoading: false,
+            loadData: false,
+            statistics: {},
+            events: [],
+            siteData: {
+                metrics: {
+                    iot_data: {},
+                    location_data: {}
+                }
+            },
+            siteDetail: {},
+            speedData: [],
+            marker: {
+
+            },
+            center: {
+                longitude: 116.981718,
+                latitude: 39.542449
+            },
+        }));
         this.refreshEvents();
     }
 

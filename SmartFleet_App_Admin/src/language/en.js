@@ -134,6 +134,31 @@ export default {
     worktime_duraction: '工作时长及行驶里程',
     speed: '速度',
 
+    event_unflod: '点击展开',
+    event_hide: '点击收缩',
+    event_engine_start: '启动',
+    event_engine_stop: '停止',
+    event_engine_load: '发动机负荷',//float [0,100],0:停止  >0:启动  %
+    event_rpm: '发动机转速',//float  [0,16383.75]  RPM
+    event_speed: '行驶速度',//int  [0,255]  km/h
+    event_brake_switch: '制动开关状态',//boolean  0:brake pedal released1:brake pedal depressed
+    event_parking_switch: '驻车制动开关状态',//boolean  0:parking brake not set1:parking brake set
+    event_steering_wheel_angle: '方向盘转动角度',//float  [-31.374,31.374]  
+    event_fuel_level: '油位输入',//float  [0,100]  %
+    event_dtcs: '故障码数量',//int [0,127]
+    event_mil: 'MIL状态',//boolean  0:off  1:on
+    event_coolant_temp: '发动机冷却液温度',//int [-40,215]  ℃
+    event_battery_volt: '控制模块电压',//float  [0,65.535]  V
+    event_engine_oil_temp: '发动机燃油温度',//int  [-40,215]  ℃
+    event_engine_start_time: '发动机启动的时间',//int  [0,65535]  sec
+    event_ambient_air_temp: '环境空气温度',//int  [-40,215]  ℃
+    event_fuel_pressure: '燃油压力',//int  [0,765]  kPa
+    event_throttle_pos: '节气门绝对位置',//float  [0,100]  %
+    event_vin: '车辆识别码',//string  17bytes
+    event_mil_activated_dist: '自MIL激活后的行驶距离',//int  [0,65535]  km
+    event_dtc_cleared_dist: '自故障码被清除以后的行驶距离',//int  [0,65535]  km
+    event_mil_activated_time: '自MIL激活后发动机运行时间',//int  [0,65535]  min
+    event_dtc_cleared_time: '自故障码被清除以后的运行时间',//int  [0,65535]  min
 
     common: {
         name: '名称',
