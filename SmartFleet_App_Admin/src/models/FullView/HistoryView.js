@@ -20,6 +20,7 @@ export default {
                 location_data: {}
             }
         },
+        selectTime: 1,
         siteDetail: {},
         speedData: [],
         marker: {

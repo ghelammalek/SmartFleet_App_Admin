@@ -63,7 +63,6 @@ class HistoryView extends Component {
             selectTime: 1,
             start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
-            custom_time: '',
             btnSelect: 1,
             state: 1,
 
@@ -116,13 +115,23 @@ class HistoryView extends Component {
             }
         }));
     }
-    selectTimeType(value) {
-        this.setState({ selectTime: value });
+    selectToday(value) {
+        this.setState({
+            selectTime: value,
+            start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
+            end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
+        });
     }
     getTimeLabel(value) {
         let lable = '';
-        if (value !== 1) {
-            lable = moment(this.state.start_time).format('MM-DD HH:mm') + ' ~ ' + moment(this.state.end_time).format('MM-DD HH:mm');
+        if (value == 0) {
+            if (moment(this.state.start_time).get('date') == moment(this.state.end_time).get('date')) {
+                lable = moment(this.state.start_time).format('YYYY-MM-DD HH:mm') + ' ~ ' + moment(this.state.end_time).format('HH:mm');
+            } else {
+                lable = moment(this.state.start_time).format('YYYY-MM-DD HH:mm') + ' ~ ' + moment(this.state.end_time).format('MM-DD HH:mm');
+            }
+        } else if (value == 2) {
+            lable = moment(this.state.start_time).format('YYYY-MM-DD');
         } else {
             lable = timeLabel[value];
         }
@@ -317,12 +326,43 @@ class HistoryView extends Component {
                                 <View style={siftStyle.bodyView}>
                                     <Text style={siftStyle.title}>{I18n.t('select_time')}</Text>
                                     <View style={siftStyle.wrapView}>
-                                        <TouchableOpacity style={this.state.selectTime == 1 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectTimeType(1)}>
+                                        <TouchableOpacity style={this.state.selectTime == 1 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectToday(1)}>
                                             <Text style={this.state.selectTime == 1 ? siftStyle.itemText_ : siftStyle.itemText}>{timeLabel[1]}</Text>
                                         </TouchableOpacity>
-                                        {/* <TouchableOpacity style={this.state.selectTime == 2 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectTimeType(2)}>
+                                        <View style={this.state.selectTime == 2 ? siftStyle.itemView_ : siftStyle.itemView}>
                                             <Text style={this.state.selectTime == 2 ? siftStyle.itemText_ : siftStyle.itemText}>{timeLabel[2]}</Text>
-                                        </TouchableOpacity> */}
+                                            <DatePicker
+                                                hideText={true}
+                                                showIcon={false}
+                                                onOpenModal={() => this.setState({ selectTime: 2 })}
+                                                locale={I18n.locale}
+                                                style={styles.customBtnView}
+                                                date={this.state.start_time}
+                                                mode="date"
+                                                placeholder={I18n.t('select_start_time')}
+                                                format="YYYY-MM-DD"
+                                                maxDate={moment().format('YYYY-MM-DD')}
+                                                confirmBtnText={I18n.t('okText')}
+                                                cancelBtnText={I18n.t('cancelText')}
+                                                allowFontScaling={false}
+                                                customStyles={{
+                                                    dateIcon: {
+                                                        height: 0,
+                                                        width: 0,
+                                                    },
+                                                    dateInput: {
+                                                        height: 40,
+                                                        borderWidth: 0,
+                                                        // alignItems: 'flex-start'
+                                                    },
+                                                    dateText: {
+                                                        fontSize: 14,
+                                                        color: '#2d2d2d',
+                                                    }
+                                                }}
+                                                onDateChange={(date) => this.changeCustomTime(date)}
+                                            />
+                                        </View>
                                     </View>
                                     <View style={siftStyle.separator} />
                                     <Text style={siftStyle.title}>{I18n.t('search_time')}</Text>
@@ -405,6 +445,12 @@ class HistoryView extends Component {
             </View>
         )
     }
+    changeCustomTime(date) {
+        this.setState({
+            start_time: moment(ihtool.getDateBegain(date)).format('YYYY-MM-DD HH:mm:ss'),
+            end_time: moment(ihtool.getDateEnd(date)).format('YYYY-MM-DD HH:mm:ss'),
+        });
+    }
     changeType(value) {
         this.setState({ state: value })
     }
@@ -415,12 +461,14 @@ class HistoryView extends Component {
         if (this.state.isShow) {
             this.setState({
                 isShow: false,
+                selectTime: this.props.selectTime,
                 start_time: this.props.start_time,
                 end_time: this.props.end_time,
             });
         } else {
             this.setState({
                 isShow: true,
+                selectTime: this.props.selectTime,
                 start_time: this.props.start_time,
                 end_time: this.props.end_time,
             });
@@ -428,16 +476,19 @@ class HistoryView extends Component {
     }
     resetAction() {
         this.setState({
-            selectTime: 1,
+            selectTime: 0,
             start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
         });
     }
     confirmAction() {
-        if (moment(this.state.end_time).unix() - moment(this.state.start_time).unix() > 3600 * 24) {
+        if (moment(this.state.end_time).unix() - moment(this.state.start_time).unix() <= 0) {
+            Alert.alert('', I18n.t('start_must_earlier_end'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+        } else if (moment(this.state.end_time).unix() - moment(this.state.start_time).unix() > 3600 * 24) {
             Alert.alert('', I18n.t('time_interval_less_24'), [{ text: I18n.t('okText'), onPress: () => { } },]);
         } else {
             this.props.dispatch(createAction('historyView/updateState')({
+                selectTime: this.state.selectTime,
                 start_time: this.state.start_time,
                 end_time: this.state.end_time,
             }));
@@ -454,6 +505,7 @@ function mapStateToProps(state) {
         center: state.historyView.center,
         start_time: state.historyView.start_time,
         end_time: state.historyView.end_time,
+        selectTime: state.historyView.selectTime,
     }
 }
 export default connect(mapStateToProps)(HistoryView);

@@ -140,6 +140,14 @@ export default historyStyle = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 3,
     },
+    customBtnView: {
+        width: 70,
+        height: 40,
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'rgba(28,28,29,0.3)',
+    },
     itemView_: {
         flex: 1,
         flexDirection: 'row',
