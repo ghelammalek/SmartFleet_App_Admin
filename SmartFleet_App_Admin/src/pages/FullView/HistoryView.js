@@ -38,7 +38,7 @@ import siftStyle from '../../styles/siftViewStyle';
 import ChartView from '../../widget/react-native-highcharts';
 
 const timeLabel = ['', I18n.t('common.this_day'), I18n.t('custom'), I18n.t('common.this_month'), I18n.t('common.this_year')]
-const names = [I18n.t('detail.speed'), I18n.t('detail.voltage'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
+const names = [I18n.t('speed'), I18n.t('worktime_duraction'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
 const units = ['km/h', 'v', '℃', ''];
 const params = ['speed', '', '', ''];
 class HistoryView extends Component {
