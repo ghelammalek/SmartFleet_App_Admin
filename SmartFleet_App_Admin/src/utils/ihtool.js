@@ -19,11 +19,14 @@ exports.changeNum = function changeNum(num) {
     return value;
 }
 
-exports.placeholderStr = function placeholderStr(str) {
+exports.placeholderStr = function placeholderStr(str, isFloat) {
     if (isEmpty(str)) {
         return '--';
     } else {
-        return this.changeNum(str);
+        if (isFloat) {
+            return this.changeNum(str);
+        }
+        return str;
     }
 }
 /**
