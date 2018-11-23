@@ -425,9 +425,12 @@ exports.getConf = function getConf(series, name) {
             backgroundColor: '#fff',
             zoomType: 'x',
         },
-        // colors: [
-        //     '#dbd31f', '#1cc593', '#d02424', '#1398dd', '#3b68c9', '#561fca', '#b633c3', '#5ab34e', '#eb8951', '#1eb9c9'
-        // ],
+        title: {
+            text: ''
+        },
+        legend: {
+            enabled: false,
+        },
         boost: {
             useGPUTranslations: true
         },
@@ -485,6 +488,7 @@ exports.getConf = function getConf(series, name) {
             }
         },
         yAxis: {
+            allowDecimals: false,
             title: {
                 text: name,
                 x: -16,
@@ -510,6 +514,70 @@ exports.getConf = function getConf(series, name) {
                 year: '%Y'
             }
         },
+        series: series,
+    };
+    return conf;
+}
+
+exports.getConfDouble = function getConfDouble(xAxis, yAxis, series) {
+    var conf = {
+        chart: {
+            backgroundColor: '#fff',
+            zoomType: 'xy',
+        },
+        colors: [
+            '#1E90FF', '#1cc593', '#d02424', '#1398dd', '#3b68c9', '#561fca', '#b633c3', '#5ab34e', '#eb8951', '#1eb9c9'
+        ],
+        title: {
+            text: ''
+        },
+        legend: {
+            enabled: false,
+        },
+        boost: {
+            useGPUTranslations: true
+        },
+        exporting: {
+            enabled: false,
+        },
+        rangeSelector: {
+            enabled: false,
+        },
+        credits: {
+            enabled: false,
+        },
+        tooltip: {
+            shared: true,
+            valueDecimals: 4,
+            backgroundColor: 'rgba(151,151,163,0.9)',
+            borderWidth: 0,
+            borderRadius: 3,
+            shadow: false,
+            style: {                      // 文字内容相关样式
+                color: "#fff",
+                fontSize: "12px",
+                fontWeight: "blod",
+            },
+            formatter: function () {
+
+                var s = ''//'<b>' + this.point + '</b>';
+                $.each(this.points, function () {
+                    s += '<br/>' + this.series.name + ': ' + parseFloat(this.y).toFixed(2);
+                });
+
+                return s;
+            }
+        },
+        scrollbar: {
+            enabled: false,
+            height: 0,
+        },
+        navigator: {
+            enabled: false,
+            height: 0,
+        },
+        yAxis: yAxis,
+        xAxis: xAxis,
         series: series,
     };
     return conf;

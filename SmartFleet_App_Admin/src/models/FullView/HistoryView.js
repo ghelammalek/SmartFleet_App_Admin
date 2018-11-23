@@ -12,6 +12,7 @@ export default {
         end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
         isLoading: false,
         loadData: false,
+        loadtrend: false,
         statistics: {},
         events: [],
         siteData: {
@@ -23,6 +24,9 @@ export default {
         selectTime: 1,
         siteDetail: {},
         speedData: [],
+        timeData: [],
+        distance: [],
+        working_duration: [],
         marker: {
 
         },
@@ -105,39 +109,79 @@ export default {
             }
         },
         *getSiteTrend({ payload }, { call, put, select }) {
-            yield put({
-                type: 'updateState',
-                payload: {
-                    loadData: true,
-                    speedData: [],
-                }
-            });
+            if (payload.fields == 'speed') {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        loadData: true,
+                        loadtrend: true,
+                        speedData: [],
+                    }
+                });
+            } else {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        loadData: true,
+                        loadtrend: true,
+                        timeData: [],
+                        distance: [],
+                        working_duration: [],
+                    }
+                });
+            }
             const data = yield call(api.getSiteTrend, payload);
             if (data.error || data.result == undefined) {
                 yield put({
                     type: 'updateState',
                     payload: {
-                        loadData: false
+                        loadData: false,
+                        loadtrend: false,
                     }
                 });
             } else {
-                let values = [];
-                if (data.result.values) {
-                    for (let i = 0; i < data.result.values.length; i++) {
-                        let value = [];
-                        const element = data.result.values[i];
-                        value.push(moment(element[0]).valueOf());
-                        value.push(element[1]);
-                        values.push(value);
+                if (payload.fields == 'speed') {
+                    let values = [];
+                    if (data.result.values) {
+                        for (let i = 0; i < data.result.values.length; i++) {
+                            let value = [];
+                            const element = data.result.values[i];
+                            value.push(moment(element[0]).valueOf());
+                            value.push(element[1]);
+                            values.push(value);
+                        }
                     }
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            speedData: values,
+                            loadData: false,
+                            loadtrend: false,
+                        }
+                    });
+                } else {
+                    let timeData = [];
+                    let distance = [];
+                    let working_duration = [];
+                    if (data.result && data.result.values) {
+                        for (let i = 0; i < data.result.values.length; i++) {
+                            const element = data.result.values[i];
+                            timeData.push(moment(element[0]).format('H:00'));
+                            distance.push(element[1]);
+                            working_duration.push(element[2]);
+                        }
+                    }
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            timeData: timeData,
+                            distance: distance,
+                            working_duration: working_duration,
+                            loadData: false,
+                            loadtrend: false,
+                        }
+                    });
                 }
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        speedData: values,
-                        loadData: false
-                    }
-                });
             }
         }
     },

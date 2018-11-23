@@ -69,11 +69,12 @@ class HistoryView extends Component {
         }
     }
     componentDidMount() {
-        this.props.dispatch(createAction('historyView/getAlerts')({
+        this.props.dispatch(createAction('historyView/updateState')({
             start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             isLoading: false,
             loadData: false,
+            selectTime: 1,
             statistics: {},
             events: [],
             siteData: {
@@ -114,6 +115,18 @@ class HistoryView extends Component {
                 mid: this.state.item.id,
             }
         }));
+        this.getTrendDate(this.state.btnSelect);
+    }
+    getTrendDate(value) {
+        this.props.dispatch(createAction('historyView/getSiteTrend')({
+            plateNo: this.state.item.id,
+            metric: 'location_data',
+            fields: value == 1 ? 'speed' : 'altitude,speed',
+            start: moment(this.state.start_time).utc().format(),
+            end: moment(this.state.end_time).utc().format(),
+            interval: value == 1 ? 60 : 3600,
+            function: 'max'
+        }))
     }
     selectToday(value) {
         this.setState({
@@ -137,23 +150,48 @@ class HistoryView extends Component {
         }
         return lable;
     }
-    getSeries() {
-        var serieses = [];
-        const name = names[this.state.btnSelect - 1];
-        const unit = units[this.state.btnSelect - 1];
-        let data = [];
-        for (let i = 0; i < 10000; i++) {
-            const time = 1542106890000 + i * 60000;
-            const value = Math.random() * 90;
-            data.push([time, value]);
+    getSeries(data) {
+        if (this.state.btnSelect == 1) {
+            var serieses = [];
+            const name = names[this.state.btnSelect - 1];
+            const unit = units[this.state.btnSelect - 1];
+            serieses.push({
+                type: 'spline',
+                name: name,
+                data: this.props.speedData,
+                lineWidth: 1,
+            });
+            return ihtool.getConf(serieses, unit);
+        } else {
+            const xAxis = [{
+                categories: this.props.timeData,
+                crosshair: true,
+                type: 'category'
+            }];
+            const yAxis = [{
+                title: {
+                    text: I18n.t('dashboard.worktime') + ' (h)',
+                    style: { color: '#1E90FF' }
+                },
+            }, {
+                title: {
+                    text: I18n.t('dashboard.travlled_distance') + ' (km)',
+                    style: { color: '#1cc593' },
+                },
+                opposite: true,
+            }];
+            const serieses = [{
+                name: I18n.t('dashboard.worktime'),
+                type: 'column',
+                data: this.props.working_duration,
+            }, {
+                name: I18n.t('dashboard.travlled_distance'),
+                type: 'column',
+                yAxis: 1,
+                data: this.props.distance,
+            }];
+            return ihtool.getConfDouble(xAxis, yAxis, serieses);
         }
-        serieses.push({
-            type: 'spline',
-            name: name,
-            data: data,
-            lineWidth: 1,
-        });
-        return ihtool.getConf(serieses, unit);
     }
     getEventItems(items) {
         if (items && items.length > 0) {
@@ -296,12 +334,12 @@ class HistoryView extends Component {
                             </View>
                             <View style={siteDetailStyle.bodyItemView}>
                                 <View style={styles.trendTitleView}>
-                                    <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.btnAction(1)}>
+                                    <TouchableOpacity style={styles.btnView} disabled={this.props.loadtrend} activeOpacity={0.6} onPress={() => this.btnAction(1)}>
                                         <View style={this.state.btnSelect == 1 ? styles.btn : styles.btn_}>
                                             <Text style={this.state.btnSelect == 1 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('speed')}</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.btnAction(2)}>
+                                    <TouchableOpacity style={styles.btnView} disabled={this.props.loadtrend} activeOpacity={0.6} onPress={() => this.btnAction(2)}>
                                         <View style={this.state.btnSelect == 2 ? styles.btn : styles.btn_}>
                                             <Text style={this.state.btnSelect == 2 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('worktime_duraction')}</Text>
                                         </View>
@@ -309,7 +347,7 @@ class HistoryView extends Component {
                                 </View>
                                 <View style={siteDetailStyle.line} />
                                 <View style={siteDetailStyle.chartView} >
-                                    <ChartView style={{ flex: 1 }} config={conf} stock={true}></ChartView>
+                                    <ChartView style={{ flex: 1 }} config={conf} more={this.state.btnSelect == 1 ? false : true} stock={false}></ChartView>
                                 </View>
                             </View>
                             <View style={{ height: 20 }} />
@@ -456,6 +494,7 @@ class HistoryView extends Component {
     }
     btnAction(value) {
         this.setState({ btnSelect: value });
+        this.getTrendDate(value);
     }
     siftBtnAction() {
         if (this.state.isShow) {
@@ -499,13 +538,19 @@ class HistoryView extends Component {
 }
 function mapStateToProps(state) {
     return {
+        loadtrend: state.historyView.loadtrend,
         isLoading: state.historyView.isLoading,
+        isLoad: state.historyView.isLoad,
         events: state.historyView.events,
         marker: state.historyView.marker,
         center: state.historyView.center,
         start_time: state.historyView.start_time,
         end_time: state.historyView.end_time,
         selectTime: state.historyView.selectTime,
+        speedData: state.historyView.speedData,
+        timeData: state.historyView.timeData,
+        distance: state.historyView.distance,
+        working_duration: state.historyView.working_duration,
     }
 }
 export default connect(mapStateToProps)(HistoryView);
