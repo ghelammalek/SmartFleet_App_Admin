@@ -121,7 +121,7 @@ class HistoryView extends Component {
         this.props.dispatch(createAction('historyView/getSiteTrend')({
             plateNo: this.state.item.id,
             metric: 'location_data',
-            fields: value == 1 ? 'speed' : 'altitude,speed',
+            fields: value == 1 ? 'speed' : 'working_duration,distance',
             start: moment(this.state.start_time).utc().format(),
             end: moment(this.state.end_time).utc().format(),
             interval: value == 1 ? 60 : 3600,
@@ -170,7 +170,7 @@ class HistoryView extends Component {
             }];
             const yAxis = [{
                 title: {
-                    text: I18n.t('dashboard.worktime') + ' (h)',
+                    text: I18n.t('dashboard.worktime') + ' (s)',
                     style: { color: '#1E90FF' }
                 },
             }, {

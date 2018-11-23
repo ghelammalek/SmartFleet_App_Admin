@@ -167,8 +167,8 @@ export default {
                         for (let i = 0; i < data.result.values.length; i++) {
                             const element = data.result.values[i];
                             timeData.push(moment(element[0]).format('H:00'));
-                            distance.push(element[1]);
-                            working_duration.push(element[2]);
+                            working_duration.push(element[1]);
+                            distance.push(element[2]);
                         }
                     }
                     yield put({
