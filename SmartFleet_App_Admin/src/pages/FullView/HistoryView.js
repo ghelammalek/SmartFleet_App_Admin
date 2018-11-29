@@ -115,9 +115,17 @@ class HistoryView extends Component {
                 mid: this.state.item.id,
             }
         }));
-        this.getTrendDate(this.state.btnSelect);
+        this.getTrendData(this.state.btnSelect);
+        this.getSiteTracks(this.state.btnSelect);
     }
-    getTrendDate(value) {
+    getSiteTracks(value) {
+        this.props.dispatch(createAction('historyView/getSiteTracks')({
+            plateNo: this.state.item.id,
+            start: moment(this.state.start_time).utc().format(),
+            end: moment(this.state.end_time).utc().format(),
+        }))
+    }
+    getTrendData(value) {
         this.props.dispatch(createAction('historyView/getSiteTrend')({
             plateNo: this.state.item.id,
             metric: 'location_data',
@@ -188,7 +196,7 @@ class HistoryView extends Component {
                 name: I18n.t('dashboard.travlled_distance'),
                 type: 'column',
                 yAxis: 1,
-                data: this.props.distance,
+                data: this.props.distanceData,
             }];
             return ihtool.getConfDouble(xAxis, yAxis, serieses);
         }
@@ -280,38 +288,38 @@ class HistoryView extends Component {
                                                 <View style={styles.statictItem}>
                                                     <View style={styles.statictItem}>
                                                         <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>里程：</Text>
-                                                        <Text style={styles.text14}>34.5公里</Text>
+                                                        <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
+                                                        <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + 'km'}</Text>
                                                     </View>
                                                     <View style={styles.statictItem}>
                                                         <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>时间：</Text>
-                                                        <Text style={styles.text14}>34小时</Text>
+                                                        <Text style={styles.text14_bold}>{I18n.t('common.when') + ': '}</Text>
+                                                        <Text style={styles.text14}>{'32h'}</Text>
                                                     </View>
                                                 </View>
                                                 <View style={styles.statictItem}>
                                                     <View style={styles.statictItem}>
                                                         <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>告警：</Text>
-                                                        <Text style={styles.text14}>4</Text>
+                                                        <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
+                                                        <Text style={styles.text14}>{ihtool.placeholderStr(this.props.count)}</Text>
                                                     </View>
                                                     <View style={styles.statictItem}>
                                                         <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>违规驾驶行为：</Text>
-                                                        <Text style={styles.text14}>0</Text>
+                                                        <Text style={styles.text14_bold}>{I18n.t('dashboard.illegal_drive_behavior') + ': '}</Text>
+                                                        <Text style={styles.text14}>{'0'}</Text>
                                                     </View>
                                                 </View>
                                             </View>
                                             <View style={styles.eventView}>
                                                 <View style={styles.itemView_}>
                                                     <View style={styles.itemStateView_}>
-                                                        <Text style={styles.text14_bold}>状态</Text>
+                                                        <Text style={styles.text14_bold}>{I18n.t('historyTack.state')}</Text>
                                                     </View>
                                                     <View style={styles.itemTimeView_}>
-                                                        <Text style={styles.text14_bold}>时间</Text>
+                                                        <Text style={styles.text14_bold}>{I18n.t('common.when')}</Text>
                                                     </View>
                                                     <View style={styles.itemMesgView_}>
-                                                        <Text style={styles.text14_bold}>内容</Text>
+                                                        <Text style={styles.text14_bold}>{I18n.t('detail.content')}</Text>
                                                     </View>
                                                 </View>
                                                 {
@@ -322,11 +330,11 @@ class HistoryView extends Component {
                                         <MapView
                                             trafficEnabled={false}
                                             baiduHeatMapEnabled={false}
-                                            zoom={6}
                                             mapType={MapTypes.NORMAL}
-                                            center={this.props.center}
-                                            marker={this.props.marker}
                                             style={styles.mapView}
+                                            center={this.props.center}
+                                            markers={this.props.markers}
+                                            polylines={this.props.tracks}
                                             onMapClick={(e) => {
                                             }}
                                         />
@@ -494,7 +502,7 @@ class HistoryView extends Component {
     }
     btnAction(value) {
         this.setState({ btnSelect: value });
-        this.getTrendDate(value);
+        this.getTrendData(value);
     }
     siftBtnAction() {
         if (this.state.isShow) {
@@ -538,11 +546,12 @@ class HistoryView extends Component {
 }
 function mapStateToProps(state) {
     return {
+        loadtracks: state.historyView.loadtracks,
         loadtrend: state.historyView.loadtrend,
         isLoading: state.historyView.isLoading,
         isLoad: state.historyView.isLoad,
         events: state.historyView.events,
-        marker: state.historyView.marker,
+        markers: state.historyView.markers,
         center: state.historyView.center,
         start_time: state.historyView.start_time,
         end_time: state.historyView.end_time,
@@ -550,7 +559,10 @@ function mapStateToProps(state) {
         speedData: state.historyView.speedData,
         timeData: state.historyView.timeData,
         distance: state.historyView.distance,
+        distanceData: state.historyView.distanceData,
+        count: state.historyView.count,
         working_duration: state.historyView.working_duration,
+        tracks: state.historyView.tracks,
     }
 }
 export default connect(mapStateToProps)(HistoryView);

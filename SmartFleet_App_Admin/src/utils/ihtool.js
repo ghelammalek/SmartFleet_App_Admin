@@ -116,7 +116,39 @@ exports.getTrackTypeImage = function getTrackTypeImage(record) {
         return null;
     }
 }
+exports.getTrackTypeImageName = function getTrackTypeImageName(record) {
+    const { labels, fields, level } = record;
+    const { value, type, category } = fields;
+    const { code } = labels;
 
+    if (code === 'driving') {
+        if (type === 'engine') {
+            if (value) {
+                return 'ico_dianhuo';
+            } else {
+                return 'ico_xihuo';
+            }
+        } else if (level) {
+            if (level == 1) {
+                return 'level1';
+            } else if (level == 2) {
+                return 'level2';
+            } else if (level == 3) {
+                return 'level3';
+            } else if (level == 4) {
+                return 'level4';
+            } else if (level == 5) {
+                return 'level5';
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    } else {
+        return '';
+    }
+}
 /**
  *   获取事件类型
  *

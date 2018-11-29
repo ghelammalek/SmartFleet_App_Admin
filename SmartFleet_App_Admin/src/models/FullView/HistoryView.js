@@ -13,6 +13,7 @@ export default {
         isLoading: false,
         loadData: false,
         loadtrend: false,
+        loadtracks: false,
         statistics: {},
         events: [],
         siteData: {
@@ -25,11 +26,12 @@ export default {
         siteDetail: {},
         speedData: [],
         timeData: [],
-        distance: [],
+        distanceData: [],
         working_duration: [],
-        marker: {
-
-        },
+        distance: null,
+        count: null,
+        tracks: [],
+        markers: [],
         center: {
             longitude: 116.981718,
             latitude: 39.542449
@@ -69,41 +71,75 @@ export default {
                     }
                 });
             } else {
+                let markers = [];
+                for (let i = 0; i < data.result.length; i++) {
+                    const element = data.result[i];
+                    if (element.fields && element.fields.start_location) {
+                        const location = element.fields.start_location;
+                        markers.push({ latitude: location.latitude, longitude: location.longitude, extra: { imageName: ihtool.getTrackTypeImageName(element) } });
+                    }
+                }
                 yield put({
                     type: 'updateState',
                     payload: {
+                        markers: markers,
                         events: data.result,
                         isLoading: false,
                     }
                 });
             }
         },
-        *getSiteData({ payload }, { call, put, select }) {
-            const data = yield call(api.getSiteData, payload);
+        *getSiteTracks({ payload }, { call, put, select }) {
+            yield put({
+                type: 'updateState',
+                payload: {
+                    loadData: true,
+                    loadtracks: true,
+                }
+            });
+            const data = yield call(api.getSiteTracks, payload);
             if (data.error || data.result == undefined) {
-                // alert('sdf');
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        loadData: false,
+                        loadtrend: false,
+                    }
+                });
             } else {
-                let siteData = {
-                    metrics: {
-                        iot_data: {},
-                        location_data: {}
+                let maxLng = 0;
+                let minLng = 0;
+                let maxLat = 0;
+                let minLat = 0;
+                for (let i = 0; i < data.result.border.length; i++) {
+                    const element = data.result.border[i];
+                    if (i == 0) {
+                        maxLng = element.lng;
+                        minLng = element.lng;
+                        maxLat = element.lat;
+                        minLat = element.lat;
+                    } else {
+                        if (element.lng > maxLng) maxLng = element.lng;
+                        if (element.lng < minLng) minLng = element.lng;
+                        if (element.lat > maxLat) maxLat = element.lat;
+                        if (element.lat < minLat) minLat = element.lat;
                     }
                 }
-                if (data.result) {
-                    if (data.result.metrics) {
-                        if (data.result.metrics.iot_data) {
-                            siteData.metrics.iot_data = data.result.metrics.iot_data;
-                        }
-                        if (data.result.metrics.location_data) {
-                            siteData.metrics.location_data = data.result.metrics.location_data;
-                        }
-                    }
+                let cenLng = (parseFloat(maxLng) + parseFloat(minLng)) / 2;
+                let cenLat = (parseFloat(maxLat) + parseFloat(minLat)) / 2;
+                let centerPoint = {
+                    latitude: cenLat,
+                    longitude: cenLng
                 }
                 yield put({
                     type: 'updateState',
                     payload: {
-                        siteData: siteData,
-                        isLoading: false,
+                        loadData: false,
+                        loadtrend: false,
+                        center: centerPoint,
+                        tracks: data.result.tracks,
+                        distance: data.result.distance,
+                        count: data.result.count,
                     }
                 });
             }
@@ -125,7 +161,7 @@ export default {
                         loadData: true,
                         loadtrend: true,
                         timeData: [],
-                        distance: [],
+                        distanceData: [],
                         working_duration: [],
                     }
                 });
@@ -161,21 +197,21 @@ export default {
                     });
                 } else {
                     let timeData = [];
-                    let distance = [];
+                    let distanceData = [];
                     let working_duration = [];
                     if (data.result && data.result.values) {
                         for (let i = 0; i < data.result.values.length; i++) {
                             const element = data.result.values[i];
                             timeData.push(moment(element[0]).format('H:00'));
                             working_duration.push(element[1]);
-                            distance.push(element[2]);
+                            distanceData.push(element[2]);
                         }
                     }
                     yield put({
                         type: 'updateState',
                         payload: {
                             timeData: timeData,
-                            distance: distance,
+                            distanceData: distanceData,
                             working_duration: working_duration,
                             loadData: false,
                             loadtrend: false,

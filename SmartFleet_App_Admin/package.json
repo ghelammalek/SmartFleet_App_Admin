@@ -15,7 +15,7 @@
     "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-native": "0.55.4",
-    "react-native-baidu-map": "^0.6.0",
+    "react-native-baidu-map": "https://github.com/inhandnet/react-native-baidu-map.git",
     "react-native-datepicker": "^1.7.2",
     "react-native-deprecated-custom-components": "^0.1.2",
     "react-native-fetch-blob": "https://github.com/linfeizhang/react-native-fetch-blob.git",

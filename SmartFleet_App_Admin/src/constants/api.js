@@ -137,6 +137,19 @@ exports.getSiteTrend = function getSiteTrend(params) {
     return request.get(url, null, true, HEADER_JSON);
 }
 
+/**
+ *    获取车辆的轨迹数据
+ *
+ * @param {*} params
+ * @returns
+ */
+exports.getSiteTracks = function getSiteTracks(params) {
+    const url = '/api/sites/' + encodeURIComponent(params.plateNo) + '/tracks?'
+        + '&start=' + params.start
+        + '&end=' + params.end
+        + '&mapType=' + config.mapType
+    return request.get(url, null, true, HEADER_JSON);
+}
 
 /**
  *   获取车辆的事件列表
