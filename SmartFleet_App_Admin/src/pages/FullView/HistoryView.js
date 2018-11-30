@@ -201,6 +201,35 @@ class HistoryView extends Component {
             return ihtool.getConfDouble(xAxis, yAxis, serieses);
         }
     }
+    getMarkers(markers, polylines) {
+        // console.log(markers);
+        let points = [];
+        // console.log(polylines);
+        if (polylines) {
+            if (polylines.length > 0) {
+                for (let i = 0; i < polylines.length; i++) {
+                    const tracks = polylines[i];
+                    if (tracks.length > 0) {
+                        const startLocation = tracks[0];
+                        points.push({ latitude: startLocation.lat, longitude: startLocation.lng, extra: { imageName: 'start_location' } });
+                        if (tracks.length > 1) {
+                            const index = tracks.length - 1;
+                            const endLocation = tracks[index];
+                            points.push({ latitude: endLocation.lat, longitude: endLocation.lng, extra: { imageName: 'end_location' } });
+                        }
+                    }
+                }
+            }
+        }
+        if (markers && markers.length > 0) {
+            for (let i = 0; i < markers.length; i++) {
+                const marker = markers[i];
+                points.push({ latitude: marker.latitude, longitude: marker.longitude, extra: { imageName: marker.extra.imageName } });
+            }
+        }
+        // console.log(points);
+        return points;
+    }
     getEventItems(items) {
         if (items && items.length > 0) {
             return items.map((item, index) =>
@@ -219,13 +248,18 @@ class HistoryView extends Component {
         } else {
             return (
                 <TouchableOpacity disabled={this.props.isLoading} style={styles.nodataView} activeOpacity={0.6} onPress={() => this.refreshEvents()} >
-                    <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
+                    {
+                        this.state.state == 1 ?
+                            <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} /> : <View />
+                    }
                 </TouchableOpacity>
             );
         }
     }
     render() {
         const conf = this.getSeries();
+        const markers = this.getMarkers(this.props.markers, this.props.tracks);
+        console.log(markers);
         return (
             <View style={styles.container}>
                 <ScrollableTabView
@@ -281,64 +315,71 @@ class HistoryView extends Component {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={siteDetailStyle.line} />
-                                {
-                                    this.state.state == 1 ?
-                                        <View>
-                                            <View style={styles.statictView}>
+                                <View style={{ flexDirection: 'row', width: Dimensions.get('window').width * 2 }}>
+                                    <View style={
+                                        this.state.state == 1 ? { width: Dimensions.get('window').width - 48 } :
+                                            { width: 0 }}>
+                                        <View style={styles.statictView}>
+                                            <View style={styles.statictItem}>
                                                 <View style={styles.statictItem}>
-                                                    <View style={styles.statictItem}>
-                                                        <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
-                                                        <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + 'km'}</Text>
-                                                    </View>
-                                                    <View style={styles.statictItem}>
-                                                        <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>{I18n.t('common.when') + ': '}</Text>
-                                                        <Text style={styles.text14}>{'32h'}</Text>
-                                                    </View>
+                                                    <View style={styles.statictPoint} />
+                                                    <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
+                                                    <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + 'km'}</Text>
                                                 </View>
                                                 <View style={styles.statictItem}>
-                                                    <View style={styles.statictItem}>
-                                                        <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
-                                                        <Text style={styles.text14}>{ihtool.placeholderStr(this.props.count)}</Text>
-                                                    </View>
-                                                    <View style={styles.statictItem}>
-                                                        <View style={styles.statictPoint} />
-                                                        <Text style={styles.text14_bold}>{I18n.t('dashboard.illegal_drive_behavior') + ': '}</Text>
-                                                        <Text style={styles.text14}>{'0'}</Text>
-                                                    </View>
+                                                    <View style={styles.statictPoint} />
+                                                    <Text style={styles.text14_bold}>{I18n.t('common.when') + ': '}</Text>
+                                                    <Text style={styles.text14}>{'32h'}</Text>
                                                 </View>
                                             </View>
-                                            <View style={styles.eventView}>
-                                                <View style={styles.itemView_}>
-                                                    <View style={styles.itemStateView_}>
-                                                        <Text style={styles.text14_bold}>{I18n.t('historyTack.state')}</Text>
-                                                    </View>
-                                                    <View style={styles.itemTimeView_}>
-                                                        <Text style={styles.text14_bold}>{I18n.t('common.when')}</Text>
-                                                    </View>
-                                                    <View style={styles.itemMesgView_}>
-                                                        <Text style={styles.text14_bold}>{I18n.t('detail.content')}</Text>
-                                                    </View>
+                                            <View style={styles.statictItem}>
+                                                <View style={styles.statictItem}>
+                                                    <View style={styles.statictPoint} />
+                                                    <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
+                                                    <Text style={styles.text14}>{ihtool.placeholderStr(this.props.count)}</Text>
                                                 </View>
-                                                {
-                                                    this.getEventItems(this.props.events)
-                                                }
+                                                <View style={styles.statictItem}>
+                                                    <View style={styles.statictPoint} />
+                                                    <Text style={styles.text14_bold}>{I18n.t('dashboard.illegal_drive_behavior') + ': '}</Text>
+                                                    <Text style={styles.text14}>{'0'}</Text>
+                                                </View>
                                             </View>
-                                        </View> :
+                                        </View>
+                                        <View style={styles.eventView}>
+                                            <View style={styles.itemView_}>
+                                                <View style={styles.itemStateView_}>
+                                                    <Text style={styles.text14_bold}>{I18n.t('historyTack.state')}</Text>
+                                                </View>
+                                                <View style={styles.itemTimeView_}>
+                                                    <Text style={styles.text14_bold}>{I18n.t('common.when')}</Text>
+                                                </View>
+                                                <View style={styles.itemMesgView_}>
+                                                    <Text style={styles.text14_bold}>{I18n.t('detail.content')}</Text>
+                                                </View>
+                                            </View>
+                                            {
+                                                this.getEventItems(this.props.events)
+                                            }
+                                        </View>
+                                    </View> :
+                                    <View style={
+                                        this.state.state == 1 ? { height: 50, marginLeft: 50, width: Dimensions.get('window').width - 48, } :
+                                            { width: Dimensions.get('window').width - 48, }}
+                                    >
                                         <MapView
                                             trafficEnabled={false}
                                             baiduHeatMapEnabled={false}
                                             mapType={MapTypes.NORMAL}
                                             style={styles.mapView}
-                                            center={this.props.center}
-                                            markers={this.props.markers}
+                                            // center={this.props.center}
+                                            markers={markers}
                                             polylines={this.props.tracks}
                                             onMapClick={(e) => {
                                             }}
                                         />
-                                }
+                                    </View>
+                                </View>
+                                {/* } */}
                             </View>
                             <View style={siteDetailStyle.bodyItemView}>
                                 <View style={styles.trendTitleView}>
