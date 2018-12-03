@@ -56,6 +56,8 @@ export default {
                 type: 'updateState',
                 payload: {
                     isLoading: true,
+                    markers: [],
+                    events: [],
                 }
             });
             const data = yield call(api.getAlerts, payload);
@@ -91,9 +93,13 @@ export default {
                 payload: {
                     loadData: true,
                     loadtracks: true,
+                    tracks: [],
+                    distance: null,
+                    count: null,
                 }
             });
             const data = yield call(api.getSiteTracks, payload);
+            // console.log(data);
             if (data.error || data.result == undefined) {
                 yield put({
                     type: 'updateState',
@@ -103,36 +109,11 @@ export default {
                     }
                 });
             } else {
-                let maxLng = 0;
-                let minLng = 0;
-                let maxLat = 0;
-                let minLat = 0;
-                for (let i = 0; i < data.result.border.length; i++) {
-                    const element = data.result.border[i];
-                    if (i == 0) {
-                        maxLng = element.lng;
-                        minLng = element.lng;
-                        maxLat = element.lat;
-                        minLat = element.lat;
-                    } else {
-                        if (element.lng > maxLng) maxLng = element.lng;
-                        if (element.lng < minLng) minLng = element.lng;
-                        if (element.lat > maxLat) maxLat = element.lat;
-                        if (element.lat < minLat) minLat = element.lat;
-                    }
-                }
-                let cenLng = (parseFloat(maxLng) + parseFloat(minLng)) / 2;
-                let cenLat = (parseFloat(maxLat) + parseFloat(minLat)) / 2;
-                let centerPoint = {
-                    latitude: cenLat,
-                    longitude: cenLng
-                }
                 yield put({
                     type: 'updateState',
                     payload: {
                         loadData: false,
                         loadtrend: false,
-                        center: centerPoint,
                         tracks: data.result.tracks,
                         distance: data.result.distance,
                         count: data.result.count,
