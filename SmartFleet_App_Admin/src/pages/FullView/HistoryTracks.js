@@ -297,7 +297,7 @@ class HistoryTracks extends Component {
                                     this.state.state == 1 ? { width: Dimensions.get('window').width - 48 } :
                                         { width: 0 }}>
                                     <View style={styles.statictView}>
-                                        <View style={styles.statictItem}>
+                                        <View style={styles.statictItem_}>
                                             <View style={styles.statictItem}>
                                                 <View style={styles.statictPoint} />
                                                 <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
@@ -309,7 +309,7 @@ class HistoryTracks extends Component {
                                                 <Text style={styles.text14}>{'32h'}</Text>
                                             </View>
                                         </View>
-                                        <View style={styles.statictItem}>
+                                        <View style={styles.statictItem_}>
                                             <View style={styles.statictItem}>
                                                 <View style={styles.statictPoint} />
                                                 <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
@@ -340,7 +340,7 @@ class HistoryTracks extends Component {
                                     </View>
                                 </View> :
                                     <View style={
-                                    this.state.state == 1 ? { marginLeft: 50, width: Dimensions.get('window').width - 48, } :
+                                    this.state.state == 1 ? { height: 200, marginLeft: 50, width: Dimensions.get('window').width - 48, } :
                                         { width: Dimensions.get('window').width - 48, }}
                                 >
                                     <MapView
@@ -351,6 +351,7 @@ class HistoryTracks extends Component {
                                         markers={markers}
                                         polylines={this.props.tracks}
                                         onMapClick={(e) => {
+                                            console.log(e);
                                         }}
                                     />
                                 </View>
