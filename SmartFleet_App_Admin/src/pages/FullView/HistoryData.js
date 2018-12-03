@@ -92,7 +92,7 @@ class HistoryData extends Component {
     getTrendData(value) {
         this.props.dispatch(createAction('historyData/getSiteTrend')({
             plateNo: this.state.item.id,
-            metric: 'location_data',
+            metric: 'iot_data',
             fields: value == 1 ? 'fuel,distance' : 'working_duration,distance',
             start: moment(this.state.start_time).utc().format(),
             end: moment(this.state.end_time).utc().format(),
