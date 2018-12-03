@@ -91,10 +91,9 @@ exports.getStatistics = function (queryType, plateNo) {
  * @returns
  */
 exports.getStatisticsTime = function (params) {
-
     let url = '/api/statistics/vehicle/accumulation?queryType=' + params.queryType
-        + '&begin=' + params.begin
-        + '&end=' + params.end;
+        + '&startTime=' + params.begin
+        + '&endTime=' + params.end;
     if (params.plateNo) {
         url = url + '&plateNo=' + encodeURIComponent(params.plateNo);
     }

@@ -76,7 +76,6 @@ export default {
                 }
             });
             const data = yield call(api.getSiteTrend, payload);
-            console.log(data);
             if (data.error || data.result == undefined) {
                 yield put({
                     type: 'updateState',

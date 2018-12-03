@@ -71,24 +71,22 @@ class HistoryData extends Component {
         this.refresh();
     }
     refresh() {
-        this.props.dispatch(createAction('historyTracks/getStatistics')({
-            begin: moment(this.state.start_time).utc().format(),
-            end: moment(this.state.end_time).utc().format(),
-            labels: {
-                code: 'driving',
-                mid: this.state.item.id,
-            }
+        this.props.dispatch(createAction('historyData/getStatistics')({
+            begin: moment(this.state.start_time).valueOf(),
+            end: moment(this.state.end_time).valueOf(),
+            plateNo: this.state.item.plateNo,
+            queryType: 1,
         }));
-        this.props.dispatch(createAction('historyTracks/getAlerts')({
-            cursor: 0,
-            limit: 15,
-            body: {
-                begin: moment(this.state.start_time).utc().format(),
-                end: moment(this.state.end_time).utc().format(),
-                plateNo: this.state.item.plateNo,
-                queryType: 1,
-            }
-        }));
+        // this.props.dispatch(createAction('historyData/getAlerts')({
+        //     cursor: 0,
+        //     limit: 15,
+        //     body: {
+        //         begin: moment(this.state.start_time).utc().format(),
+        //         end: moment(this.state.end_time).utc().format(),
+        //         plateNo: this.state.item.plateNo,
+        //         queryType: 1,
+        //     }
+        // }));
         this.getTrendData(this.state.btnSelect);
     }
     getTrendData(value) {
@@ -506,6 +504,7 @@ function mapStateToProps(state) {
         loadtrend: state.historyData.loadtrend,
         isLoading: state.historyData.isLoading,
         isLoad: state.historyData.isLoad,
+        statistics: state.historyData.statistics,
         events: state.historyData.events,
         start_time: state.historyData.start_time,
         end_time: state.historyData.end_time,
