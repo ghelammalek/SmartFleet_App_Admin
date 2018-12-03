@@ -85,6 +85,22 @@ exports.getStatistics = function (queryType, plateNo) {
 }
 
 /**
+ *    获取车辆的统计数据
+ *
+ *  * @param {*} queryType
+ * @returns
+ */
+exports.getStatisticsTime = function (params) {
+
+    let url = '/api/statistics/vehicle/accumulation?queryType=' + params.queryType
+        + '&begin=' + params.begin
+        + '&end=' + params.end;
+    if (params.plateNo) {
+        url = url + '&plateNo=' + encodeURIComponent(params.plateNo);
+    }
+    return request.get(url, null, true, HEADER_JSON);
+}
+/**
  *   获取车辆的列表信息
  *
  * @param {*} 

@@ -27,6 +27,7 @@ const singin = StackActions.reset({
     index: 0,
     actions: [
         NavigationActions.navigate({ routeName: 'Login' })
+        // NavigationActions.navigate({ routeName: 'HistoryView', params: { item: { plateNo: '', location: {}, id: '12312' } } })
     ]
 });
 const main = StackActions.reset({

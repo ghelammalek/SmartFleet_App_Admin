@@ -44,10 +44,10 @@ export default historyStyle = StyleSheet.create({
     },
     siftView: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height - 83,
+        height: Dimensions.get('window').height - 40,
         top: 1,
         position: 'absolute',
-        marginTop: 83,
+        marginTop: 40,
         // backgroundColor: 'red',
     },
     timeTitle: {
@@ -95,6 +95,7 @@ export default historyStyle = StyleSheet.create({
     },
 
     statictView: {
+        flex: 1,
         paddingHorizontal: 12,
         marginTop: 12,
         backgroundColor: '#fbfbfb',
@@ -216,6 +217,73 @@ export default historyStyle = StyleSheet.create({
     },
 
 
+    detailItem: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 8,
+        height: 50,
+    },
+
+    recordImage: {
+        width: 15,
+        height: 15,
+        resizeMode: 'contain',
+    },
+    recordLable: {
+        marginLeft: 8,
+        marginRight: 12,
+    },
+    recordTitleView: {
+        flex: 1,
+        height: 40,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: -12,
+        paddingHorizontal: 12,
+        backgroundColor: '#fdfdfd',
+    },
+    recordView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+    },
+    recordLeftView: {
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: 15,
+        marginRight: 13,
+    },
+    recordLine: {
+        width: 1,
+        flex: 1,
+        backgroundColor: '#f3f3f3',
+    },
+    recordRightView: {
+        flex: 1,
+        flexDirection: 'column',
+        // justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingBottom: 30,
+        // backgroundColor: 'red'
+    },
+    recordTimeView: {
+        height: 15,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 6,
+    },
+    recordTime: {
+        color: '#adadad',
+        fontSize: 12,
+    },
+    recordMsg: {
+        color: '#2d2d2d',
+        fontSize: 14,
+    },
 
     mapView: {
         flex: 1,
@@ -228,5 +296,10 @@ export default historyStyle = StyleSheet.create({
         backgroundColor: '#fff',
         borderTopWidth: 1,
         borderTopColor: '#e0e0e0',
+    },
+    nodataView_: {
+        flex: 1,
+        minHeight: 200,
+        backgroundColor: '#fff',
     },
 })

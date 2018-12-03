@@ -132,6 +132,7 @@ export default {
     logo_title: '打造智能车辆管理系统',
 
     worktime_duraction: '工作时长及行驶里程',
+    fuel_distance: '油耗及里程趋势',
     speed: '速度',
 
     event_unflod: '点击展开',
