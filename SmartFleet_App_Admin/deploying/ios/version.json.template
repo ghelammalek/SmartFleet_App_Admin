@@ -1,0 +1,4 @@
+{
+    "version": "{{ app_version }}",
+    "commit_id": "{{ commit_id}}"
+}

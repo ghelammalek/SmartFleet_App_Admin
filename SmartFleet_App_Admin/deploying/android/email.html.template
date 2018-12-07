@@ -1,0 +1,18 @@
+<table width="600" border="0" cellspacing="0" cellpadding="4">
+          <tr style="font-size:16px">
+            <td colspan=2>App name: </td><td colspan=2>{{ app_name }}</a></td>
+          </tr>
+          <tr style="font-size:14px">
+            <td colspan=2>Version: </td><td colspan=2>{{ app_version }}</a></td>
+          </tr>
+          <tr style="font-size:14px">
+            <td colspan=2>desc: </td><td colspan=2>{{ app_desc }}</a></td>
+          </tr>
+          <tr style="font-size:14px">
+            <td colspan=4><a href="{{ app_url }}">Download</a></td>
+          </tr>
+          <tr style="font-size:13px">
+            <td>
+             <img src="cid:file_name"></td>
+          </tr>
+</table>

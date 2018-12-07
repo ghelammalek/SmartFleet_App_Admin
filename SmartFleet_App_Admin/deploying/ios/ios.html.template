@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+	<title>{{ app_name }}</title>
+</head>
+
+<body>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		.step {
+			margin: 14px;
+		}
+
+		ul {
+			list-style: none;
+		}
+
+		ul li {
+			padding-left: 20px;
+			line-height: 40px;
+		}
+
+		ul #tip {
+			font-size: 24px;
+
+		}
+
+		.test {
+			line-height: 30px;
+			width: 30%;
+			margin: 0 auto;
+			font-size: 20px;
+			/*border: 10px solid hsla(0,0%,100%,.5);*/
+			background: #77e0a7;
+			text-align: center;
+			border-radius: 6px
+		}
+
+		.test a {
+			text-decoration: none;
+			color: #000;
+			display: inline-block;
+			margin: 0 auto
+		}
+	</style>
+
+	<div class="test">
+		<b>{{ app_name }}</b>
+		<br />
+		<label>{{ app_version }}</label>
+		<br />
+		<label>{{ app_desc }}</label>
+		<br/>
+	</div>
+	<div class="step">
+		<ul>
+			<li id="tip">安装步骤</li>
+			<li class="item">
+				<!-- <img src="setting1.png"> -->第一步：点击"开始下载"</li>
+			<li class="item">
+				<!-- <img src="setting2.png"> -->第二步：点击"安装"</li>
+			<li class="item">
+				<!-- <img src="setting3.png"> -->第三步：在桌面查看安装进度，直至完成</li>
+			<li class="item">
+				<!-- <img src="setting4.png"> -->第四步：在"设置"->"通用"->"设备管理"中设置信任"inhand networks, Inc"</li>
+			<li class="item">
+				<!-- <img src="setting5.png"> -->第五步：打开App</li>
+		</ul>
+	</div>
+	<div class="test">
+		<a href="itms-services://?action=download-manifest&url={{ app_url }}/{{ app_version }}/manifest.plist">开始下载</a>
+		<br />
+	</div>
+	<script type="text/javascript">
+		function test() {
+			console.log('a')
+		}
+		function is_weixin() {
+			var ua = navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == "micromessenger") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		var isWeixin = is_weixin();
+		var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+
+		function loadStyleText(cssText) {
+			var style = document.createElement('style');
+			style.rel = 'stylesheet';
+			style.type = 'text/css';
+			try {
+				style.appendChild(document.createTextNode(cssText));
+			} catch (e) {
+				style.styleSheet.cssText = cssText; //ie9以下
+			}
+			var head = document.getElementsByTagName("head")[0]; //head标签之间加上style样式
+			head.appendChild(style);
+		}
+		var cssText = "#weixin-tip{position: fixed; left:0; top:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=80); width: 100%; height:100%; z-index: 100;} #weixin-tip p{text-align: center; margin-top: 10%; padding:0 5%;}";
+		if (isWeixin) {
+			loadHtml();
+			loadStyleText(cssText);
+		}
+	</script>
+</body>
+
+</html>
