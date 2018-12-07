@@ -150,7 +150,8 @@ export default siteDetailStyle = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 3,
-        height: 50,
+        minHeight: 50,
+        paddingVertical: 8,
     },
     detailItem_: {
         flex: 1,
@@ -158,11 +159,14 @@ export default siteDetailStyle = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         // marginHorizontal: 3,
-        height: 50,
+        minHeight: 50,
+        paddingVertical: 8,
     },
     line_vertical: {
+        // flex: 1,
         width: 1,
         height: 50,
+
         backgroundColor: '#f3f3f3',
     },
     line_horizontal: {
@@ -172,6 +176,7 @@ export default siteDetailStyle = StyleSheet.create({
     },
     detailLabelView: {
         maxWidth: Dimensions.get('window').width / 2 - 60,
+        paddingHorizontal: 3
     },
     detailLabel: {
         // flex: 2,
@@ -259,4 +264,14 @@ export default siteDetailStyle = StyleSheet.create({
         fontWeight: 'bold',
         color: '#24ba8e',
     },
+    messageView: {
+        flex: 1,
+        // alignItems: 'flex-end',
+        paddingRight: 8,
+    },
+    messageView_: {
+        flex: 1,
+        // alignItems: 'flex-end',
+        // paddingRight: 3,
+    }
 });

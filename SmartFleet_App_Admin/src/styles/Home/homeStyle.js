@@ -43,15 +43,17 @@ export default homeStyle = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 3,
-        padding: 15,
+        paddingLeft: 15,
+        paddingRight: 3,
         marginTop: 10,
     },
     static_titleView: {
+        flex: 1,
         justifyContent: 'center',
         flexDirection: 'column',
     },
     static_subView: {
-        marginTop: 3,
+        // marginTop: 3,
         alignItems: 'flex-end',
         flexDirection: 'row',
     },
@@ -69,6 +71,7 @@ export default homeStyle = StyleSheet.create({
     static_image: {
         width: 40,
         height: 40,
+        marginVertical: 15,
         resizeMode: 'contain',
         marginRight: 8,
     },
