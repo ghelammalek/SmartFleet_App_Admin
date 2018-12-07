@@ -56,15 +56,24 @@
 			display: inline-block;
 			margin: 0 auto
 		}
+
+		.test1 {
+			width: auto;
+			margin: 0 20%;
+			font-size: 20px;
+			/*border: 10px solid hsla(0,0%,100%,.5);*/
+			text-align: center;
+			border-radius: 6px
+		}
 	</style>
 
-	<div class="test">
-		<b>{{ app_name }}</b>
+	<div class="test1">
+		<h2>{{ app_name }}</h2>
 		<br />
 		<label>{{ app_version }}</label>
 		<br />
 		<label>{{ app_desc }}</label>
-		<br/>
+		<br />
 	</div>
 	<div class="step">
 		<ul>
