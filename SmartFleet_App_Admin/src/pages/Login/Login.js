@@ -195,6 +195,8 @@ class Login extends Component {
                                     <TextInput
                                         style={loginStyle.textInput}
                                         value={this.state.tel}
+                                        autoCapitalize="none"
+                                        clearButtonMode="while-editing"
                                         placeholder={I18n.t('please_entry_tel')}
                                         placeholderTextClolor='#979797'
                                         maxLength={11}
@@ -252,6 +254,8 @@ class Login extends Component {
                                     <TextInput
                                         style={loginStyle.textInput}
                                         value={this.state.username}
+                                        autoCapitalize="none"
+                                        clearButtonMode="while-editing"
                                         placeholder={I18n.t('please_entry_username')}
                                         placeholderTextClolor='#979797'
                                         editable={!this.props.visible}

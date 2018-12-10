@@ -480,7 +480,7 @@ class HistoryData extends Component {
     }
     resetAction() {
         this.setState({
-            selectTime: 0,
+            selectTime: 1,
             start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
         });

@@ -65,6 +65,7 @@ class HistoryTracks extends Component {
             end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             btnSelect: 1,
             state: 1,
+            isFlod: true,
 
         }
     }
@@ -100,7 +101,7 @@ class HistoryTracks extends Component {
     refresh() {
         this.props.dispatch(createAction('historyTracks/getAlerts')({
             cursor: 0,
-            limit: 15,
+            limit: 0,
             body: {
                 begin: moment(this.state.start_time).utc().format(),
                 end: moment(this.state.end_time).utc().format(),
@@ -224,18 +225,41 @@ class HistoryTracks extends Component {
     }
     getEventItems(items) {
         if (items && items.length > 0) {
-            return items.map((item, index) =>
-                <View style={styles.itemView} key={index}>
-                    <View style={styles.itemStateView}>
-                        <Image style={styles.itemImage} source={ihtool.getTrackTypeImage(item)} />
-                    </View>
-                    <View style={styles.itemTimeView}>
-                        <Text style={styles.text14}>{moment(item.startsAt).format('YYYY-MM-DD HH:mm')}</Text>
-                    </View>
-                    <View style={styles.itemMesgView}>
-                        <Text numberOfLines={2} style={styles.text14}>{ihtool.getEventDesc(item)}</Text>
-                    </View>
-                </View>
+            return items.map((item, index) => {
+                if (this.state.state == 1) {
+                    if (this.state.isFlod == true) {
+                        return <View style={styles.itemView} key={index}>
+                            <View style={styles.itemStateView}>
+                                <Image style={styles.itemImage} source={ihtool.getTrackTypeImage(item)} />
+                            </View>
+                            <View style={styles.itemTimeView}>
+                                <Text style={styles.text14}>{moment(item.startsAt).format('YYYY-MM-DD HH:mm')}</Text>
+                            </View>
+                            <View style={styles.itemMesgView}>
+                                <Text numberOfLines={2} style={styles.text14}>{ihtool.getEventDesc(item)}</Text>
+                            </View>
+                        </View>
+                    } else {
+                        if (index < 3) {
+                            return <View style={styles.itemView} key={index}>
+                                <View style={styles.itemStateView}>
+                                    <Image style={styles.itemImage} source={ihtool.getTrackTypeImage(item)} />
+                                </View>
+                                <View style={styles.itemTimeView}>
+                                    <Text style={styles.text14}>{moment(item.startsAt).format('YYYY-MM-DD HH:mm')}</Text>
+                                </View>
+                                <View style={styles.itemMesgView}>
+                                    <Text numberOfLines={2} style={styles.text14}>{ihtool.getEventDesc(item)}</Text>
+                                </View>
+                            </View>
+                        } else {
+                            return <View />
+                        }
+                    }
+                } else {
+                    return <View />
+                }
+            }
             )
         } else {
             return (
@@ -292,7 +316,7 @@ class HistoryTracks extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={siteDetailStyle.line} />
-                            <View style={{ flexDirection: 'row', width: Dimensions.get('window').width * 2 }}>
+                            <View style={{ flexDirection: 'row', flex: 1, width: Dimensions.get('window').width * 2 }}>
                                 <View style={
                                     this.state.state == 1 ? { width: Dimensions.get('window').width - 48 } :
                                         { width: 0 }}>
@@ -337,12 +361,17 @@ class HistoryTracks extends Component {
                                         {
                                             this.getEventItems(this.props.events)
                                         }
+                                        {
+                                            this.props.events && this.props.events.length > 0 ?
+                                                <TouchableOpacity activeOpacity={0.6} onPress={() => { this.setState({ isFlod: !this.state.isFlod }) }} style={siteDetailStyle.unflodBtn} >
+                                                    <Text style={siteDetailStyle.unflodBtnTitle}>{this.state.isFlod ? I18n.t('event_hide') : I18n.t('event_unflod')}</Text>
+                                                </TouchableOpacity> : <View />
+                                        }
                                     </View>
-                                </View> :
-                                    <View style={
+                                </View>
+                                <View style={
                                     this.state.state == 1 ? { height: 200, marginLeft: 50, width: Dimensions.get('window').width - 48, } :
-                                        { width: Dimensions.get('window').width - 48, }}
-                                >
+                                        { width: Dimensions.get('window').width - 48 }}>
                                     <MapView
                                         trafficEnabled={false}
                                         baiduHeatMapEnabled={false}
@@ -351,7 +380,7 @@ class HistoryTracks extends Component {
                                         markers={markers}
                                         polylines={this.props.tracks}
                                         onMapClick={(e) => {
-                                            console.log(e);
+
                                         }}
                                     />
                                 </View>
