@@ -65,7 +65,7 @@ class HistoryTracks extends Component {
             end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             btnSelect: 1,
             state: 1,
-            isFlod: true,
+            isFlod: false,
 
         }
     }
@@ -88,7 +88,6 @@ class HistoryTracks extends Component {
             selectTime: 1,
             siteDetail: {},
             speedData: [],
-            timeData: [],
             distanceData: [],
             working_duration: [],
             distance: null,
@@ -167,11 +166,6 @@ class HistoryTracks extends Component {
             });
             return ihtool.getConf(serieses, unit);
         } else {
-            const xAxis = [{
-                categories: this.props.timeData,
-                crosshair: true,
-                type: 'category'
-            }];
             const yAxis = [{
                 title: {
                     text: I18n.t('dashboard.worktime') + ' (s)',
@@ -194,7 +188,7 @@ class HistoryTracks extends Component {
                 yAxis: 1,
                 data: this.props.distanceData,
             }];
-            return ihtool.getConfDouble(xAxis, yAxis, serieses);
+            return ihtool.getConfDouble(yAxis, serieses);
         }
     }
     getMarkers(markers, polylines) {
@@ -565,7 +559,7 @@ class HistoryTracks extends Component {
     }
     resetAction() {
         this.setState({
-            selectTime: 0,
+            selectTime: 1,
             start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
         });
@@ -598,7 +592,6 @@ function mapStateToProps(state) {
         end_time: state.historyTracks.end_time,
         selectTime: state.historyTracks.selectTime,
         speedData: state.historyTracks.speedData,
-        timeData: state.historyTracks.timeData,
         distance: state.historyTracks.distance,
         distanceData: state.historyTracks.distanceData,
         count: state.historyTracks.count,

@@ -488,15 +488,28 @@ exports.getConf = function getConf(series, name) {
                 fontWeight: "blod",
             },
             formatter: function () {
-                var num = (parseFloat(this.x) / 1000).toFixed(3);
-                var str = num.toString().split('.');
 
-                var s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', (parseFloat(this.x) + 3600000 * 8)) + '</b>';
+                var s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', (parseFloat(this.x))) + '</b>';
                 $.each(this.points, function () {
                     s += '<br/>' + this.series.name + ': ' + parseFloat(this.y).toFixed(2);
                 });
 
                 return s;
+            }
+        },
+        plotOptions: {
+            spline: {
+                marker: {
+                    enabled: true,
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
             }
         },
         scrollbar: {
@@ -506,18 +519,6 @@ exports.getConf = function getConf(series, name) {
         navigator: {
             enabled: false,
             height: 0,
-            xAxis: {
-                dateTimeLabelFormats: {
-                    millisecond: ' ',
-                    second: ' ',
-                    minute: ' ',
-                    hour: ' ',
-                    day: ' ',
-                    week: ' ',
-                    month: ' ',
-                    year: ' '
-                }
-            }
         },
         yAxis: {
             allowDecimals: false,
@@ -538,7 +539,7 @@ exports.getConf = function getConf(series, name) {
             dateTimeLabelFormats: {
                 millisecond: '%M:%S',
                 second: '%M:%S',
-                minute: '%H:%M:%S',
+                minute: '%M:%S',
                 hour: '%H:%M',
                 day: '%m-%d',
                 week: '%m-%d',
@@ -550,10 +551,10 @@ exports.getConf = function getConf(series, name) {
     };
     return conf;
 }
-
-exports.getConfDouble = function getConfDouble(xAxis, yAxis, series) {
+exports.getConfDouble = function getConfDouble(yAxis, series) {
     var conf = {
         chart: {
+
             backgroundColor: '#fff',
             zoomType: 'xy',
         },
@@ -591,8 +592,7 @@ exports.getConfDouble = function getConfDouble(xAxis, yAxis, series) {
                 fontWeight: "blod",
             },
             formatter: function () {
-
-                var s = ''//'<b>' + this.point + '</b>';
+                var s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M', (parseFloat(this.x))) + '</b>';
                 $.each(this.points, function () {
                     s += '<br/>' + this.series.name + ': ' + parseFloat(this.y).toFixed(2);
                 });
@@ -609,7 +609,19 @@ exports.getConfDouble = function getConfDouble(xAxis, yAxis, series) {
             height: 0,
         },
         yAxis: yAxis,
-        xAxis: xAxis,
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                millisecond: '%H:%M',
+                second: '%H:%M',
+                minute: '%H:%M',
+                hour: '%H:%M',
+                day: '%m-%d',
+                week: '%m-%d',
+                month: '%Y-%m',
+                year: '%Y'
+            }
+        },
         series: series,
     };
     return conf;

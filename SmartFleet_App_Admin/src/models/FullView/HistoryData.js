@@ -17,7 +17,6 @@ export default {
         events: [],
         selectTime: 1,
         speedData: [],
-        timeData: [],
         distanceData: [],
         working_duration: [],
     },
@@ -70,7 +69,6 @@ export default {
                 payload: {
                     loadData: true,
                     loadtrend: true,
-                    timeData: [],
                     distanceData: [],
                     working_duration: [],
                 }
@@ -85,21 +83,18 @@ export default {
                     }
                 });
             } else {
-                let timeData = [];
                 let distanceData = [];
                 let working_duration = [];
                 if (data.result && data.result.values) {
                     for (let i = 0; i < data.result.values.length; i++) {
                         const element = data.result.values[i];
-                        timeData.push(moment(element[0]).format('H:00'));
-                        working_duration.push(element[1]);
-                        distanceData.push(element[2]);
+                        working_duration.push([element[0], element[1]]);
+                        distanceData.push([element[0], element[2]]);
                     }
                 }
                 yield put({
                     type: 'updateState',
                     payload: {
-                        timeData: timeData,
                         distanceData: distanceData,
                         working_duration: working_duration,
                         loadData: false,

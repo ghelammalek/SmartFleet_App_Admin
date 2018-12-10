@@ -25,7 +25,6 @@ export default {
         selectTime: 1,
         siteDetail: {},
         speedData: [],
-        timeData: [],
         distanceData: [],
         working_duration: [],
         distance: null,
@@ -137,7 +136,6 @@ export default {
                     payload: {
                         loadData: true,
                         loadtrend: true,
-                        timeData: [],
                         distanceData: [],
                         working_duration: [],
                     }
@@ -154,40 +152,27 @@ export default {
                 });
             } else {
                 if (payload.fields == 'speed') {
-                    let values = [];
-                    if (data.result.values) {
-                        for (let i = 0; i < data.result.values.length; i++) {
-                            let value = [];
-                            const element = data.result.values[i];
-                            value.push(moment(element[0]).valueOf());
-                            value.push(element[1]);
-                            values.push(value);
-                        }
-                    }
                     yield put({
                         type: 'updateState',
                         payload: {
-                            speedData: values,
+                            speedData: data.result.values,
                             loadData: false,
                             loadtrend: false,
                         }
                     });
                 } else {
-                    let timeData = [];
                     let distanceData = [];
                     let working_duration = [];
                     if (data.result && data.result.values) {
                         for (let i = 0; i < data.result.values.length; i++) {
                             const element = data.result.values[i];
-                            timeData.push(moment(element[0]).format('H:00'));
-                            working_duration.push(element[1]);
-                            distanceData.push(element[2]);
+                            working_duration.push([element[0], element[1]]);
+                            distanceData.push([element[0], element[2]]);
                         }
                     }
                     yield put({
                         type: 'updateState',
                         payload: {
-                            timeData: timeData,
                             distanceData: distanceData,
                             working_duration: working_duration,
                             loadData: false,

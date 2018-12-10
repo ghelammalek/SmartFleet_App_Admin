@@ -9,6 +9,7 @@ import {
     Image,
     Dimensions
 } from 'react-native';
+import moment from 'moment';
 
 const win = Dimensions.get('window');
 class ChartWeb extends Component {
@@ -110,7 +111,7 @@ var flattenText = function (item, key) {
     } else if (item && typeof item === 'object' && item.length !== undefined) {
         str += '['
         item.forEach(function (k2) {
-            str += `${flattenText(k2)}, `
+            str += `${flattenText((isNaN(k2) && !isNaN(Date.parse(k2))) ? ((moment(k2).valueOf()) + 3600000 * 8) : k2)}, `
         })
         if (item.length > 0) str = str.slice(0, str.length - 2)
         str += ']'

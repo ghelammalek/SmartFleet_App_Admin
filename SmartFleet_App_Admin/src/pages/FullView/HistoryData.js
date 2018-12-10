@@ -64,7 +64,6 @@ class HistoryData extends Component {
             events: [],
             selectTime: 1,
             speedData: [],
-            timeData: [],
             distanceData: [],
             working_duration: [],
         }));
@@ -139,11 +138,6 @@ class HistoryData extends Component {
             text2 = I18n.t('historyTack.mileage');
         }
 
-        const xAxis = [{
-            categories: this.props.timeData,
-            crosshair: true,
-            type: 'datetime'
-        }];
         const yAxis = [{
             title: {
                 text: text1 + (this.state.btnSelect == 0 ? ' (s)' : ' (L)'),
@@ -166,7 +160,7 @@ class HistoryData extends Component {
             yAxis: 1,
             data: this.props.distanceData,
         }];
-        return ihtool.getConfDouble(xAxis, yAxis, serieses);
+        return ihtool.getConfDouble(yAxis, serieses);
     }
     getEventItems(items) {
         if (items && items.length > 0) {
@@ -510,7 +504,6 @@ function mapStateToProps(state) {
         end_time: state.historyData.end_time,
         selectTime: state.historyData.selectTime,
         speedData: state.historyData.speedData,
-        timeData: state.historyData.timeData,
         distanceData: state.historyData.distanceData,
         working_duration: state.historyData.working_duration,
     }
