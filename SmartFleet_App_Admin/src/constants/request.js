@@ -51,7 +51,7 @@ function refreshToken(method, url1, header, body, hasToken) {
         "&grant_type=refresh_token" +
         "&refresh_token=" + Global.cfg.refresh_token;
 
-    return RNFetchBlob.config({ timeout: 15000 })
+    return RNFetchBlob.config({ timeout: 20000 })
         .fetch(POST, url, HEADER_FORM)
         .then((response) => response.json())
         .then((data) => {
@@ -112,7 +112,7 @@ function request(method, url1, header, body, hasToken) {
         url += ('access_token=' + Global.cfg.access_token);
     }
     url = getServerIP() + url;
-    return RNFetchBlob.config({ timeout: 15000 })
+    return RNFetchBlob.config({ timeout: 20000 })
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {
@@ -146,7 +146,7 @@ function request(method, url1, header, body, hasToken) {
 }
 function request_(method, url1, header, body, hasToken) {
     var url = url1;
-    return RNFetchBlob.config({ timeout: 15000 })
+    return RNFetchBlob.config({ timeout: 20000 })
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {

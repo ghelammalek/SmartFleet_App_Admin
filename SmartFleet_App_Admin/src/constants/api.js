@@ -220,7 +220,15 @@ exports.register = function (params) {
 
 
 
-
+/**
+ *  获取机构设置信息
+ *
+ * @returns
+ */
+exports.getSettingInfo = function () {
+    const url = '/api/setting';
+    return request.get(url, null, true, HEADER_JSON);
+}
 
 
 /**

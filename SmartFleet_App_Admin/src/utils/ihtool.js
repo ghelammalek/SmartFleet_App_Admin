@@ -189,7 +189,7 @@ exports.getEventDesc = function getEventDesc(record) {
         } else if (type === 'brake') {
             label = I18n.t('notice.brake');
         }
-        label = I18n.t('notice.car_notice');
+        // label = I18n.t('notice.car_notice');
     } else if (code === 'driving') {
         if (type === 'overspeed') {
             label = I18n.t('notice.overspeed') + ',' + I18n.t('notice.mph');

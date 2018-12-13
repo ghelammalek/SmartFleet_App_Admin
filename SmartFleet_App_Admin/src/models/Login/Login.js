@@ -81,15 +81,28 @@ export default {
                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 } else {
                     Global.cfg.userInfo = userInfo.result;
-                    Global.cfg.setRunningConfig();
-                    Global.global.navigation.dispatch(signin(data));
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            visible: false,
-                        }
-                    });
-
+                    const settingInfo = yield call(api.getSettingInfo);
+                    if (settingInfo.error) {
+                        Global.cfg.access_token = '';
+                        Global.cfg.refresh_token = '';
+                        yield put({
+                            type: 'updateState',
+                            payload: {
+                                visible: false,
+                            }
+                        });
+                        Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    } else {
+                        Global.cfg.settingInfo = settingInfo.result;
+                        Global.cfg.setRunningConfig();
+                        Global.global.navigation.dispatch(signin(data));
+                        yield put({
+                            type: 'updateState',
+                            payload: {
+                                visible: false,
+                            }
+                        });
+                    }
                 }
             }
         }

@@ -269,6 +269,7 @@ class HistoryTracks extends Component {
     render() {
         const conf = this.getSeries();
         const markers = this.getMarkers(this.props.markers, this.props.tracks);
+        const center = markers.length == 0 ? { latitude: Global.cfg.settingInfo.initPs.y, longitude: Global.cfg.settingInfo.initPs.x } : undefined;
         return (
             <View style={styles.container}>
                 <View style={styles.topView}>
@@ -369,8 +370,9 @@ class HistoryTracks extends Component {
                                     <MapView
                                         trafficEnabled={false}
                                         baiduHeatMapEnabled={false}
-                                        mapType={MapTypes.NORMAL}
+                                        mapType={MapTypes.SATELLITE}
                                         style={styles.mapView}
+                                        center={center}
                                         markers={markers}
                                         polylines={this.props.tracks}
                                         onMapClick={(e) => {

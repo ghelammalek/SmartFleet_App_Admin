@@ -37,7 +37,7 @@ class FullView extends Component {
         super(props);
         this.state = {
             mayType: MapTypes.NORMAL,
-            zoom: 6,
+            zoom: 10,
             trafficEnabled: false,
             baiduHeatMapEnabled: false,
             tabNames: [I18n.t('car_map'), I18n.t('car_list')],
@@ -109,7 +109,9 @@ class FullView extends Component {
         )
     }
     render() {
-        var center = this.state.center;
+        const markers = this.props.markers;
+        const center = markers.length == 0 ? { latitude: Global.cfg.settingInfo.initPs.y, longitude: Global.cfg.settingInfo.initPs.x } : undefined;
+
         return (
             <View style={styles.container}>
                 {/* <NavigationBar
@@ -140,8 +142,8 @@ class FullView extends Component {
                             baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
                             zoom={this.state.zoom}
                             mapType={this.state.mapType}
-                            center={this.props.center}
-                            markers={this.props.markers}
+                            center={center}
+                            markers={markers}
                             style={styles.map}
                             onMarkerClick={this._annotationClinck_.bind(this)}
                             onMapClick={(e) => {

@@ -22,6 +22,7 @@ import I18n from '../../language/index';
 import Global from '../../utils/Global';
 import setting from '../../utils/setting';
 import moment from 'moment';
+import ihtool from '../../utils/ihtool';
 
 const singin = StackActions.reset({
     index: 0,
@@ -67,10 +68,15 @@ class Spalsh extends Component {
         Global.global.navigation = this.props.navigation;
         setTimeout(() => {
             SplashScreen.hide();
-            if (isEmpty(Global.cfg.access_token)) {
+            if (ihtool.getCurrentVersion() !== Global.cfg.version) {
+                Global.cfg.version = ihtool.getCurrentVersion();
                 this.props.navigation.dispatch(singin);
             } else {
-                this.props.navigation.dispatch(main);
+                if (isEmpty(Global.cfg.access_token)) {
+                    this.props.navigation.dispatch(singin);
+                } else {
+                    this.props.navigation.dispatch(main);
+                }
             }
         }, 1000);
     }

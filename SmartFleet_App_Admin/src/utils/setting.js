@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-19 15:00:08 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-25 18:44:20
+ * @Last Modified time: 2018-12-13 12:03:42
  */
 'use strick';
 
@@ -11,19 +11,21 @@ let Global = require('./Global');
 
 class Settings {
     constructor() {
-        this._key = "cn.com.SmartFleet.App.Admin.settings";
-        this.serverIP = "http://cd.inhandcloud.com:20080";
-        this.serverName = "";
-        this.tel = "";
-        this.username = "";
-        this.access_token = "";
-        this.refresh_token = "";
-        this.create_token_time = "";
-        this.last_login_time = "";
-        this.language = "";
-        this.expires_in = "";
+        this._key = 'cn.com.SmartFleet.App.Admin.settings';
+        this.serverIP = 'http://cd.inhandcloud.com:20080';
+        this.serverName = '';
+        this.tel = '';
+        this.username = '';
+        this.access_token = '';
+        this.refresh_token = '';
+        this.create_token_time = '';
+        this.last_login_time = '';
+        this.language = '';
+        this.expires_in = '';
         this.loginType = 0;
         this.userInfo = {};
+        this.settingInfo = {};
+        this.version = '';
     }
 
     async setRunningConfig() {
@@ -52,6 +54,8 @@ class Settings {
             this.expires_in = cfg.expires_in;
             this.loginType = cfg.loginType;
             this.userInfo = cfg.userInfo;
+            this.settingInfo = cfg.settingInfo;
+            this.version = cfg.version;
         }
         app.refresh(this);
     }
