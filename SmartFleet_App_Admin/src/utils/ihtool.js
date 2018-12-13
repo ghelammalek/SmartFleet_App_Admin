@@ -175,9 +175,9 @@ exports.getEventType = function getEventType(record) {
  * @returns
  */
 exports.getEventDesc = function getEventDesc(record) {
-    const { labels, fields } = record;
-    const { value, type, category } = fields;
-    const { code } = labels;
+    const { labels, fields } = record || {};
+    const { value, type, category } = fields || {};
+    const { code } = labels || {};
     var label = '';
     if (code === 'behavior') {
         if (type === 'fatigure') {
@@ -215,6 +215,8 @@ exports.getEventDesc = function getEventDesc(record) {
             }
         } else if (type === 'angle') {
             label = I18n.t('notice.angle');
+        } else {
+            label = I18n.t('notice.driving_notice');
         }
     } else if (code === 'asset') {
         if (value) {

@@ -29,6 +29,7 @@ export default {
         working_duration: [],
         distance: null,
         count: null,
+        durations: null,
         tracks: [],
         markers: [],
     },
@@ -69,11 +70,15 @@ export default {
                 });
             } else {
                 let markers = [];
+                let count = 0;
                 for (let i = 0; i < data.result.length; i++) {
                     const element = data.result[i];
                     if (element.fields && element.fields.start_location) {
                         const location = element.fields.start_location;
                         markers.push({ latitude: location.latitude, longitude: location.longitude, extra: { imageName: ihtool.getTrackTypeImageName(element) } });
+                    }
+                    if (element.labels && element.labels.code && element.labels.code === 'driving') {
+                        count = count + 1;
                     }
                 }
                 yield put({
@@ -81,6 +86,7 @@ export default {
                     payload: {
                         markers: markers,
                         events: data.result,
+                        count: count,
                         isLoading: false,
                     }
                 });
@@ -93,8 +99,6 @@ export default {
                     loadData: true,
                     loadtracks: true,
                     tracks: [],
-                    distance: null,
-                    count: null,
                 }
             });
             const data = yield call(api.getSiteTracks, payload);
@@ -114,8 +118,6 @@ export default {
                         loadData: false,
                         loadtrend: false,
                         tracks: data.result.tracks,
-                        distance: data.result.distance,
-                        count: data.result.count,
                     }
                 });
             }
@@ -163,11 +165,19 @@ export default {
                 } else {
                     let distanceData = [];
                     let working_duration = [];
+                    let durations = 0;
+                    let distance = 0;
                     if (data.result && data.result.values) {
                         for (let i = 0; i < data.result.values.length; i++) {
                             const element = data.result.values[i];
                             working_duration.push([element[0], element[1]]);
                             distanceData.push([element[0], element[2]]);
+                            if (element[1]) {
+                                durations = durations + element[1];
+                            }
+                            if (element[2]) {
+                                distance = distance + element[2];
+                            }
                         }
                     }
                     yield put({
@@ -175,6 +185,8 @@ export default {
                         payload: {
                             distanceData: distanceData,
                             working_duration: working_duration,
+                            durations: durations,
+                            distance: distance,
                             loadData: false,
                             loadtrend: false,
                         }
