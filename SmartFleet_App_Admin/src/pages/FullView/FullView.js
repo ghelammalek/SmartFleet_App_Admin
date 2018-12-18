@@ -25,6 +25,7 @@ import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
+import ihtool from '../../utils/ihtool';
 import setting from '../../utils/setting';
 import styles from '../../styles/FullView/fullViewStyle';
 
@@ -110,8 +111,7 @@ class FullView extends Component {
     }
     render() {
         const markers = this.props.markers;
-        const center = markers.length == 0 ? { latitude: Global.cfg.settingInfo.initPs.y, longitude: Global.cfg.settingInfo.initPs.x } : undefined;
-
+        const center = markers.length == 0 ? ihtool.getInitPs() : undefined;
         return (
             <View style={styles.container}>
                 {/* <NavigationBar

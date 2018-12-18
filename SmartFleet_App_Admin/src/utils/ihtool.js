@@ -8,7 +8,16 @@ import VersionNumber from 'react-native-version-number';
 
 
 
-
+//排除用户坐标不存在的情况
+exports.getInitPs = function getInitPs() {
+    const { initPs } = Global.cfg.settingInfo || {};
+    const { x, y } = initPs || {};
+    if (x && y) {
+        return { latitude: y, longitude: x };
+    } else {
+        return undefined;
+    }
+}
 exports.changeNum = function changeNum(num) {
     let value = '';
     if (num < 10000) {
