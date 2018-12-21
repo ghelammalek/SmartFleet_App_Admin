@@ -60,8 +60,8 @@ function refreshToken(method, url1, header, body, hasToken) {
         .then((data) => {
             try {
                 if (data.error) {
-                    //console.log('刷新token失败了');
-                    //console.log(data);
+                    console.log('刷新token失败了');
+                    console.log(data);
                     if (Global.cfg.access_token !== '') {
                         Alert.alert('', I18n.t('signIn_timeout'), [{
                             text: I18n.t('okText'), onPress: () => {
@@ -74,8 +74,8 @@ function refreshToken(method, url1, header, body, hasToken) {
                     Global.cfg.setRunningConfig();
                     return undefined;
                 } else {
-                    //console.log('刷新token成功了');
-                    //console.log(data);
+                    console.log('刷新token成功了');
+                    console.log(data);
                     Global.cfg.access_token = data.access_token;
                     Global.cfg.refresh_token = data.refresh_token;
                     Global.cfg.expires_in = data.expires_in;
@@ -85,8 +85,8 @@ function refreshToken(method, url1, header, body, hasToken) {
                     return request(method, url1, header, body, hasToken);
                 }
             } catch (e) {
-                //console.log('刷新token崩溃了');
-                //console.log(e);
+                console.log('刷新token崩溃了');
+                console.log(e);
                 if (Global.cfg.access_token !== '') {
                     Alert.alert('', I18n.t('signIn_timeout'), [{
                         text: I18n.t('okText'), onPress: () => {
@@ -105,8 +105,8 @@ function refreshToken(method, url1, header, body, hasToken) {
             // Global.cfg.refresh_token = '';
             // Global.cfg.setRunningConfig();
             // Global.global.navigation.dispatch(signin);
-            //console.log('刷新token崩溃了');
-            //console.log(e);
+            console.log('刷新token崩溃了');
+            console.log(e);
             return { error: e };
         });
 }
@@ -132,11 +132,11 @@ function request(method, url1, header, body, hasToken) {
         .then((response) => response.json())
         .then((data) => {
             try {
-                //console.log(JSON.stringify(body));
+                console.log(JSON.stringify(body));
                 if (data.error) {
                     if (data.error_code === 21327 || data.error_code === 21336 || data.error_code === 21337 || data.error_code === 21338) {
-                        //console.log('token过期' + url);
-                        //console.log(data);
+                        console.log('token过期' + url);
+                        console.log(data);
                         return refreshToken(method, url1, header, body, hasToken);
                     } else if (data.error_code === Global.nopermision_code) {
                         if (Global.isAlert) {
@@ -150,23 +150,23 @@ function request(method, url1, header, body, hasToken) {
                         }
                         return undefined;
                     }
-                    //console.log('失败了' + url);
-                    //console.log(data);
+                    console.log('失败了' + url);
+                    console.log(data);
                     return data;
                 } else {
-                    //console.log('成功了' + url);
-                    //console.log(data);
+                    console.log('成功了' + url);
+                    console.log(data);
                     return data;
                 }
             } catch (err) {
-                //console.log('返回数据错误' + url);
-                //console.log({ error: err });
+                console.log('返回数据错误' + url);
+                console.log({ error: err });
                 return { error: err };
             }
         })
         .catch((err) => {
-            //console.log('崩溃了' + url);
-            //console.log({ error: err });
+            console.log('崩溃了' + url);
+            console.log({ error: err });
             return { error: err };
         });
 }
@@ -178,19 +178,19 @@ function request_(method, url1, header, body, hasToken) {
         .then((data) => {
             try {
                 if (data.error) {
-                    //console.log('失败了' + url);
+                    console.log('失败了' + url);
                     return data;
                 }
-                //console.log('成功了' + url);
-                //console.log(data);
+                console.log('成功了' + url);
+                console.log(data);
                 return data;
             } catch (err) {
-                //console.log('失败了' + url);
+                console.log('失败了' + url);
                 return { error: err };
             }
         })
         .catch((err) => {
-            //console.log('崩溃了' + url);
+            console.log('崩溃了' + url);
             return { error: err };
         });
 }

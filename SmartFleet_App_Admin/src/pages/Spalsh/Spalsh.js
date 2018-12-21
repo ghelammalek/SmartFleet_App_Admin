@@ -46,7 +46,7 @@ class Spalsh extends Component {
     }
     refresh(cfg) {
         Global.cfg = cfg;
-        Global.cfg.language = 'zh';
+        Global.cfg.language = 'zh-Hans-CN';
         if (isEmpty(Global.cfg.language)) {
             getLanguages().then(languages => {
                 I18n.locale = languages[0];

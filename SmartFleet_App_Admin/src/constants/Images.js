@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-12-03 01:59:59
+ * @Last Modified time: 2018-12-21 16:21:04
  */
 
 export default {
@@ -12,6 +12,8 @@ export default {
     login_ico_security_code: require('../assets/images/login/ico_security_code.png'),
     login_username: require('../assets/images/login/username.png'),
     login_password: require('../assets/images/login/password.png'),
+    Multiple_Choice: require('../assets/images/login/Multiple_Choice.png'),
+    Multiple_Choice_h: require('../assets/images/login/Multiple_Choice_h.png'),
 
     tab_home_h: require('../assets/images/tabbar/home_selected.png'),
     tab_home: require('../assets/images/tabbar/home_normal.png'),

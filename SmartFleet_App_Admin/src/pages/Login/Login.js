@@ -174,8 +174,11 @@ class Login extends Component {
         })
         Global.cfg.setRunningConfig();
     }
+    forgetPassword() {
+
+    }
     changeAction() {
-        this.props.navigation.navigate('ChangeView', { title: I18n.t('change_language_IP') });
+        this.props.navigation.navigate('LanguageView', { title: I18n.t('select_language') });
     }
     render() {
         return (
@@ -233,20 +236,6 @@ class Login extends Component {
                                     }
 
                                 </View>
-                                <View style={loginStyle.spaceView} />
-                                {/* <TouchableOpacity onPress={() => this.changeLoginType()}>
-                                    <View style={loginStyle.spaceView} >
-                                        <Text style={loginStyle.changeTypeLabel}  >{I18n.t('change_loginType')}</Text>
-                                    </View>
-                                </TouchableOpacity> */}
-                                <TouchableOpacity activeOpacity={0.6} disabled={this.props.visible} onPress={() => { Keyboard.dismiss(); this.submitAction() }} >
-                                    <View style={loginStyle.buttonView_submit}>
-                                        <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                {/* <TouchableOpacity style={{ backgroundColor: '#fff', marginTop: 20 }} onPress={() => this.changeAction()}>
-                                    <Text style={loginStyle.changeLabel}  >{I18n.t('change_language_IP')}</Text>
-                                </TouchableOpacity> */}
                             </View> :
                             <View style={loginStyle.body}>
                                 <View style={loginStyle.textView}>
@@ -275,24 +264,37 @@ class Login extends Component {
                                         onChangeText={(text) => this.setState({ password: text })}
                                     />
                                 </View>
-                                <View style={loginStyle.spaceView} />
-                                {/* <TouchableOpacity onPress={() => this.changeLoginType()}>
-                                    <View style={loginStyle.spaceView} >
-                                        <Text style={loginStyle.changeTypeLabel}  >{I18n.t('change_loginType')}</Text>
-                                    </View>
-                                </TouchableOpacity> */}
-                                <TouchableOpacity activeOpacity={0.6} disabled={this.props.visible} onPress={() => { Keyboard.dismiss(); this.submitAction() }} >
-                                    <View style={loginStyle.buttonView_submit}>
-                                        <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                {/* <TouchableOpacity style={{ backgroundColor: '#fff', marginTop: 20 }} onPress={() => this.changeAction()}>
-                                    <Text style={loginStyle.changeLabel}  >{I18n.t('change_language_IP')}</Text>
-                                </TouchableOpacity> */}
                             </View>
                     }
-                </View>
-            </TouchableWithoutFeedback>
+                    <View style={loginStyle.body_}>
+                        {/* <View style={loginStyle.spaceView} >
+                            <TouchableOpacity onPress={() => this.changeLoginType()}>
+                                <View>
+                                    <Text style={loginStyle.changeTypeLabel}  >{
+                                        this.state.loginType == 1 ? I18n.t('login.account_login') : I18n.t('login.phone_login')
+                                    }</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.forgetPassword()}>
+                                <View>
+                                    <Text style={loginStyle.changeTypeLabel}  >{I18n.t('login.forget_password')}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View> */}
+                        <View style={{ height: 40 }} />
+                        <TouchableOpacity activeOpacity={0.6} disabled={this.props.visible} onPress={() => { Keyboard.dismiss(); this.submitAction() }} >
+                            <View style={loginStyle.buttonView_submit}>
+                                <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={loginStyle.changeLanguageView}>
+                            <TouchableOpacity style={loginStyle.changeLabelView} onPress={() => this.changeAction()}>
+                                <Text style={loginStyle.changeLabel}  >{I18n.t('select_language')}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View >
+            </TouchableWithoutFeedback >
         )
     }
 }

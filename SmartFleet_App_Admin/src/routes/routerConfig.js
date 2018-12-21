@@ -1,6 +1,7 @@
 
 import Spalsh from '../pages/Spalsh/Spalsh';
 import Login from '../pages/Login/Login';
+import LanguageView from '../pages/Login/LanguageView';
 import Home from '../pages/Home/Home';
 import FullView from '../pages/FullView/FullView';
 import SiteDetail from '../pages/FullView/SiteDetail';
@@ -23,4 +24,5 @@ export default {
     RegisterCar: { screen: RegisterCar },
     UpgradeVersionView: { screen: UpgradeVersionView },
     HistoryView: { screen: HistoryView },
+    LanguageView: { screen: LanguageView },
 }

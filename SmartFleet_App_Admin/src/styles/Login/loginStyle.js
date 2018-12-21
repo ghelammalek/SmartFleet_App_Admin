@@ -12,45 +12,32 @@ export default loginStyle = StyleSheet.create({
     },
     bgImage: {
         width: Dimensions.get('window').width,
-        height: (Dimensions.get('window').height / 2) - 30,
-    },
-    titleView: {
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        width: Dimensions.get('window').width,
-        height: (Dimensions.get('window').height / 2) - 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-    },
-    title: {
-        fontSize: 50,
-        color: '#fff',
-        fontWeight: '400',
-        fontFamily: 'PingFang SC',
-        marginBottom: -3,
-    },
-    title_: {
-        fontSize: 20,
-        color: '#fff',
-        fontFamily: 'PingFang SC',
-        marginTop: -3,
+        height: Dimensions.get('window').height / 2,
     },
     body: {
-        paddingLeft: 30,
-        paddingRight: 30,
-        marginTop: 20,
+        flex: 1,
+        width: Dimensions.get('window').width,
+        paddingHorizontal: 30,
         alignItems: 'center',
+        maxHeight: 140,
+    },
+    body_: {
+        flex: 1,
+        width: Dimensions.get('window').width,
+        paddingHorizontal: 30,
+        alignItems: 'center',
+        // backgroundColor: 'green',
     },
     textView: {
-        height: 70,
+        flex: 1,
+        // height: 60,
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 10,
         // paddingBottom:10,
         borderColor: '#dfdfdf',
         borderBottomWidth: 1,
+        // backgroundColor: 'red',
     },
     img: {
         width: 20,
@@ -59,6 +46,7 @@ export default loginStyle = StyleSheet.create({
     },
     textInput: {
         flex: 1,
+        minHeight: 40,
         fontSize: 14,
         padding: 0,
     },
@@ -89,20 +77,35 @@ export default loginStyle = StyleSheet.create({
     },
     spaceView: {
         width: Dimensions.get('window').width - 60,
-        height: 40,
-        paddingTop: 10,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        height: 60,
+        paddingHorizontal: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        // backgroundColor: 'red',
+
     },
     changeTypeLabel: {
-        fontSize: 13,
-        color: '#24ba8e',
+        fontSize: 12,
+        color: '#1c1c1d',
     },
     changeLabel: {
         fontSize: 14,
         color: '#1c1c1d',
     },
-
+    changeLanguageView: {
+        flex: 1,
+        paddingBottom: 10,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        // backgroundColor: 'red',
+    },
+    changeLabelView: {
+        height: 30,
+        // backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 })
 
 
