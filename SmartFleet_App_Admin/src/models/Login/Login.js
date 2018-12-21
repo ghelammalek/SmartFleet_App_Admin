@@ -32,11 +32,13 @@ export default {
         * getCode({ payload }, { call, put, select }) {
             const data = yield call(api.getCode, payload.tel);
             // console.log(data);
-            if (data.error) {
-                if (data.error_code == 10024) {
-                    Alert.alert('', I18n.t('get_code_limit'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                } else {
-                    Alert.alert('', I18n.t('get_code_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+            if (data) {
+                if (data.error) {
+                    if (data.error_code == 10024) {
+                        Alert.alert('', I18n.t('get_code_limit'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    } else {
+                        Alert.alert('', I18n.t('get_code_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    }
                 }
             }
         },
@@ -48,63 +50,51 @@ export default {
                 }
             });
             const data = yield call(api.getAccessToken, payload.username, payload.password);
-            if (data.error) {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        visible: false,
-                    }
-                });
-                if (data.error_code === 20013) {
-                    Alert.alert('', I18n.t('20013'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                } else if (data.error_code === 100001) {
-                    Alert.alert('', I18n.t('100001'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                } else {
-                    Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                }
-            } else {
-                Global.cfg.access_token = data.access_token;
-                Global.cfg.refresh_token = data.refresh_token;
-                Global.cfg.expires_in = data.expires_in;
-                Global.cfg.create_token_time = moment().unix();
+            if (data) {
+                if (data.error == undefined) {
+                    Global.cfg.access_token = data.access_token;
+                    Global.cfg.refresh_token = data.refresh_token;
+                    Global.cfg.expires_in = data.expires_in;
+                    Global.cfg.create_token_time = moment().unix();
 
-                const userInfo = yield call(api.getUserInfo);
-                if (userInfo.error) {
-                    Global.cfg.access_token = '';
-                    Global.cfg.refresh_token = '';
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            visible: false,
+                    const userInfo = yield call(api.getUserInfo);
+                    if (userInfo) {
+                        if (userInfo.error) {
+                            Global.cfg.access_token = '';
+                            Global.cfg.refresh_token = '';
+                            Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                        } else {
+                            Global.cfg.userInfo = userInfo.result;
+                            const settingInfo = yield call(api.getSettingInfo);
+                            if (settingInfo) {
+                                if (settingInfo.error) {
+                                    Global.cfg.access_token = '';
+                                    Global.cfg.refresh_token = '';
+                                    Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                                } else {
+                                    Global.cfg.settingInfo = settingInfo.result;
+                                    Global.cfg.setRunningConfig();
+                                    Global.global.navigation.dispatch(signin(data));
+                                }
+                            }
                         }
-                    });
-                    Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    }
                 } else {
-                    Global.cfg.userInfo = userInfo.result;
-                    const settingInfo = yield call(api.getSettingInfo);
-                    if (settingInfo.error) {
-                        Global.cfg.access_token = '';
-                        Global.cfg.refresh_token = '';
-                        yield put({
-                            type: 'updateState',
-                            payload: {
-                                visible: false,
-                            }
-                        });
-                        Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    if (data.error_code === 20013) {
+                        Alert.alert('', I18n.t('20013'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    } else if (data.error_code === 100001) {
+                        Alert.alert('', I18n.t('100001'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     } else {
-                        Global.cfg.settingInfo = settingInfo.result;
-                        Global.cfg.setRunningConfig();
-                        Global.global.navigation.dispatch(signin(data));
-                        yield put({
-                            type: 'updateState',
-                            payload: {
-                                visible: false,
-                            }
-                        });
+                        Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     }
                 }
             }
+            yield put({
+                type: 'updateState',
+                payload: {
+                    visible: false,
+                }
+            });
         }
     }
 }

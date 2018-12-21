@@ -185,11 +185,6 @@ class FullView extends Component {
         );
     }
     onSubmitEditing(evt) {
-
-        var maxLng = 116.4136103013;
-        var minLng = 116.4136103013;
-        var maxLat = 39.9110666857;
-        var minLat = 39.9110666857;
         let markers = [];
         let data = [];
         for (let i = 0; i < this.props.rootData.length; i++) {
@@ -203,20 +198,9 @@ class FullView extends Component {
                         name: '',
                     }
                 }
-                if (marker.longitude > maxLng) maxLng = marker.longitude;
-                if (marker.longitude < minLng) minLng = marker.longitude;
-                if (marker.latitude > maxLat) maxLat = marker.latitude;
-                if (marker.latitude < minLat) minLat = marker.latitude;
-
                 markers.push(marker);
                 data.push(site);
             }
-        }
-        var cenLng = (parseFloat(maxLng) + parseFloat(minLng)) / 2;
-        var cenLat = (parseFloat(maxLat) + parseFloat(minLat)) / 2;
-        var centerPoint = {
-            latitude: cenLat,
-            longitude: cenLng
         }
         this.props.dispatch({
             type: 'fullView/updateState',
@@ -224,7 +208,6 @@ class FullView extends Component {
                 plateNo: evt.nativeEvent.text,
                 data: data,
                 markers: markers,
-                center: centerPoint,
             }
         });
     }
@@ -235,7 +218,6 @@ function mapStateToProps(state) {
         data: state.fullView.data,
         rootData: state.fullView.rootData,
         markers: state.fullView.markers,
-        center: state.fullView.center,
         plateNo: state.fullView.plateNo,
     }
 }

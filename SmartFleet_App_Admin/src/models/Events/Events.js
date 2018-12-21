@@ -27,61 +27,59 @@ export default {
     effects: {
         * getAlerts({ payload }, { call, put, select }) {
             const data = yield call(api.getAlerts, payload);
-            if (data.error) {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        isLoading: false,
-                        isLoad: false,
-                    }
-                });
-                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-            } else {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        cursor: data.cursor,
-                        data: data.result,
-                        isLoading: false,
-                        isLoad: false,
-                    }
-                });
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: false,
+                    isLoad: false,
+                }
+            });
+            if (data) {
+                if (data.error) {
+                    Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                } else {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            cursor: data.cursor,
+                            data: data.result,
+                        }
+                    });
+                }
             }
         },
         * loadMore({ payload }, { call, put, select }) {
             var events = yield select(state => state.events.data);
             const data = yield call(api.getAlerts, payload);
-            if (data.error) {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        isLoading: false,
-                        isLoad: false,
-                    }
-                });
-                Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-            } else {
-                events = events.concat(data.result);
-                if (data.result.length > 0) {
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            cursor: data.cursor,
-                            data: events,
-                            isLoading: false,
-                            isLoad: false,
-                        }
-                    });
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: false,
+                    isLoad: false,
+                }
+            });
+            if (data) {
+                if (data.error) {
+                    Alert.alert('', I18n.t('loading_error'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                 } else {
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            cursor: data.cursor - 20,
-                            data: events,
-                            isLoading: false,
-                            isLoad: false,
-                        }
-                    });
+                    events = events.concat(data.result);
+                    if (data.result.length > 0) {
+                        yield put({
+                            type: 'updateState',
+                            payload: {
+                                cursor: data.cursor,
+                                data: events,
+                            }
+                        });
+                    } else {
+                        yield put({
+                            type: 'updateState',
+                            payload: {
+                                cursor: data.cursor - 20,
+                                data: events,
+                            }
+                        });
+                    }
                 }
             }
         },

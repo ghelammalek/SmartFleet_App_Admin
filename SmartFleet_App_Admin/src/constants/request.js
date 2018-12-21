@@ -3,6 +3,8 @@ import { NavigationActions, StackActions } from 'react-navigation';
 import moment from 'moment';
 import Global from '../utils/Global';
 import { isEmpty, createAction } from '../utils/index';
+import { Alert } from 'react-native';
+import I18n from '../language/index';
 
 
 const GET = 'GET';
@@ -33,6 +35,7 @@ const HEADER_JSON = {
     'Accept': 'application/json',
     'Content-Type': 'application/json;charset=utf-8'
 };
+
 function getServerIP() {
     if (isEmpty(Global.cfg.serverIP)) {
         return Global.global.server;
@@ -59,12 +62,17 @@ function refreshToken(method, url1, header, body, hasToken) {
                 if (data.error) {
                     //console.log('刷新token失败了');
                     //console.log(data);
-
+                    if (Global.cfg.access_token !== '') {
+                        Alert.alert('', I18n.t('signIn_timeout'), [{
+                            text: I18n.t('okText'), onPress: () => {
+                                Global.global.navigation.dispatch(signin);
+                            }
+                        }], { cancelable: false, onDismiss: () => { } });
+                    }
                     Global.cfg.access_token = '';
                     Global.cfg.refresh_token = '';
                     Global.cfg.setRunningConfig();
-                    Global.global.navigation.dispatch(signin);
-                    return data;
+                    return undefined;
                 } else {
                     //console.log('刷新token成功了');
                     //console.log(data);
@@ -79,17 +87,24 @@ function refreshToken(method, url1, header, body, hasToken) {
             } catch (e) {
                 //console.log('刷新token崩溃了');
                 //console.log(e);
+                if (Global.cfg.access_token !== '') {
+                    Alert.alert('', I18n.t('signIn_timeout'), [{
+                        text: I18n.t('okText'), onPress: () => {
+                            Global.global.navigation.dispatch(signin);
+                        }
+                    }], { cancelable: false, onDismiss: () => { } });
+                }
                 Global.cfg.access_token = '';
                 Global.cfg.refresh_token = '';
                 Global.cfg.setRunningConfig();
-                return { error: e };
+                return undefined;
             }
         })
         .catch((e) => {
-            Global.cfg.access_token = '';
-            Global.cfg.refresh_token = '';
-            Global.cfg.setRunningConfig();
-            Global.global.navigation.dispatch(signin);
+            // Global.cfg.access_token = '';
+            // Global.cfg.refresh_token = '';
+            // Global.cfg.setRunningConfig();
+            // Global.global.navigation.dispatch(signin);
             //console.log('刷新token崩溃了');
             //console.log(e);
             return { error: e };
@@ -120,9 +135,20 @@ function request(method, url1, header, body, hasToken) {
                 //console.log(JSON.stringify(body));
                 if (data.error) {
                     if (data.error_code === 21327 || data.error_code === 21336 || data.error_code === 21337 || data.error_code === 21338) {
-                        //console.log('失败了' + url);
+                        //console.log('token过期' + url);
                         //console.log(data);
                         return refreshToken(method, url1, header, body, hasToken);
+                    } else if (data.error_code === Global.nopermision_code) {
+                        if (Global.isAlert) {
+                            Global.isAlert = false;
+                            Alert.alert('', I18n.t('no_authority'), [{
+                                text: I18n.t('okText'), onPress: () => {
+                                    Global.isAlert = true;
+                                    Global.global.navigation.goBack(null);
+                                }
+                            }], { cancelable: false, onDismiss: () => { } });
+                        }
+                        return undefined;
                     }
                     //console.log('失败了' + url);
                     //console.log(data);
@@ -133,7 +159,7 @@ function request(method, url1, header, body, hasToken) {
                     return data;
                 }
             } catch (err) {
-                //console.log('失败了' + url);
+                //console.log('返回数据错误' + url);
                 //console.log({ error: err });
                 return { error: err };
             }

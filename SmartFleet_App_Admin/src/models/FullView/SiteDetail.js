@@ -36,70 +36,93 @@ export default {
     effects: {
         * getStatistics({ payload }, { call, put, select }) {
             const data = yield call(api.getStatistics, payload.queryType, payload.plateNo);
-            if (data.error) {
-            } else {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        statistics: data.result,
-                    }
-                });
+            if (data) {
+                if (data.error) {
+                } else {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            statistics: data.result,
+                        }
+                    });
+                }
             }
         },
         * getAlerts({ payload }, { call, put, select }) {
             const data = yield call(api.getAlerts, payload);
-            if (data.error) {
-            } else {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        event: data.result,
-                        isLoading: false,
-                    }
-                });
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: false,
+                }
+            });
+            if (data) {
+                if (data.error) {
+                } else {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            event: data.result,
+                        }
+                    });
+                }
             }
         },
         *getSiteDetail({ payload }, { call, put, select }) {
             const data = yield call(api.getSiteDetail, payload);
-            if (data.error) {
-            } else {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        siteDetail: data.result,
-                        isLoading: false,
-                    }
-                });
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: false,
+                }
+            });
+            if (data) {
+                if (data.error) {
+                } else {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            siteDetail: data.result,
+                        }
+                    });
+                }
             }
         },
         *getSiteData({ payload }, { call, put, select }) {
             const data = yield call(api.getSiteData, payload);
-            if (data.error || data.result == undefined) {
-                // alert('sdf');
-            } else {
-                let siteData = {
-                    metrics: {
-                        iot_data: {},
-                        location_data: {}
-                    }
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: false,
                 }
-                if (data.result) {
-                    if (data.result.metrics) {
-                        if (data.result.metrics.iot_data) {
-                            siteData.metrics.iot_data = data.result.metrics.iot_data;
-                        }
-                        if (data.result.metrics.location_data) {
-                            siteData.metrics.location_data = data.result.metrics.location_data;
+            });
+            if (data) {
+                if (data.error || data.result == undefined) {
+                    // alert('sdf');
+                } else {
+                    let siteData = {
+                        metrics: {
+                            iot_data: {},
+                            location_data: {}
                         }
                     }
-                }
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        siteData: siteData,
-                        isLoading: false,
+                    if (data.result) {
+                        if (data.result.metrics) {
+                            if (data.result.metrics.iot_data) {
+                                siteData.metrics.iot_data = data.result.metrics.iot_data;
+                            }
+                            if (data.result.metrics.location_data) {
+                                siteData.metrics.location_data = data.result.metrics.location_data;
+                            }
+                        }
                     }
-                });
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            siteData: siteData,
+                        }
+                    });
+                }
             }
         },
         *getSiteTrend({ payload }, { call, put, select }) {
@@ -111,31 +134,38 @@ export default {
                 }
             });
             const data = yield call(api.getSiteTrend, payload);
-            if (data.error || data.result == undefined) {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        loadData: false
-                    }
-                });
-            } else {
-                let values = [];
-                if (data.result.values) {
-                    for (let i = 0; i < data.result.values.length; i++) {
-                        let value = [];
-                        const element = data.result.values[i];
-                        value.push(moment(element[0]).valueOf());
-                        value.push(element[1]);
-                        values.push(value);
-                    }
+            yield put({
+                type: 'updateState',
+                payload: {
+                    loadData: false
                 }
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        speedData: values,
-                        loadData: false
+            });
+            if (data) {
+                if (data.error || data.result == undefined) {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            loadData: false
+                        }
+                    });
+                } else {
+                    let values = [];
+                    if (data.result.values) {
+                        for (let i = 0; i < data.result.values.length; i++) {
+                            let value = [];
+                            const element = data.result.values[i];
+                            value.push(moment(element[0]).valueOf());
+                            value.push(element[1]);
+                            values.push(value);
+                        }
                     }
-                });
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            speedData: values,
+                        }
+                    });
+                }
             }
         }
     },

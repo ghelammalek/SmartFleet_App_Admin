@@ -28,14 +28,16 @@ export default {
     effects: {
         * getStatistics({ payload }, { call, put, select }) {
             const data = yield call(api.getStatisticsTime, payload);
-            if (data.error) {
-            } else {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        statistics: data.result,
-                    }
-                });
+            if (data) {
+                if (data.error) {
+                } else {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            statistics: data.result,
+                        }
+                    });
+                }
             }
         },
         * getAlerts({ payload }, { call, put, select }) {
@@ -46,21 +48,22 @@ export default {
                 }
             });
             const data = yield call(api.getAlerts, payload);
-            if (data.error) {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        isLoading: false,
-                    }
-                });
-            } else {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        events: data.result,
-                        isLoading: false,
-                    }
-                });
+            yield put({
+                type: 'updateState',
+                payload: {
+                    isLoading: false,
+                }
+            });
+            if (data) {
+                if (data.error) {
+                } else {
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            events: data.result,
+                        }
+                    });
+                }
             }
         },
         *getSiteTrend({ payload }, { call, put, select }) {
@@ -74,33 +77,33 @@ export default {
                 }
             });
             const data = yield call(api.getSiteTrend, payload);
-            if (data.error || data.result == undefined) {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        loadData: false,
-                        loadtrend: false,
-                    }
-                });
-            } else {
-                let distanceData = [];
-                let working_duration = [];
-                if (data.result && data.result.values) {
-                    for (let i = 0; i < data.result.values.length; i++) {
-                        const element = data.result.values[i];
-                        working_duration.push([element[0], element[1]]);
-                        distanceData.push([element[0], element[2]]);
-                    }
+            yield put({
+                type: 'updateState',
+                payload: {
+                    loadData: false,
+                    loadtrend: false,
                 }
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        distanceData: distanceData,
-                        working_duration: working_duration,
-                        loadData: false,
-                        loadtrend: false,
+            });
+            if (data) {
+                if (data.error || data.result == undefined) {
+                } else {
+                    let distanceData = [];
+                    let working_duration = [];
+                    if (data.result && data.result.values) {
+                        for (let i = 0; i < data.result.values.length; i++) {
+                            const element = data.result.values[i];
+                            working_duration.push([element[0], element[1]]);
+                            distanceData.push([element[0], element[2]]);
+                        }
                     }
-                });
+                    yield put({
+                        type: 'updateState',
+                        payload: {
+                            distanceData: distanceData,
+                            working_duration: working_duration,
+                        }
+                    });
+                }
             }
         }
     },

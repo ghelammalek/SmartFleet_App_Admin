@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:15 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-10-29 16:02:25
+ * @Last Modified time: 2018-12-21 13:28:29
  */
 
 
@@ -19,6 +19,8 @@ var Global = {
         Chinese: 'zh',
         English: 'en'
     },
+    nopermision_code: 20005,
+    isAlert: true,
     languages: [
         {
             name: '中文',

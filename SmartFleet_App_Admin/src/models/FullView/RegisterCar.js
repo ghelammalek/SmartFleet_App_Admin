@@ -26,19 +26,21 @@ export default {
                 type: 'updateState',
                 isLoading: false,
             })
-            if (data.error) {
-                if (data.result) {
-                    Alert.alert('', I18n.t('register_car_exist'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                } else {
-                    Alert.alert('', I18n.t('register_failed'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                }
-            } else {
-                Alert.alert('', I18n.t('register_successful'), [{
-                    text: I18n.t('okText'), onPress: () => {
-                        that.props.navigation.state.params.callback();
-                        that.props.navigation.goBack();
+            if (data) {
+                if (data.error) {
+                    if (data.result) {
+                        Alert.alert('', I18n.t('register_car_exist'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    } else {
+                        Alert.alert('', I18n.t('register_failed'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     }
-                },]);
+                } else {
+                    Alert.alert('', I18n.t('register_successful'), [{
+                        text: I18n.t('okText'), onPress: () => {
+                            that.props.navigation.state.params.callback();
+                            that.props.navigation.goBack();
+                        }
+                    },]);
+                }
             }
         },
     },

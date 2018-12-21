@@ -62,6 +62,7 @@ export default {
     get_code_err: '获取验证码失败，请重试!',
     code_err: '验证码错误,请重新获取',
     signIn_again: '请重新登录',
+    signIn_timeout: '登录过期,请重新登录',
     signIn_err_again: '登录失败,请重新登录',
     signIn_err: '登录失败，请重试!',
     repeat: '请重试',
@@ -81,6 +82,7 @@ export default {
     signIn: '登录',
     signIn_in: '登录中...',
     get_code_limit: '操作过于频繁已被禁止，请联系管理员',
+    no_authority: '无权限，请联系管理员',
 
 
     car_detail: '车辆详情',
