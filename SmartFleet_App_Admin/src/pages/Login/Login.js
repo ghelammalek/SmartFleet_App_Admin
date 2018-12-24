@@ -56,7 +56,7 @@ class Login extends Component {
         Alert.alert('', text, [{ text: I18n.t('okText'), onPress: () => { } },]);
     }
     submitAction() {
-        if (Global.cfg.loginStyle === 1) {
+        if (this.state.loginType == 1) {
             if (this.state.username.trim() == '') {
                 this.getAlert(I18n.t('please_entry_tel'));
             } else if (!((/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/).test(this.state.tel))) {
@@ -70,7 +70,8 @@ class Login extends Component {
                 this.props.dispatch({
                     type: 'login/getAccessToken_code',
                     payload: {
-                        tel: this.state.tel,
+                        country: encodeURIComponent('+86'),
+                        tel: this.state.tel.replace('+86', ''),
                         smscode: this.state.code,
                         navigation: this.props.navigation
                     }
@@ -107,7 +108,7 @@ class Login extends Component {
             this.props.dispatch({
                 type: 'login/getCode',
                 payload: {
-                    tel: this.state.tel,
+                    tel: this.state.tel.replace('+86', ''),
                 }
             });
 
@@ -175,7 +176,7 @@ class Login extends Component {
         Global.cfg.setRunningConfig();
     }
     forgetPassword() {
-
+        this.props.navigation.push('ForgotPasswordView');
     }
     changeAction() {
         this.props.navigation.navigate('LanguageView', { title: I18n.t('select_language') });
@@ -267,7 +268,7 @@ class Login extends Component {
                             </View>
                     }
                     <View style={loginStyle.body_}>
-                        {/* <View style={loginStyle.spaceView} >
+                        <View style={loginStyle.spaceView} >
                             <TouchableOpacity onPress={() => this.changeLoginType()}>
                                 <View>
                                     <Text style={loginStyle.changeTypeLabel}  >{
@@ -275,13 +276,15 @@ class Login extends Component {
                                     }</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.forgetPassword()}>
-                                <View>
-                                    <Text style={loginStyle.changeTypeLabel}  >{I18n.t('login.forget_password')}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View> */}
-                        <View style={{ height: 40 }} />
+                            {
+                                this.state.loginType == 1 ? <View /> :
+                                    <TouchableOpacity onPress={() => this.forgetPassword()}>
+                                        <View>
+                                            <Text style={loginStyle.changeTypeLabel}  >{I18n.t('login.forget_password')}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                            }
+                        </View>
                         <TouchableOpacity activeOpacity={0.6} disabled={this.props.visible} onPress={() => { Keyboard.dismiss(); this.submitAction() }} >
                             <View style={loginStyle.buttonView_submit}>
                                 <Text style={loginStyle.buttonText}>{this.props.visible ? I18n.t('signIn_in') : I18n.t('signIn')}</Text>

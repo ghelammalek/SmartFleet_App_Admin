@@ -40,8 +40,9 @@ export default loginStyle = StyleSheet.create({
         // backgroundColor: 'red',
     },
     img: {
-        width: 20,
-        height: 20,
+        width: 16,
+        height: 16,
+        resizeMode: 'contain',
         marginRight: 15,
     },
     textInput: {
@@ -52,8 +53,8 @@ export default loginStyle = StyleSheet.create({
     },
     buttonView_submit: {
         width: Dimensions.get('window').width - 60,
-        height: 50,
-        borderRadius: 25,
+        height: 44,
+        borderRadius: 6,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#24ba8e',
@@ -64,6 +65,17 @@ export default loginStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#24ba8e',
+    },
+    buttonView_code_: {
+        width: 100,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        resizeMode: 'contain',
+        // backgroundColor: 'red',
+        // borderRadius: 3,
+        // borderColor: '#f3f3f3',
+        // borderWidth: 1,
     },
     text: {
         color: 'white',
@@ -98,14 +110,46 @@ export default loginStyle = StyleSheet.create({
         paddingBottom: 10,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        // backgroundColor: 'red',
     },
     changeLabelView: {
         height: 30,
-        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    forgetView: {
+        backgroundColor: '#fff',
+        borderRadius: 6,
+        marginHorizontal: 20,
+        padding: 30,
+    },
+    forgetTitleView: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        justifyContent: 'center',
+    },
+    forgetTitle: {
+        fontSize: 14,
+        color: '#9797a3',
+    },
+    forgetTextView: {
+        width: Dimensions.get('window').width - 100,
+        height: 65,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 10,
+        borderColor: '#f3f3f3',
+        borderBottomWidth: 1,
+    },
+
+    forgetBtn: {
+        width: Dimensions.get('window').width - 100,
+        height: 44,
+        borderRadius: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#24ba8e',
+        marginTop: 40,
+    },
 })
 
 

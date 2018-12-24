@@ -6,7 +6,14 @@ import moment from 'moment';
 import { isEmpty } from '../utils/index';
 import VersionNumber from 'react-native-version-number';
 
-
+//判断国际化里是否有字段
+exports.judgeText = function judgeText(text) {
+    if (I18n.t(text).indexOf('.' + text + '"') == -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 //排除用户坐标不存在的情况
 exports.getInitPs = function getInitPs() {

@@ -57,6 +57,7 @@ export default {
     no_data: '无数据',
     scan: '扫一扫',
     custom: '自定义',
+    reset_password: '重置密码',
 
     //登录
     get_code_err: '获取验证码失败，请重试!',
@@ -83,7 +84,9 @@ export default {
     signIn_in: '登录中...',
     get_code_limit: '操作过于频繁已被禁止，请联系管理员',
     no_authority: '无权限，请联系管理员',
-
+    new_pwd_email: '新密码已发送到邮箱，请注意查收！',
+    forget_label: '请输入您注册时使用的Email地址，我们将给您发送重置密码邮件',
+    reset_pwd_failed: '重置密码失败',
 
     car_detail: '车辆详情',
     add_car: '添加车辆',

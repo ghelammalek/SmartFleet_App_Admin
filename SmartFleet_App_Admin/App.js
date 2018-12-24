@@ -19,12 +19,15 @@ import RegisterCar from './src/models/FullView/RegisterCar';
 import Events from './src/models/Events/Events';
 import EventDetail from './src/models/Events/EventDetail';
 import Setting from './src/models/Setting/Setting';
+import ForgotPasswordView from './src/models/Login/ForgotPasswordView';
 
 
 import SplashScreen from 'react-native-splash-screen';
 
 const app = dva({
-  models: [Spalsh, Login, Home, FullView, Events, EventDetail, Setting, SiteDetail, RegisterCar, HistoryView, HistoryTracks, HistoryData],
+  models: [Spalsh, Login, Home, FullView, Events, EventDetail,
+    Setting, SiteDetail, RegisterCar, HistoryView, HistoryTracks,
+    HistoryData, ForgotPasswordView],
   onError(e) {
     // console.log('onError', e);
   },

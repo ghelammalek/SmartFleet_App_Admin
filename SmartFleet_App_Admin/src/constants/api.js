@@ -24,29 +24,28 @@ const HEADER_JSON = {
  * @returns
  */
 exports.getCode = function (phone) {
-    const url = '/api/sms/code?phone=' + phone;
+    const url = '/api/sms/code?phone=%2B86' + phone;
     return request.get(url, null, false, HEADER_JSON);
 };
 
 /**
  *  通过短信验证码获取access_token
  *
- * @param {*} country
- * @param {*} tel
- * @param {*} code
+ * @param {*} params
  * @returns
+ * payload.tel, payload.smscode
  */
-exports.getAccessToken_code = function (country, tel, code) {
+exports.getAccessToken_code = function (params) {
     const url = "/oauth2/access_token?" +
         "client_id=" + Global.client_id +
         "&client_secret=" + Global.client_secret +
         "&grant_type=password" +
-        "&mobile[country]=" + country +
-        "&mobile[phone]=" + tel +
-        "&captcha=" + code +
+        "&mobile[country]=" + params.country +
+        "&mobile[phone]=" + params.tel +
+        "&captcha=" + params.smscode +
         "&type=mobile&autoLogin=true" +
-        "&username=+" + country + tel +
-        "&password=" + code +
+        "&username=" + params.country + params.tel +
+        "&password=" + params.smscode +
         "&password_type=4";
     return request.post(url, null, false, HEADER_FORM);
 };
@@ -68,6 +67,45 @@ exports.getAccessToken = function (username, password) {
         "&password_type=2&language=2&autoLogin=true";
     return request.post(url, null, false, HEADER_FORM);
 };
+
+/**
+ *   获取随机码图片id
+ *
+ * @returns
+ */
+exports.getImageCode = function getImageCode() {
+    const url = "/api/captchas";
+    return request.get(url, null, false, HEADER_JSON);
+}
+
+/**
+ *   获取随机码图片
+ *
+ * @returns
+ */
+exports.getImage = function getImage(params) {
+    const url = "/api/captchas/image?pid=" + params.pid +
+        "&width=" + params.width +
+        "&height=" + params.height;
+    return request.get(url, null, false, HEADER_JSON);
+}
+
+/**
+ *   重置密码
+ *   captcha: "zuxuq"
+ *   email: "zhanglf@inhand.com.cn"
+ *   language: 2
+ *   picId: "IabrUVxEH"
+ *   username: "zhanglf@inhand.com.cn"
+ *   varificationCode: "zuxuq"
+ *
+ * @returns
+ */
+exports.forgotten_password = function forgotten_password(params) {
+    const url = "/api2/forgotten_password";
+    return request.post(url, params, false, HEADER_JSON);
+}
+
 
 /**
  *    获取车辆的统计数据

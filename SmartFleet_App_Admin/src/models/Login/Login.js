@@ -4,6 +4,7 @@ import Global from '../../utils/Global';
 import I18n from '../../language/index';
 import api from '../../constants/api';
 import moment from 'moment';
+import ihool from '../../utils/ihtool';
 
 
 
@@ -41,6 +42,59 @@ export default {
                     }
                 }
             }
+        },
+        * getAccessToken_code({ payload }, { call, put }, select) {
+            yield put({
+                type: 'updateState',
+                payload: {
+                    visible: true,
+                }
+            });
+            const data = yield call(api.getAccessToken_code, payload);
+            if (data) {
+                if (data.error == undefined) {
+                    Global.cfg.access_token = data.access_token;
+                    Global.cfg.refresh_token = data.refresh_token;
+                    Global.cfg.expires_in = data.expires_in;
+                    Global.cfg.create_token_time = moment().unix();
+
+                    const userInfo = yield call(api.getUserInfo);
+                    if (userInfo) {
+                        if (userInfo.error) {
+                            Global.cfg.access_token = '';
+                            Global.cfg.refresh_token = '';
+                            Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                        } else {
+                            Global.cfg.userInfo = userInfo.result;
+                            const settingInfo = yield call(api.getSettingInfo);
+                            if (settingInfo) {
+                                if (settingInfo.error) {
+                                    Global.cfg.access_token = '';
+                                    Global.cfg.refresh_token = '';
+                                    Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                                } else {
+                                    Global.cfg.settingInfo = settingInfo.result;
+                                    Global.cfg.setRunningConfig();
+                                    Global.global.navigation.dispatch(signin(data));
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    const error = 'error.' + data.error_code;
+                    if (ihool.judgeText(error)) {
+                        Alert.alert('', I18n.t(error), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    } else {
+                        Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    }
+                }
+            }
+            yield put({
+                type: 'updateState',
+                payload: {
+                    visible: false,
+                }
+            });
         },
         * getAccessToken({ payload }, { call, put, select }) {
             yield put({
@@ -80,10 +134,9 @@ export default {
                         }
                     }
                 } else {
-                    if (data.error_code === 20013) {
-                        Alert.alert('', I18n.t('20013'), [{ text: I18n.t('okText'), onPress: () => { } },]);
-                    } else if (data.error_code === 100001) {
-                        Alert.alert('', I18n.t('100001'), [{ text: I18n.t('okText'), onPress: () => { } },]);
+                    const error = 'error.' + data.error_code;
+                    if (ihool.judgeText(error)) {
+                        Alert.alert('', I18n.t(error), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     } else {
                         Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     }
