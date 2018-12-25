@@ -69,6 +69,16 @@ exports.getAccessToken = function (username, password) {
 };
 
 /**
+ *    验证手机号
+ *
+ * @param {*} phone
+ * @returns
+ */
+exports.validatePhone = function validatePhone(phone) {
+    const url = "/api/phone/validate?phone=" + encodeURIComponent(phone);
+    return request.get(url, null, false, HEADER_JSON);
+}
+/**
  *   获取随机码图片id
  *
  * @returns

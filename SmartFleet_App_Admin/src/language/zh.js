@@ -60,7 +60,7 @@ export default {
     reset_password: '重置密码',
 
     //登录
-    get_code_err: '获取验证码失败，请重试!',
+    get_code_err: '验证码发送失败，请稍后再试',
     code_err: '验证码错误,请重新获取',
     signIn_again: '请重新登录',
     signIn_timeout: '登录过期,请重新登录',
@@ -79,7 +79,7 @@ export default {
     please_entry_password: '请输入密码',
     please_entry_code: '请输入验证码',
     get_code: '获取验证码',
-    repeat_later: 's 后请重试',
+    repeat_later: ' s ',
     signIn: '登录',
     signIn_in: '登录中...',
     get_code_limit: '操作过于频繁已被禁止，请联系管理员',
@@ -90,11 +90,11 @@ export default {
 
     car_detail: '车辆详情',
     add_car: '添加车辆',
-    please_entry_plateNo: '请填写车牌号',
+    please_entry_plateNo: '请输入车牌号',
     pleaseholder_plateNo: '请输入车牌号',
-    please_entry_sn: '请填写网关序列号',
+    please_entry_sn: '请输入网关序列号',
     plateNo: '车牌号',
-    please_entry: '请填写',
+    please_entry: '请输入',
     asset_no: '资产编号',
     gateway_no: '网关序列号',
     gateway_type: '网关型号',

@@ -20,9 +20,11 @@ import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';
 import I18n from '../../language/index';
 import Global from '../../utils/Global';
+import ihtool from '../../utils/ihtool';
 import setting from '../../utils/setting';
 import loginStyle from '../../styles/Login/loginStyle';
 import md5 from '../../utils/md5';
+import LoadingView from '../../widget/LoadingView';
 
 class ForgotPasswordView extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -79,16 +81,16 @@ class ForgotPasswordView extends Component {
                 onFailed: (data) => {
                     this.setState({ isLoading: false });
                     if (data) {
-                        if (data.error_code == 20013) {
-                            this.getAlert(I18n.t('login.captcha_error'));
-                        } else if (data.error_code == 20006) {
-                            this.getAlert(I18n.t('error.user_not_exist'));
+                        const error = 'error.' + data.error_code;
+                        if (ihtool.judgeText(error)) {
+                            Alert.alert('', I18n.t(error), [{ text: I18n.t('okText'), onPress: () => { } },]);
                         } else {
                             this.getAlert(I18n.t('reset_pwd_failed'));
                         }
                     } else {
                         this.getAlert(I18n.t('reset_pwd_failed'));
                     }
+                    this.getCode();
                 }
             });
         }
@@ -131,6 +133,7 @@ class ForgotPasswordView extends Component {
                             <TextInput
                                 style={loginStyle.textInput}
                                 autoCapitalize="none"
+                                autoCorrect={false}
                                 clearButtonMode="while-editing"
                                 placeholder={I18n.t('common.email')}
                                 placeholderTextClolor='#979797'
@@ -146,6 +149,7 @@ class ForgotPasswordView extends Component {
                                 placeholder={I18n.t('login.captcha')}
                                 placeholderTextClolor='#979797'
                                 autoCapitalize='none'
+                                autoCorrect={false}
                                 // editable={!this.props.isLoading}
                                 underlineColorAndroid="transparent"
                                 onChangeText={(text) => this.setState({ smsCode: text })}
@@ -158,10 +162,13 @@ class ForgotPasswordView extends Component {
                         </View>
                         <TouchableOpacity style={loginStyle.forgetBtn} activeOpacity={0.6} disabled={this.state.isLoading} onPress={() => { Keyboard.dismiss(); this.submitAction() }} >
                             <View >
-                                <Text style={loginStyle.buttonText}>{this.state.isLoading ? I18n.t('reset_password') : I18n.t('reset_password')}</Text>
+                                <Text style={loginStyle.buttonText}>{I18n.t('reset_password')}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
+                    {
+                        this.props.isLoading ? <LoadingView /> : <View />
+                    }
                 </View >
             </TouchableWithoutFeedback >
         )

@@ -4,7 +4,7 @@ import Global from '../../utils/Global';
 import I18n from '../../language/index';
 import api from '../../constants/api';
 import moment from 'moment';
-import ihool from '../../utils/ihtool';
+import ihtool from '../../utils/ihtool';
 
 
 
@@ -42,6 +42,17 @@ export default {
                     }
                 }
             }
+        },
+        * validatePhone({ payload,onSuccess,onFailed }, { call, put, select }) {
+            const data = yield call(api.validatePhone, payload.tel);
+            // console.log(data);
+            if (data) {
+                if (data.result) {
+                    onSuccess(data);
+                    return;
+                }
+            }
+            onFailed();
         },
         * getAccessToken_code({ payload }, { call, put }, select) {
             yield put({
@@ -82,7 +93,7 @@ export default {
                     }
                 } else {
                     const error = 'error.' + data.error_code;
-                    if (ihool.judgeText(error)) {
+                    if (ihtool.judgeText(error)) {
                         Alert.alert('', I18n.t(error), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     } else {
                         Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
@@ -135,7 +146,7 @@ export default {
                     }
                 } else {
                     const error = 'error.' + data.error_code;
-                    if (ihool.judgeText(error)) {
+                    if (ihtool.judgeText(error)) {
                         Alert.alert('', I18n.t(error), [{ text: I18n.t('okText'), onPress: () => { } },]);
                     } else {
                         Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);

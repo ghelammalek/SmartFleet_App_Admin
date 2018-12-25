@@ -57,7 +57,7 @@ class Login extends Component {
     }
     submitAction() {
         if (this.state.loginType == 1) {
-            if (this.state.username.trim() == '') {
+            if (this.state.tel.trim() == '') {
                 this.getAlert(I18n.t('please_entry_tel'));
             } else if (!((/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/).test(this.state.tel))) {
                 this.getAlert(I18n.t('tel_format_err'));
@@ -105,29 +105,42 @@ class Login extends Component {
         } else if (!((/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/).test(this.state.tel))) {
             this.getAlert(I18n.t('tel_format_err'));
         } else {
+            this.setState({isCode:false});
             this.props.dispatch({
-                type: 'login/getCode',
+                type: 'login/validatePhone',
                 payload: {
-                    tel: this.state.tel.replace('+86', ''),
+                    tel: '+86'+this.state.tel.replace('+86', ''),
+                },
+                onSuccess:(data)=>{
+                    this.props.dispatch({
+                        type: 'login/getCode',
+                        payload: {
+                            tel: this.state.tel.replace('+86', ''),
+                        }
+                    });
+        
+                    this.setState({
+                        seconds: 60,
+                        isCode: false,
+                        code: '',
+        
+                    });
+                    this.timer = setInterval(
+                        () => {
+                            if (this.state.seconds > 1) {
+                                this.setState({ seconds: this.state.seconds - 1 });
+                            } else {
+                                this.timer && clearInterval(this.timer);
+                                this.setState({ isCode: true });
+                            }
+                        }, 1000
+                    );
+                },
+                onFialed:()=>{
+                    this.setState({isCode:false});
                 }
             });
-
-            this.setState({
-                seconds: 60,
-                isCode: false,
-                code: '',
-
-            });
-            this.timer = setInterval(
-                () => {
-                    if (this.state.seconds > 1) {
-                        this.setState({ seconds: this.state.seconds - 1 });
-                    } else {
-                        this.timer && clearInterval(this.timer);
-                        this.setState({ isCode: true });
-                    }
-                }, 1000
-            );
+            
         }
     }
     componentWillMount() {
@@ -204,6 +217,7 @@ class Login extends Component {
                                         placeholder={I18n.t('please_entry_tel')}
                                         placeholderTextClolor='#979797'
                                         maxLength={11}
+                                        autoCorrect={false}
                                         editable={!this.props.visible}
                                         underlineColorAndroid="transparent"
                                         onChangeText={(text) => this.setState({ tel: text })}
@@ -216,6 +230,7 @@ class Login extends Component {
                                         placeholder={I18n.t('please_entry_code')}
                                         placeholderTextClolor='#979797'
                                         maxLength={6}
+                                        autoCorrect={false}
                                         value={this.state.code}
                                         editable={!this.props.visible}
                                         underlineColorAndroid="transparent"
@@ -245,6 +260,7 @@ class Login extends Component {
                                         style={loginStyle.textInput}
                                         value={this.state.username}
                                         autoCapitalize="none"
+                                        autoCorrect={false}
                                         clearButtonMode="while-editing"
                                         placeholder={I18n.t('please_entry_username')}
                                         placeholderTextClolor='#979797'
@@ -259,6 +275,7 @@ class Login extends Component {
                                         style={loginStyle.textInput}
                                         placeholder={I18n.t('please_entry_password')}
                                         placeholderTextClolor='#979797'
+                                        autoCorrect={false}
                                         secureTextEntry={true}
                                         editable={!this.props.visible}
                                         underlineColorAndroid="transparent"
