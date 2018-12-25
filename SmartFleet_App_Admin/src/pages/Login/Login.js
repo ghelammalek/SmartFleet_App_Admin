@@ -105,25 +105,25 @@ class Login extends Component {
         } else if (!((/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/).test(this.state.tel))) {
             this.getAlert(I18n.t('tel_format_err'));
         } else {
-            this.setState({isCode:false});
+            this.setState({ isCode: false });
             this.props.dispatch({
                 type: 'login/validatePhone',
                 payload: {
-                    tel: '+86'+this.state.tel.replace('+86', ''),
+                    tel: '+86' + this.state.tel.replace('+86', ''),
                 },
-                onSuccess:(data)=>{
+                onSuccess: (data) => {
                     this.props.dispatch({
                         type: 'login/getCode',
                         payload: {
                             tel: this.state.tel.replace('+86', ''),
                         }
                     });
-        
+
                     this.setState({
                         seconds: 60,
                         isCode: false,
                         code: '',
-        
+
                     });
                     this.timer = setInterval(
                         () => {
@@ -136,11 +136,11 @@ class Login extends Component {
                         }, 1000
                     );
                 },
-                onFialed:()=>{
-                    this.setState({isCode:false});
+                onFialed: () => {
+                    this.setState({ isCode: false });
                 }
             });
-            
+
         }
     }
     componentWillMount() {
@@ -185,6 +185,8 @@ class Login extends Component {
         }
         this.setState({
             loginType: Global.cfg.loginType,
+            code: '',
+            password: '',
         })
         Global.cfg.setRunningConfig();
     }
@@ -231,6 +233,7 @@ class Login extends Component {
                                         placeholderTextClolor='#979797'
                                         maxLength={6}
                                         autoCorrect={false}
+                                        secureTextEntry={false}
                                         value={this.state.code}
                                         editable={!this.props.visible}
                                         underlineColorAndroid="transparent"
@@ -275,6 +278,7 @@ class Login extends Component {
                                         style={loginStyle.textInput}
                                         placeholder={I18n.t('please_entry_password')}
                                         placeholderTextClolor='#979797'
+                                        value={this.state.password}
                                         autoCorrect={false}
                                         secureTextEntry={true}
                                         editable={!this.props.visible}
@@ -320,10 +324,10 @@ class Login extends Component {
 }
 function mapStateToProps(state) {
     return {
-        tel: state.login.tel,
-        code: state.login.code,
-        username: state.login.username,
-        password: state.login.password,
+        // tel: state.login.tel,
+        // code: state.login.code,
+        // username: state.login.username,
+        // password: state.login.password,
         visible: state.login.visible,
         language: state.login.language,
     }

@@ -52,7 +52,7 @@ class SiteDetail extends Component {
             location: item.location,
             item: item,
             mayType: MapTypes.NORMAL,
-            zoom: 6,
+            zoom: 15,
             trafficEnabled: false,
             baiduHeatMapEnabled: false,
             address: '',
@@ -60,10 +60,16 @@ class SiteDetail extends Component {
             isUnflod: false,
         };
     }
+    componentWillUnmount() {
+        this.timer && clearInterval(this.timer);
+    }
     componentDidMount() {
         this.getAddress(this.state.location.y, this.state.location.x);
         this.props.navigation.setParams({ navAction: this.navAction.bind(this) });
         this.getAllData();
+        this.timer = setInterval(() => {
+            this.setState({ zoom: 15 })
+        }, 60000);
     }
     getAddress(latitude, longitude) {
         Geolocation.reverseGeoCode(latitude, longitude)
@@ -107,7 +113,7 @@ class SiteDetail extends Component {
         this.props.dispatch(createAction('siteDetail/getStatistics')({ queryType: '1', plateNo: this.state.title }));
         this.props.dispatch(createAction('siteDetail/getAlerts')({
             cursor: 0,
-            limit: 10,
+            limit: 1,
             body: {
                 end: moment().add(1, 'day').utc().format(),
                 labels: {
@@ -193,9 +199,9 @@ class SiteDetail extends Component {
         // const { odo_meter, water_temp, fuel_meter, fuel_capacity, speed, rpm, break_state } = iot_data;
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.topItemView} activeOpacity={0.6} onPress={() => this.pushCarInfoView()}>
+                <TouchableOpacity disabled={true} style={styles.topItemView} activeOpacity={0.6} onPress={() => this.pushCarInfoView()}>
                     <Text style={styles.topTitle}>{this.state.title}</Text>
-                    <Image style={styles.topImage} source={Images.other_right} />
+                    {/* <Image style={styles.topImage} source={Images.other_right} /> */}
                 </TouchableOpacity>
                 <ScrollView
                     style={homeStyle.scrollView}
@@ -269,7 +275,7 @@ class SiteDetail extends Component {
                         <MapView
                             trafficEnabled={false}
                             baiduHeatMapEnabled={false}
-                            zoom={6}
+                            zoom={15}
                             mapType={MapTypes.NORMAL}
                             center={this.props.center}
                             marker={this.props.marker}
@@ -277,6 +283,7 @@ class SiteDetail extends Component {
                             onMapClick={(e) => {
                             }}
                         />
+                        <Text style={{ marginLeft: 10, marginTop: 10, color: '#9797a3' }}>{ihtool.getSimpleDate(iot_data.timestamp)}</Text>
                         <View style={styles.detailView}>
                             <View style={styles.detailItemView}>
                                 <View style={styles.detailItem}>

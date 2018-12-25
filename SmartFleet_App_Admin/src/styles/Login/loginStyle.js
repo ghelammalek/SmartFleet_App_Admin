@@ -19,7 +19,7 @@ export default loginStyle = StyleSheet.create({
         width: Dimensions.get('window').width,
         paddingHorizontal: 30,
         alignItems: 'center',
-        maxHeight: 140,
+        maxHeight: 130,
     },
     body_: {
         flex: 1,
@@ -89,7 +89,7 @@ export default loginStyle = StyleSheet.create({
     },
     spaceView: {
         width: Dimensions.get('window').width - 60,
-        height: 60,
+        height: 50,
         paddingHorizontal: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',

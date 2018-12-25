@@ -178,7 +178,8 @@ exports.getSiteDetail = function getSiteDetail(params) {
  * @returns
  */
 exports.getSiteData = function getSiteData(params) {
-    const url = '/api/iot/modules/' + params.mid + '/sense';
+    const url = '/api/iot/modules/' + params.mid +
+        '/sense?mapType=' + config.mapType;
     return request.get(url, null, true, HEADER_JSON);
 }
 

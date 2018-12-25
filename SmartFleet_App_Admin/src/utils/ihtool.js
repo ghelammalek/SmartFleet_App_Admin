@@ -101,10 +101,10 @@ exports.getEventLevelLabel = function getEventLevelLabel(value) {
  */
 exports.getTrackTypeImage = function getTrackTypeImage(record) {
     const { labels, fields, level } = record;
-    const { value, type, category } = fields;
-    const { code } = labels;
+    const { value, type, category, desc } = fields;
+    const { sub_code } = labels;
 
-    if (code === 'driving') {
+    if (sub_code === 'driving') {
         if (type === 'engine') {
             if (value) {
                 return Images.other_ico_dianhuo;
@@ -134,10 +134,10 @@ exports.getTrackTypeImage = function getTrackTypeImage(record) {
 }
 exports.getTrackTypeImageName = function getTrackTypeImageName(record) {
     const { labels, fields, level } = record;
-    const { value, type, category } = fields;
-    const { code } = labels;
+    const { value, type, category, desc } = fields;
+    const { sub_code } = labels;
 
-    if (code === 'driving') {
+    if (sub_code === 'driving') {
         if (type === 'engine') {
             if (value) {
                 return 'ico_dianhuo';
@@ -171,14 +171,14 @@ exports.getTrackTypeImageName = function getTrackTypeImageName(record) {
  * @param {*} record
  */
 exports.getEventType = function getEventType(record) {
-    const { labels, fields } = record;
-    const { value, type, category } = fields;
-    const { code } = labels;
+    const { labels, fields, level } = record;
+    const { value, type, category, desc } = fields;
+    const { sub_code } = labels;
 
     var label = '';
-    if (code === 'behavior') {
+    if (sub_code === 'behavior') {
         label = I18n.t('notice.car_notice');
-    } else if (code === 'driving') {
+    } else if (sub_code === 'driving') {
         label = I18n.t('notice.driving_notice');
     }
     return label;
@@ -191,35 +191,36 @@ exports.getEventType = function getEventType(record) {
  * @returns
  */
 exports.getEventDesc = function getEventDesc(record) {
-    const { labels, fields } = record || {};
-    const { value, type, category } = fields || {};
-    const { code } = labels || {};
+    const { labels, fields, level } = record || {};
+    const { value, type, category, desc } = fields || {};
+    const { sub_code } = labels || {};
     var label = '';
-    if (code === 'behavior') {
+    if (sub_code === 'behavior') {
         if (type === 'fatigure') {
             label = I18n.t('notice.fatigure');
-        } else if (type === 'belt') {
-            label = I18n.t('notice.belt');
-        } else if (type === 'overspeed') {
-            label = I18n.t('notice.overspeed') + ',' + I18n.t('notice.mph');
+        } else if (type === 'seatbelt') {
+            if (value === 1) {
+                label = I18n.t('pilot_unbelt');
+            } else {
+                label = I18n.t('co_pilot_unbelt');
+            }
         } else if (type === 'brake') {
             label = I18n.t('notice.brake');
         }
-        // label = I18n.t('notice.car_notice');
-    } else if (code === 'driving') {
+    } else if (sub_code === 'driving') {
         if (type === 'overspeed') {
             label = I18n.t('notice.overspeed') + ',' + I18n.t('notice.mph');
         } else if (type === 'zone') {
             if (category === 'route') {
-                if (value) {
+                if (value === 1) {
                     label = I18n.t('notice.backroute');
-                } else {
+                } else if (value == 0) {
                     label = I18n.t('notice.outroute');
                 }
-            } else if (category !== 'route') {
-                if (value) {
+            } else {
+                if (value === 1) {
                     label = I18n.t('notice.backzone');
-                } else {
+                } else if (value == 0) {
                     label = I18n.t('notice.outzone');
                 }
             }
@@ -229,13 +230,11 @@ exports.getEventDesc = function getEventDesc(record) {
             } else if (value === 0) {
                 label = I18n.t('notice.vehicle_stop');
             }
-        } else if (type === 'angle') {
+        } else if (type === 'heading') {
             label = I18n.t('notice.angle');
-        } else {
-            label = I18n.t('notice.driving_notice');
         }
-    } else if (code === 'asset') {
-        if (value) {
+    } else if (sub_code === 'asset') {
+        if (value === 1) {
             if (type === 'RFID') {
                 label = I18n.t('notice.asset_monitoring_online') + ':RFID';
             } else if (type === 'Bluetooth') {
@@ -243,47 +242,65 @@ exports.getEventDesc = function getEventDesc(record) {
             } else {
                 label = I18n.t('notice.asset_monitoring_online') + ':' + I18n.t('vehicle.other');
             }
-        } else if (!value) {
+        } else if (value === 0) {
             if (type === 'RFID') {
                 label = I18n.t('notice.asset_monitoring_offline') + ':RFID';
             } else if (type === 'Bluetooth') {
-                label = I18n.t('notice.asset_monitoring_online') + ':Bluetooth';
+                label = I18n.t('notice.asset_monitoring_offline') + ':Bluetooth';
             } else {
-                label = I18n.t('notice.asset_monitoring_online') + ':' + I18n.t('vehicle.other');
+                label = I18n.t('notice.asset_monitoring_offline') + ':' + I18n.t('vehicle.other');
             }
         }
-    } else if (code === 'driver') {
+    } else if (sub_code === 'driver') {
         label = I18n.t('notice.driver_change');
-    } else if (code === 'state') {
-        if (type === 'fuel') {
+    } else if (sub_code === 'state') {
+        if (type === 'fuel_capacity_changed') {
             label = I18n.t('notice.fuel_change');
+        } else if (type === 'insufficient_fuel') {
+            label = I18n.t('insufficient_fuel');
+        } else if (type === 'tco_abnormal') {
+            label = I18n.t('tco_abnormal');
         } else if (type === 'gnss') {
             if (value === 0) {
                 label = I18n.t('notice.gnss_fault');
             } else if (value === 1) {
                 label = I18n.t('notice.gnss_short');
-            } else {
+            } else if (value === 2) {
                 label = I18n.t('notice.gnss_cut');
             }
         } else if (type === 'battery') {
             if (value === 0) {
                 label = I18n.t('notice.battery_power_off');
-            } else {
+            } else if (value > 0) {
                 label = I18n.t('notice.battery_undervoltage');
             }
         }
-    } else if (code === 'safety') {
+    } else if (sub_code === 'safety') {
         if (type === 'crash') {
             label = I18n.t('notice.crash');
-        } else if (code === 'turnover') {
+        } else if (sub_code === 'turnover') {
             label = I18n.t('notice.turnover');
-        } else if (code === 'urgency') {
+        } else if (sub_code === 'urgency') {
             label = I18n.t('notice.urgency');
         }
-    } else {
-        label = '';
+    } else if (sub_code === 'obd-dtc') {
+        label = desc;
     }
-    return label.replace('{value}', value);
+    if (label === '') {
+        if (level === 5) {
+            return I18n.t('level5');
+        } else if (level === 4) {
+            return I18n.t('level4');
+        } else if (level === 3) {
+            return I18n.t('level3');
+        } else if (level === 2) {
+            return I18n.t('level2');
+        } else {
+            return I18n.t('level1');
+        }
+    } else {
+        return label.replace('{value}', value);
+    }
 }
 
 /**
@@ -335,7 +352,12 @@ exports.getTime13 = function getTime(date) {
  * @returns
  */
 exports.getSimpleDate = function getSimpleDate(date) {
-    const date_ = moment(date).format('YYYY-MM-DD HH:mm:ss.SSS');
+    let date_;
+    if (isEmpty(date)) {
+        return;
+    } else {
+        date_ = moment(date).format('YYYY-MM-DD HH:mm:ss.SSS');
+    }
     var str = '';
     let year = moment(date_).get('year');
     let month = moment(date_).get('month');  // 0 to 11
