@@ -286,21 +286,7 @@ exports.getEventDesc = function getEventDesc(record) {
     } else if (sub_code === 'obd-dtc') {
         label = desc;
     }
-    if (label === '') {
-        if (level === 5) {
-            return I18n.t('level5');
-        } else if (level === 4) {
-            return I18n.t('level4');
-        } else if (level === 3) {
-            return I18n.t('level3');
-        } else if (level === 2) {
-            return I18n.t('level2');
-        } else {
-            return I18n.t('level1');
-        }
-    } else {
-        return label.replace('{value}', value);
-    }
+    return label.replace('{value}', value);
 }
 
 /**
