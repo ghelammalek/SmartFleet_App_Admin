@@ -130,8 +130,8 @@ class EventDetail extends Component {
                         </View>
                         <View style={homeStyle.itemTextView}>
                             <Text style={styles.itemText} >{I18n.t('event_level') + '：'}</Text>
-                            <Text style={styles.itemText} >{ihtool.getEventLevelLabel(item.level)}</Text>
-                            <Image style={homeStyle.itemLevelImage} source={ihtool.getTrackTypeImage(item)} />
+                            <Image style={homeStyle.itemLevelImage} source={ihtool.getEventLevelImage(item.level)} />
+                            <Image style={homeStyle.itemLevelImage} source={ihtool.getEventDetailImage(item)} />
                         </View>
                         {
                             item.confirmState ?

@@ -32,7 +32,6 @@ import styles from '../../styles/FullView/siteDetailStyle';
 import homeStyle from '../../styles/Home/homeStyle';
 import ChartView from '../../widget/react-native-highcharts';
 
-const names = [I18n.t('detail.speed'), I18n.t('detail.voltage'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
 const units = ['km/h', 'v', '℃', ''];
 const params = ['speed', '', '', ''];
 class SiteDetail extends Component {
@@ -59,6 +58,8 @@ class SiteDetail extends Component {
             btnSelect: 1,
             isUnflod: false,
         };
+        this.names = [I18n.t('detail.speed'), I18n.t('detail.voltage'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
+
     }
     componentWillUnmount() {
         this.timer && clearInterval(this.timer);
@@ -81,34 +82,8 @@ class SiteDetail extends Component {
             })
     }
     getAllData() {
-        let marker = {};
-        let center = {};
-        if (this.state.location) {
-            marker = {
-                longitude: this.state.location.x,
-                latitude: this.state.location.y,
-                title: this.state.title
-            };
-            center = {
-                longitude: this.state.location.x,
-                latitude: this.state.location.y,
-            };
-        }
-        // console.log(marker);
         this.props.dispatch(createAction('siteDetail/updateState')({
-            statistics: {},
-            event: [],
-            siteData: {
-                metrics: {
-                    iot_data: {},
-                    location_data: {}
-                }
-            },
-            siteDetail: {},
-            speedData: [],
             isLoading: false,
-            marker: marker,
-            center: center,
         }));
         this.props.dispatch(createAction('siteDetail/getStatistics')({ queryType: '1', plateNo: this.state.title }));
         this.props.dispatch(createAction('siteDetail/getAlerts')({
@@ -122,8 +97,17 @@ class SiteDetail extends Component {
             }
         }));
         this.props.dispatch(createAction('siteDetail/getSiteDetail')({ plateNo: this.state.title }));
-        this.props.dispatch(createAction('siteDetail/getSiteData')({ mid: this.state.item.id }));
-
+        this.props.dispatch({
+            type: 'siteDetail/getSiteData',
+            payload: {
+                mid: this.state.item.id
+            },
+            onSuccess: (location) => {
+                if (location.latitude && location.longitude) {
+                    this.getAddress(location.latitude, location.longitude);
+                }
+            }
+        })
         const fields = params[this.state.btnSelect - 1];
         this.props.dispatch(createAction('siteDetail/getSiteTrend')({
             plateNo: this.state.item.id,
@@ -159,7 +143,7 @@ class SiteDetail extends Component {
             const item = items[0];
             return (
                 <TouchableOpacity style={styles.eventItemView} disabled={this.props.isLoading} activeOpacity={0.6} onPress={() => this.pushEventDetail(item)} >
-                    <Image style={styles.eventImage} source={ihtool.getTrackTypeImage(item)} />
+                    <Image style={styles.eventImage} source={ihtool.getEventDetailImage(item)} />
                     <Text style={styles.message_} >{ihtool.getEventDesc(item)}</Text>
                     <Text style={styles.eventTime} >{ihtool.getSimpleDate(item.startsAt)}</Text>
                     <Image style={styles.eventRightImage} source={Images.other_right} />
@@ -171,7 +155,7 @@ class SiteDetail extends Component {
     }
     getSeries() {
         var serieses = [];
-        const name = names[this.state.btnSelect - 1];
+        const name = this.names[this.state.btnSelect - 1];
         const unit = units[this.state.btnSelect - 1];
         // if (this.state.btnSelect == 1) {
         serieses.push({

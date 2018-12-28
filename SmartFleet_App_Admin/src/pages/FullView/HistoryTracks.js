@@ -37,8 +37,6 @@ import siteDetailStyle from '../../styles/FullView/siteDetailStyle';
 import siftStyle from '../../styles/siftViewStyle';
 import ChartView from '../../widget/react-native-highcharts';
 
-const timeLabel = ['', I18n.t('common.this_day'), I18n.t('custom'), I18n.t('common.this_month'), I18n.t('common.this_year')]
-const names = [I18n.t('speed'), I18n.t('worktime_duraction'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
 const units = ['km/h', 'v', '℃', ''];
 const params = ['speed', '', '', ''];
 class HistoryTracks extends Component {
@@ -66,8 +64,10 @@ class HistoryTracks extends Component {
             btnSelect: 1,
             state: 1,
             isFlod: false,
-
         }
+        this.timeLabel = ['', I18n.t('common.this_day'), I18n.t('custom'), I18n.t('common.this_month'), I18n.t('common.this_year')]
+        this.names = [I18n.t('speed'), I18n.t('worktime_duraction'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
+
     }
     componentDidMount() {
         this.props.dispatch(createAction('historyTracks/updateState')({
@@ -159,14 +159,14 @@ class HistoryTracks extends Component {
         } else if (value == 2) {
             lable = moment(this.state.start_time).format('YYYY-MM-DD');
         } else {
-            lable = timeLabel[value];
+            lable = this.timeLabel[value];
         }
         return lable;
     }
     getSeries(data) {
         if (this.state.btnSelect == 1) {
             var serieses = [];
-            const name = names[this.state.btnSelect - 1];
+            const name = this.names[this.state.btnSelect - 1];
             const unit = units[this.state.btnSelect - 1];
             serieses.push({
                 type: 'spline',
@@ -246,7 +246,7 @@ class HistoryTracks extends Component {
                     if (this.state.isFlod == true) {
                         return <View style={styles.itemView} key={index}>
                             <View style={styles.itemStateView}>
-                                <Image style={styles.itemImage} source={ihtool.getTrackTypeImage(item)} />
+                                <Image style={styles.itemImage} source={ihtool.getEventDetailImage(item)} />
                             </View>
                             <View style={styles.itemTimeView}>
                                 <Text style={styles.text14}>{moment(item.startsAt).format('YYYY-MM-DD HH:mm')}</Text>
@@ -259,7 +259,7 @@ class HistoryTracks extends Component {
                         if (index < 3) {
                             return <View style={styles.itemView} key={index}>
                                 <View style={styles.itemStateView}>
-                                    <Image style={styles.itemImage} source={ihtool.getTrackTypeImage(item)} />
+                                    <Image style={styles.itemImage} source={ihtool.getEventDetailImage(item)} />
                                 </View>
                                 <View style={styles.itemTimeView}>
                                     <Text style={styles.text14}>{moment(item.startsAt).format('YYYY-MM-DD HH:mm')}</Text>
@@ -432,10 +432,10 @@ class HistoryTracks extends Component {
                                     <Text style={siftStyle.title}>{I18n.t('select_time')}</Text>
                                     <View style={siftStyle.wrapView}>
                                         <TouchableOpacity style={this.state.selectTime == 1 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectToday(1)}>
-                                            <Text style={this.state.selectTime == 1 ? siftStyle.itemText_ : siftStyle.itemText}>{timeLabel[1]}</Text>
+                                            <Text style={this.state.selectTime == 1 ? siftStyle.itemText_ : siftStyle.itemText}>{this.timeLabel[1]}</Text>
                                         </TouchableOpacity>
                                         <View style={this.state.selectTime == 2 ? siftStyle.itemView_ : siftStyle.itemView}>
-                                            <Text style={this.state.selectTime == 2 ? siftStyle.itemText_ : siftStyle.itemText}>{timeLabel[2]}</Text>
+                                            <Text style={this.state.selectTime == 2 ? siftStyle.itemText_ : siftStyle.itemText}>{this.timeLabel[2]}</Text>
                                             <DatePicker
                                                 hideText={true}
                                                 showIcon={false}

@@ -211,8 +211,8 @@ class Events extends Component {
                         </View>
                         <View style={homeStyle.itemTextView}>
                             <Text style={homeStyle.itemText} >{I18n.t('event_level') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{ihtool.getEventLevelLabel(item.item.level)}</Text>
-                            <Image style={homeStyle.itemLevelImage} source={ihtool.getTrackTypeImage(item.item)} />
+                            <Image style={homeStyle.itemLevelImage} source={ihtool.getEventLevelImage(item.item.level)} />
+                            <Image style={homeStyle.itemLevelImage} source={ihtool.getEventDetailImage(item.item)} />
                         </View>
                         <View style={homeStyle.itemTextView}>
                             <Text style={homeStyle.itemText} >{I18n.t('event_desc') + '：'}</Text>

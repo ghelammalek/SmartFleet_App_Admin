@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-12-27 23:36:19
+ * @Last Modified time: 2018-12-28 23:28:34
  */
 
 export default {
@@ -88,4 +88,7 @@ export default {
     event_start: require('../assets/images/event/start.png'),
     event_stop: require('../assets/images/event/stop.png'),
     event_zone: require('../assets/images/event/zone.png'),
+    event_start_warning: require('../assets/images/event/start_warning.png'),
+    event_stop_warning: require('../assets/images/event/stop_warning.png'),
+
 }

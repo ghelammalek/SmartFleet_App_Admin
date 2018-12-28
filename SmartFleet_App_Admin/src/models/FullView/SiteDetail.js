@@ -20,13 +20,8 @@ export default {
         },
         siteDetail: {},
         speedData: [],
-        marker: {
-
-        },
-        center: {
-            longitude: 116.981718,
-            latitude: 39.542449
-        },
+        marker: null,
+        center: null,
     },
     reducers: {
         updateState(state, { payload }) {
@@ -50,12 +45,6 @@ export default {
         },
         * getAlerts({ payload }, { call, put, select }) {
             const data = yield call(api.getAlerts, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    isLoading: false,
-                }
-            });
             if (data) {
                 if (data.error) {
                 } else {
@@ -70,12 +59,6 @@ export default {
         },
         *getSiteDetail({ payload }, { call, put, select }) {
             const data = yield call(api.getSiteDetail, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    isLoading: false,
-                }
-            });
             if (data) {
                 if (data.error) {
                 } else {
@@ -88,14 +71,8 @@ export default {
                 }
             }
         },
-        *getSiteData({ payload }, { call, put, select }) {
+        *getSiteData({ payload, onSuccess }, { call, put, select }) {
             const data = yield call(api.getSiteData, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    isLoading: false,
-                }
-            });
             if (data) {
                 if (data.error || data.result == undefined) {
                     // alert('sdf');
@@ -116,12 +93,19 @@ export default {
                             }
                         }
                     }
+                    let marker = {
+                        latitude: data.result.metrics.location_data.latitude,
+                        longitude: data.result.metrics.location_data.longitude,
+                    }
                     yield put({
                         type: 'updateState',
                         payload: {
                             siteData: siteData,
+                            marker: marker,
+                            center: marker
                         }
                     });
+                    onSuccess(marker);
                 }
             }
         },
@@ -134,18 +118,13 @@ export default {
                 }
             });
             const data = yield call(api.getSiteTrend, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    loadData: false
-                }
-            });
             if (data) {
                 if (data.error || data.result == undefined) {
                     yield put({
                         type: 'updateState',
                         payload: {
-                            loadData: false
+                            loadData: false,
+                            isLoading: false
                         }
                     });
                 } else {
@@ -163,9 +142,19 @@ export default {
                         type: 'updateState',
                         payload: {
                             speedData: values,
+                            loadData: false,
+                            isLoading: false
                         }
                     });
                 }
+            } else {
+                yield put({
+                    type: 'updateState',
+                    payload: {
+                        loadData: false,
+                        isLoading: false
+                    }
+                });
             }
         }
     },

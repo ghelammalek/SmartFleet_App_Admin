@@ -71,6 +71,25 @@ exports.getStatistics = function getStatistics(params) {
 }
 
 /**
+ *   获取事件类型
+ *
+ * @param {*} record
+ */
+exports.getEventType = function getEventType(record) {
+    const { labels, fields, level } = record || {};
+    const { value, legal, type, category, desc } = fields || {};
+    const { sub_code } = labels || {};
+
+    var label = '';
+    if (sub_code === 'behavior') {
+        label = I18n.t('notice.car_notice');
+    } else if (sub_code === 'driving') {
+        label = I18n.t('notice.driving_notice');
+    }
+    return label;
+}
+
+/**
  *   获取告警级别label
  *
  * @param {*} value
@@ -120,10 +139,10 @@ exports.getEventLevelImage = function getEventLevelImage(value) {
  *
  * @param {*} record
  */
-exports.getTrackTypeImage = function getTrackTypeImage(record) {
-    const { labels, fields, level } = record;
-    const { value, type, category, desc } = fields;
-    const { sub_code } = labels;
+exports.getEventDetailImage = function getEventDetailImage(record) {
+    const { labels, fields, level } = record || {};
+    const { value, legal, type, category, desc } = fields || {};
+    const { sub_code } = labels || {};
 
     if (sub_code === 'driving') {
         if (type === 'overspeed') {
@@ -139,33 +158,30 @@ exports.getTrackTypeImage = function getTrackTypeImage(record) {
                 return Images.event_zone;
             }
         } else if (type === 'engine') {
-            if (value === 1) {
-                return Images.event_start;
-            } else if (value === 0) {
-                return Images.event_stop;
+            if (legal === 0) {
+                if (value === 1) {
+                    return Images.event_start_warning;
+                } else if (value === 0) {
+                    return Images.event_stop_warning;
+                }
+            } else {
+                if (value === 1) {
+                    return Images.event_start;
+                } else if (value === 0) {
+                    return Images.event_stop;
+                }
             }
         } else if (type === 'heading') {
             return Images.event_heading;
         }
     } else {
-        if (level == 1) {
-            return Images.event_level1;
-        } else if (level == 2) {
-            return Images.event_level2;
-        } else if (level == 3) {
-            return Images.event_level3;
-        } else if (level == 4) {
-            return Images.event_level4;
-        } else if (level == 5) {
-            return Images.event_level5;
-        }
         return null;
     }
 }
-exports.getTrackTypeImageName = function getTrackTypeImageName(record) {
-    const { labels, fields, level } = record;
-    const { value, type, category, desc } = fields;
-    const { sub_code } = labels;
+exports.getEventDetailImageName = function getEventDetailImageName(record) {
+    const { labels, fields, level } = record || {};
+    const { value, legal, type, category, desc } = fields || {};
+    const { sub_code } = labels || {};
 
     if (sub_code === 'driving') {
         if (type === 'overspeed') {
@@ -181,46 +197,25 @@ exports.getTrackTypeImageName = function getTrackTypeImageName(record) {
                 return 'zone';
             }
         } else if (type === 'engine') {
-            if (value === 1) {
-                return 'start';
-            } else if (value === 0) {
-                return 'stop';
+            if (legal === 0) {
+                if (value === 1) {
+                    return 'start_warning';
+                } else if (value === 0) {
+                    return 'stop_warning';
+                }
+            } else {
+                if (value === 1) {
+                    return 'start';
+                } else if (value === 0) {
+                    return 'stop';
+                }
             }
         } else if (type === 'heading') {
             return 'heading';
         }
     } else {
-        if (level == 1) {
-            return 'level1';
-        } else if (level == 2) {
-            return 'level2';
-        } else if (level == 3) {
-            return 'level3';
-        } else if (level == 4) {
-            return 'level4';
-        } else if (level == 5) {
-            return 'level5';
-        }
         return '';
     }
-}
-/**
- *   获取事件类型
- *
- * @param {*} record
- */
-exports.getEventType = function getEventType(record) {
-    const { labels, fields, level } = record;
-    const { value, type, category, desc } = fields;
-    const { sub_code } = labels;
-
-    var label = '';
-    if (sub_code === 'behavior') {
-        label = I18n.t('notice.car_notice');
-    } else if (sub_code === 'driving') {
-        label = I18n.t('notice.driving_notice');
-    }
-    return label;
 }
 
 /**

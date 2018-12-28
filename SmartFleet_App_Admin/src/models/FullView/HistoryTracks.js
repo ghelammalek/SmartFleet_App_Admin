@@ -81,7 +81,7 @@ export default {
                             markers.push({
                                 latitude: location.latitude,
                                 longitude: location.longitude,
-                                extra: { imageName: ihtool.getTrackTypeImageName(element) }
+                                extra: { imageName: ihtool.getEventDetailImageName(element) }
                             });
                         }
                         if (element.labels && element.labels.code && element.labels.code === 'driving') {
