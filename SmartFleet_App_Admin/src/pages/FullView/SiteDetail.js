@@ -159,7 +159,7 @@ class SiteDetail extends Component {
             const item = items[0];
             return (
                 <TouchableOpacity style={styles.eventItemView} disabled={this.props.isLoading} activeOpacity={0.6} onPress={() => this.pushEventDetail(item)} >
-                    <Image style={styles.eventImage} source={ihtool.getEventLevelImage(item.level)} />
+                    <Image style={styles.eventImage} source={ihtool.getTrackTypeImage(item)} />
                     <Text style={styles.message_} >{ihtool.getEventDesc(item)}</Text>
                     <Text style={styles.eventTime} >{ihtool.getSimpleDate(item.startsAt)}</Text>
                     <Image style={styles.eventRightImage} source={Images.other_right} />
