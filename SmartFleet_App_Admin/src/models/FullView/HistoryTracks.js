@@ -78,7 +78,11 @@ export default {
                         const element = data.result[i];
                         if (element.fields && element.fields.start_location) {
                             const location = element.fields.start_location;
-                            markers.push({ latitude: location.latitude, longitude: location.longitude, extra: { imageName: ihtool.getTrackTypeImageName(element) } });
+                            markers.push({
+                                latitude: location.latitude,
+                                longitude: location.longitude,
+                                extra: { imageName: ihtool.getTrackTypeImageName(element) }
+                            });
                         }
                         if (element.labels && element.labels.code && element.labels.code === 'driving') {
                             count = count + 1;

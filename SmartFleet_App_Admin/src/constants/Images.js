@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2018-12-21 16:21:04
+ * @Last Modified time: 2018-12-27 23:36:19
  */
 
 export default {
@@ -81,5 +81,11 @@ export default {
     event_level3: require('../assets/images/event/level3.png'),
     event_level4: require('../assets/images/event/level4.png'),
     event_level5: require('../assets/images/event/level5.png'),
-
+    event_heading: require('../assets/images/event/heading.png'),
+    event_overspeed_alert: require('../assets/images/event/overspeed_alert.png'),
+    event_overspeed_warning: require('../assets/images/event/overspeed_warning.png'),
+    event_path: require('../assets/images/event/path.png'),
+    event_start: require('../assets/images/event/start.png'),
+    event_stop: require('../assets/images/event/stop.png'),
+    event_zone: require('../assets/images/event/zone.png'),
 }

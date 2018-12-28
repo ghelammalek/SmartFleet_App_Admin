@@ -209,11 +209,19 @@ class HistoryTracks extends Component {
                     const tracks = polylines[i];
                     if (tracks.length > 0) {
                         const startLocation = tracks[0];
-                        points.push({ latitude: startLocation.lat, longitude: startLocation.lng, extra: { imageName: 'start_location' } });
+                        points.push({
+                            latitude: startLocation.lat,
+                            longitude: startLocation.lng,
+                            extra: { imageName: 'start' }
+                        });
                         if (tracks.length > 1) {
                             const index = tracks.length - 1;
                             const endLocation = tracks[index];
-                            points.push({ latitude: endLocation.lat, longitude: endLocation.lng, extra: { imageName: 'end_location' } });
+                            points.push({
+                                latitude: endLocation.lat,
+                                longitude: endLocation.lng,
+                                extra: { imageName: 'stop' }
+                            });
                         }
                     }
                 }
@@ -222,7 +230,11 @@ class HistoryTracks extends Component {
         if (markers && markers.length > 0) {
             for (let i = 0; i < markers.length; i++) {
                 const marker = markers[i];
-                points.push({ latitude: marker.latitude, longitude: marker.longitude, extra: { imageName: marker.extra.imageName } });
+                points.push({
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
+                    extra: { imageName: marker.extra.imageName }
+                });
             }
         }
         return points;

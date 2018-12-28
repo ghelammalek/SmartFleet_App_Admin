@@ -93,6 +93,27 @@ exports.getEventLevelLabel = function getEventLevelLabel(value) {
 }
 
 
+/**
+ *   获取告警级别图片
+ *
+ * @param {*} value
+ * @returns
+ */
+exports.getEventLevelImage = function getEventLevelImage(value) {
+    if (value == 1) {
+        return Images.event_level1;
+    } else if (value == 2) {
+        return Images.event_level2;
+    } else if (value == 3) {
+        return Images.event_level3;
+    } else if (value == 4) {
+        return Images.event_level4;
+    } else if (value == 5) {
+        return Images.event_level5;
+    } else {
+        return null;
+    }
+}
 
 /**
  *   获取车辆轨迹历史事件状态
@@ -105,30 +126,39 @@ exports.getTrackTypeImage = function getTrackTypeImage(record) {
     const { sub_code } = labels;
 
     if (sub_code === 'driving') {
-        if (type === 'engine') {
-            if (value) {
-                return Images.other_ico_dianhuo;
-            } else {
-                return Images.other_ico_xihuo;
+        if (type === 'overspeed') {
+            if (level === 2) {
+                return Images.event_overspeed_warning;
+            } else if (level === 4) {
+                return Images.event_overspeed_alert;
             }
-        } else if (level) {
-            if (level == 1) {
-                return Images.event_level1;
-            } else if (level == 2) {
-                return Images.event_level2;
-            } else if (level == 3) {
-                return Images.event_level3;
-            } else if (level == 4) {
-                return Images.event_level4;
-            } else if (level == 5) {
-                return Images.event_level5;
+        } else if (type === 'zone') {
+            if (category === 'route') {
+                return Images.event_path;
             } else {
-                return null;
+                return Images.event_zone;
             }
-        } else {
-            return null;
+        } else if (type === 'engine') {
+            if (value === 1) {
+                return Images.event_start;
+            } else if (value === 0) {
+                return Images.event_stop;
+            }
+        } else if (type === 'heading') {
+            return Images.event_heading;
         }
     } else {
+        if (level == 1) {
+            return Images.event_level1;
+        } else if (level == 2) {
+            return Images.event_level2;
+        } else if (level == 3) {
+            return Images.event_level3;
+        } else if (level == 4) {
+            return Images.event_level4;
+        } else if (level == 5) {
+            return Images.event_level5;
+        }
         return null;
     }
 }
@@ -138,30 +168,39 @@ exports.getTrackTypeImageName = function getTrackTypeImageName(record) {
     const { sub_code } = labels;
 
     if (sub_code === 'driving') {
-        if (type === 'engine') {
-            if (value) {
-                return 'ico_dianhuo';
-            } else {
-                return 'ico_xihuo';
+        if (type === 'overspeed') {
+            if (level === 2) {
+                return 'overspeed_warning';
+            } else if (level === 4) {
+                return 'overspeed_alert';
             }
-        } else if (level) {
-            if (level == 1) {
-                return 'level1';
-            } else if (level == 2) {
-                return 'level2';
-            } else if (level == 3) {
-                return 'level3';
-            } else if (level == 4) {
-                return 'level4';
-            } else if (level == 5) {
-                return 'level5';
+        } else if (type === 'zone') {
+            if (category === 'route') {
+                return 'path';
             } else {
-                return '';
+                return 'zone';
             }
-        } else {
-            return '';
+        } else if (type === 'engine') {
+            if (value === 1) {
+                return 'start';
+            } else if (value === 0) {
+                return 'stop';
+            }
+        } else if (type === 'heading') {
+            return 'heading';
         }
     } else {
+        if (level == 1) {
+            return 'level1';
+        } else if (level == 2) {
+            return 'level2';
+        } else if (level == 3) {
+            return 'level3';
+        } else if (level == 4) {
+            return 'level4';
+        } else if (level == 5) {
+            return 'level5';
+        }
         return '';
     }
 }
@@ -289,27 +328,6 @@ exports.getEventDesc = function getEventDesc(record) {
     return label.replace('{value}', value);
 }
 
-/**
- *   获取告警级别图片
- *
- * @param {*} value
- * @returns
- */
-exports.getEventLevelImage = function getEventLevelImage(value) {
-    if (value == 1) {
-        return Images.event_level1;
-    } else if (value == 2) {
-        return Images.event_level2;
-    } else if (value == 3) {
-        return Images.event_level3;
-    } else if (value == 4) {
-        return Images.event_level4;
-    } else if (value == 5) {
-        return Images.event_level5;
-    } else {
-        return null;
-    }
-}
 
 /**
  *   获取10位的时间戳
