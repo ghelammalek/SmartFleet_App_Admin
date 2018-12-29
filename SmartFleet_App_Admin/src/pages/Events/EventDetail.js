@@ -36,53 +36,47 @@ class EventDetail extends Component {
     constructor(props) {
         super(props);
         const item = this.props.navigation.state.params.item;
-        var markers = [];
-        var maxLng = 116.4136103013;
-        var minLng = 116.4136103013;
-        var maxLat = 39.9110666857;
-        var minLat = 39.9110666857;
+        let markers = [];
+        let maxLng = -360;
+        let minLng = 360;
+        let maxLat = -360;
+        let minLat = 360;
         if (item.fields) {
             if (item.fields.start_location) {
-                maxLng = item.fields.start_location.longitude;
-                minLng = item.fields.start_location.longitude;
-                maxLat = item.fields.start_location.latitude;
-                minLat = item.fields.start_location.latitude;
+                const marker = item.fields.start_location;
+                if (marker.longitude > maxLng) maxLng = marker.longitude;
+                if (marker.longitude < minLng) minLng = marker.longitude;
+                if (marker.latitude > maxLat) maxLat = marker.latitude;
+                if (marker.latitude < minLat) minLat = marker.latitude;
                 markers.push({
-                    latitude: item.fields.start_location.latitude,
-                    longitude: item.fields.start_location.longitude,
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
                     title: I18n.t('start_location'),
                 })
             }
             if (item.fields.end_location) {
-                maxLng = item.fields.end_location.longitude;
-                minLng = item.fields.end_location.longitude;
-                maxLat = item.fields.end_location.latitude;
-                minLat = item.fields.end_location.latitude;
+                const marker = item.fields.end_location;
+                if (marker.longitude > maxLng) maxLng = marker.longitude;
+                if (marker.longitude < minLng) minLng = marker.longitude;
+                if (marker.latitude > maxLat) maxLat = marker.latitude;
+                if (marker.latitude < minLat) minLat = marker.latitude;
                 markers.push({
-                    latitude: item.fields.end_location.latitude,
-                    longitude: item.fields.end_location.longitude,
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
                     title: I18n.t('end_location'),
                 })
             }
         }
-
-        for (let i = 0; i < markers.length; i++) {
-            const marker = markers[i];
-            if (marker.longitude > maxLng) maxLng = marker.longitude;
-            if (marker.longitude < minLng) minLng = marker.longitude;
-            if (marker.latitude > maxLat) maxLat = marker.latitude;
-            if (marker.latitude < minLat) minLat = marker.latitude;
-        }
-        var cenLng = (parseFloat(maxLng) + parseFloat(minLng)) / 2;
-        var cenLat = (parseFloat(maxLat) + parseFloat(minLat)) / 2;
-        var centerPoint = {
+        let cenLng = (parseFloat(maxLng) + parseFloat(minLng)) / 2;
+        let cenLat = (parseFloat(maxLat) + parseFloat(minLat)) / 2;
+        let centerPoint = {
             latitude: cenLat,
             longitude: cenLng
         }
         this.state = {
             data: item,
             mayType: MapTypes.NORMAL,
-            // zoom: 6,
+            zoom: 15,
             trafficEnabled: false,
             baiduHeatMapEnabled: false,
             center: centerPoint,
@@ -160,15 +154,25 @@ class EventDetail extends Component {
             <View style={styles.container}>
                 {
                     this.state.markers.length > 0 ?
-                        <MapView
-                            trafficEnabled={this.state.trafficEnabled}
-                            baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
-                            // zoom={this.state.zoom}
-                            mapType={this.state.mapType}
-                            center={this.state.center}
-                            markers={this.state.markers}
-                            style={styles.map}
-                        /> : <View />
+                        this.state.markers.length === 2 ?
+                            <MapView
+                                trafficEnabled={this.state.trafficEnabled}
+                                baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
+                                // zoom={this.state.zoom}
+                                mapType={this.state.mapType}
+                                center={this.state.center}
+                                markers={this.state.markers}
+                                style={styles.map}
+                            /> :
+                            <MapView
+                                trafficEnabled={this.state.trafficEnabled}
+                                baiduHeatMapEnabled={this.state.baiduHeatMapEnabled}
+                                zoom={this.state.zoom}
+                                mapType={this.state.mapType}
+                                center={this.state.center}
+                                markers={this.state.markers}
+                                style={styles.map}
+                            /> : <View />
                 }
                 {
                     this._renderItem(this.props.data)
