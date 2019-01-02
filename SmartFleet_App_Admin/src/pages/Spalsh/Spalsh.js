@@ -35,6 +35,19 @@ const main = StackActions.reset({
     index: 0,
     actions: [
         NavigationActions.navigate({ routeName: 'Main' })
+        // NavigationActions.navigate({
+        //     routeName: 'SiteDetail',
+        //     params: {
+        //         item: {
+        //             id: '5c272b2bde262d0001725209',
+        //             plateNo: '京LV5870',
+        //             minutes: 13,
+        //             distance: 119,
+        //             duration: 5.9,
+        //             location: { x: 116.4224776530299, y: 40.0832424159471 }
+        //         }
+        //     }
+        // })
     ]
 });
 

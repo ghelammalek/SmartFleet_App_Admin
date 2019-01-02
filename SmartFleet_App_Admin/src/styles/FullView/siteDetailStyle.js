@@ -108,7 +108,7 @@ export default siteDetailStyle = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 12,
-        marginTop: 12,
+        // marginTop: 12,
     },
     eventImage: {
         width: 20,
@@ -132,7 +132,62 @@ export default siteDetailStyle = StyleSheet.create({
         height: 220,
         marginTop: 12,
     },
-
+    mapBtn: {
+        flex: 1,
+        marginTop: -220,
+        height: 220,
+    },
+    mapMsgView: {
+        top: 0,
+        width: Dimensions.get('window').width - 50,
+        height: 95,
+        position: 'absolute',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flexDirection: 'column'
+    },
+    mapArrow: {
+        width: 0,
+        height: 0,
+        borderLeftWidth: 8,
+        borderLeftColor: 'transparent',
+        borderRightWidth: 8,
+        borderRightColor: 'transparent',
+        borderTopColor: '#fff',
+        borderTopWidth: 10,
+    },
+    mapMsg: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: 36,
+        minWidth: 60,
+        maxWidth: Dimensions.get('window').width * 2 / 3,
+        borderRadius: 5,
+        backgroundColor: '#fff',
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
+    space: {
+        backgroundColor: '#24ba8e',
+        width: 4,
+        height: 20,
+        marginRight: 8,
+    },
+    timeView: {
+        flex: 1,
+        marginTop: 5,
+        minHeight: 30,
+        paddingRight: 8,
+        marginBottom: -8,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        // backgroundColor: 'red',
+        flexDirection: 'row',
+    },
+    time: {
+        fontSize: 14,
+        color: '#9797a3'
+    },
     detailView: {
         borderWidth: 1,
         borderColor: '#f3f3f3',

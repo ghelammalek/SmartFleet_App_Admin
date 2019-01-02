@@ -54,9 +54,12 @@ class SiteDetail extends Component {
             zoom: 15,
             trafficEnabled: false,
             baiduHeatMapEnabled: false,
+            marker: {},
             address: '',
             btnSelect: 1,
             isUnflod: false,
+            isTime: false,
+            isMap: true,
         };
         this.names = [I18n.t('detail.speed'), I18n.t('detail.voltage'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
 
@@ -65,7 +68,7 @@ class SiteDetail extends Component {
         this.timer && clearInterval(this.timer);
     }
     componentDidMount() {
-        this.getAddress(this.state.location.y, this.state.location.x);
+        // this.getAddress(this.state.location.y, this.state.location.x);
         this.props.navigation.setParams({ navAction: this.navAction.bind(this) });
         this.getAllData();
         this.timer = setInterval(() => {
@@ -73,11 +76,13 @@ class SiteDetail extends Component {
         }, 60000);
     }
     getAddress(latitude, longitude) {
+        this.setState({ isMap: true });
         Geolocation.reverseGeoCode(latitude, longitude)
             .then(data => {
-                this.setState({ address: data.address });
+                this.setState({ isMap: false, address: data.address });
             })
             .catch(e => {
+                this.setState({ isMap: false });
                 console.log(e, 'error');
             })
     }
@@ -104,8 +109,14 @@ class SiteDetail extends Component {
             },
             onSuccess: (location) => {
                 if (location.latitude && location.longitude) {
+                    this.setState({ marker: location });
                     this.getAddress(location.latitude, location.longitude);
+                } else {
+                    this.setState({ isMap: false });
                 }
+            },
+            onFailed: () => {
+                this.setState({ isMap: false });
             }
         })
         const fields = params[this.state.btnSelect - 1];
@@ -164,22 +175,25 @@ class SiteDetail extends Component {
             data: this.props.speedData,
             lineWidth: 1,
         });
-        // } else {
-        //     serieses.push({
-        //         type: 'spline',
-        //         name: name,
-        //         data: [],
-        //         lineWidth: 1,
-        //     });
-        // }
         return ihtool.getConf(serieses, unit);
+    }
+    pushBigMapView() {
+        this.props.navigation.navigate('SiteBigMap', {
+            title: this.state.title,
+            center: this.props.center,
+            marker: {
+                title: this.state.address,
+                longitude: this.props.marker.longitude,
+                latitude: this.props.marker.latitude,
+            },
+        });
     }
     render() {
         const conf = this.getSeries();
         const statistics = ihtool.getStatistics(this.props.statistics);
         const { siteData } = this.props;
-        const { metrics } = siteData;
-        const { iot_data, location_data } = metrics;
+        const { metrics } = siteData || {};
+        const { iot_data, location_data } = metrics || {};
         // const { odo_meter, water_temp, fuel_meter, fuel_capacity, speed, rpm, break_state } = iot_data;
         return (
             <View style={styles.container}>
@@ -242,7 +256,7 @@ class SiteDetail extends Component {
                         </View>
                     </View>
                     <View style={styles.bodyItemView}>
-                        <View style={styles.addressView}>
+                        {/* <View style={styles.addressView}>
                             <View style={styles.row_left}>
                                 <Image source={Images.other_location} style={styles.markImage} />
                                 <Text numberOfLines={1} style={styles.message_}>{this.state.address}</Text>
@@ -252,22 +266,49 @@ class SiteDetail extends Component {
                                 <Image source={Images.weather_fine} style={styles.weatherImage} />
                             </View>
                         </View>
-                        <Text style={styles.message_}>{'行驶中，正常，司机张三'}</Text>
+                        <Text style={styles.message_}>{'行驶中，正常，司机张三'}</Text> */}
                         {
                             this.getEventItem(this.props.event)
                         }
-                        <MapView
-                            trafficEnabled={false}
-                            baiduHeatMapEnabled={false}
-                            zoom={15}
-                            mapType={MapTypes.NORMAL}
-                            center={this.props.center}
-                            marker={this.props.marker}
-                            style={styles.mapView}
-                            onMapClick={(e) => {
-                            }}
-                        />
-                        <Text style={{ marginLeft: 10, marginTop: 10, color: '#9797a3' }}>{ihtool.getSimpleDate(iot_data.timestamp)}</Text>
+                        <View style={styles.mapView}>
+                            <MapView
+                                trafficEnabled={false}
+                                baiduHeatMapEnabled={false}
+                                zoom={15}
+                                mapType={MapTypes.NORMAL}
+                                center={this.props.center}
+                                marker={this.props.marker}
+                                style={{ flex: 1 }}
+                                onMapClick={(e) => {
+                                }}
+                            />
+                            {
+                                this.state.isMap ? <View /> :
+                                    <View style={styles.mapMsgView}>
+                                        <View style={styles.mapMsg}>
+                                            <Text style={styles.message}>{this.state.address}</Text>
+                                        </View>
+                                        <View style={styles.mapArrow} />
+                                    </View>
+                            }
+                            <TouchableOpacity style={styles.mapBtn}
+                                onPress={() => this.pushBigMapView()}
+                                activeOpacity={0.6}
+                                disabled={this.state.isMap}
+                            >
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity style={styles.timeView}
+                            onPress={() => { this.setState({ isTime: !this.state.isTime }) }}
+                        >
+                            <View style={styles.space} />
+                            <Text style={styles.time}>
+                                {
+                                    this.state.isTime ? ihtool.changeDateFormat(iot_data.timestamp) :
+                                        ihtool.getSimpleDate_(iot_data.timestamp)
+                                }
+                            </Text>
+                        </TouchableOpacity>
                         <View style={styles.detailView}>
                             <View style={styles.detailItemView}>
                                 <View style={styles.detailItem}>
@@ -481,10 +522,10 @@ class SiteDetail extends Component {
                                     <Text style={this.state.btnSelect == 4 ? styles.btnTitle : styles.btnTitle_}>{I18n.t('detail.braking_sign')}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.moreView} activeOpacity={0.6} onPress={() => this.more()}>
+                            {/* <TouchableOpacity style={styles.moreView} activeOpacity={0.6} onPress={() => this.more()}>
                                 <Text style={styles.more}>{I18n.t('common.more')}</Text>
                                 <Image style={styles.moreBtn} source={Images.other_right} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                         <View style={styles.line} />
                         <View style={styles.chartView} >

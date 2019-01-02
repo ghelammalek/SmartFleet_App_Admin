@@ -58,6 +58,12 @@ export default {
     scan: '扫一扫',
     custom: '自定义',
     reset_password: '重置密码',
+    just_time: '刚刚',
+    minutes_ago: ' 分钟前',
+    hours_ago: ' 小时前',
+    days_ago: ' 天前',
+    month_ago: ' 月前',
+    years_ago: ' 年前',
 
     //登录
     get_code_err: '验证码发送失败，请稍后再试',

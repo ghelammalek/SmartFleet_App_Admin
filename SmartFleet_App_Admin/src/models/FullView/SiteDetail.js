@@ -71,11 +71,12 @@ export default {
                 }
             }
         },
-        *getSiteData({ payload, onSuccess }, { call, put, select }) {
+        *getSiteData({ payload, onSuccess, onFailed }, { call, put, select }) {
             const data = yield call(api.getSiteData, payload);
             if (data) {
                 if (data.error || data.result == undefined) {
                     // alert('sdf');
+                    onFailed();
                 } else {
                     let siteData = {
                         metrics: {
@@ -107,6 +108,8 @@ export default {
                     });
                     onSuccess(marker);
                 }
+            } else {
+                onFailed();
             }
         },
         *getSiteTrend({ payload }, { call, put, select }) {

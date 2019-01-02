@@ -6,6 +6,7 @@ import ForgotPasswordView from '../pages/Login/ForgotPasswordView';
 import Home from '../pages/Home/Home';
 import FullView from '../pages/FullView/FullView';
 import SiteDetail from '../pages/FullView/SiteDetail';
+import SiteBigMap from '../pages/FullView/SiteBigMap';
 import HistoryView from '../pages/FullView/HistoryView';
 import Events from '../pages/Events/Events';
 import Setting from '../pages/Setting/Setting';
@@ -20,6 +21,7 @@ export default {
     Events: { screen: Events },
     Setting: { screen: Setting },
     SiteDetail: { screen: SiteDetail },
+    SiteBigMap: { screen: SiteBigMap },
     EventDetail: { screen: EventDetail },
     ScanView: { screen: ScanView },
     RegisterCar: { screen: RegisterCar },

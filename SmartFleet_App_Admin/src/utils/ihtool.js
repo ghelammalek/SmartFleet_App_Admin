@@ -80,7 +80,7 @@ exports.getEventType = function getEventType(record) {
     const { value, legal, type, category, desc } = fields || {};
     const { sub_code } = labels || {};
 
-    var label = '';
+    let label = '';
     if (sub_code === 'behavior') {
         label = I18n.t('notice.car_notice');
     } else if (sub_code === 'driving') {
@@ -228,7 +228,7 @@ exports.getEventDesc = function getEventDesc(record) {
     const { labels, fields, level } = record || {};
     const { value, type, category, desc } = fields || {};
     const { sub_code } = labels || {};
-    var label = '';
+    let label = '';
     if (sub_code === 'behavior') {
         if (type === 'fatigure') {
             label = I18n.t('notice.fatigure');
@@ -343,7 +343,6 @@ exports.getTime10 = function getTime(date) {
 exports.getTime13 = function getTime(date) {
     return moment(date).valueOf();
 }
-
 /**
  *   对时间做简化处理
  *
@@ -357,7 +356,7 @@ exports.getSimpleDate = function getSimpleDate(date) {
     } else {
         date_ = moment(date).format('YYYY-MM-DD HH:mm:ss.SSS');
     }
-    var str = '';
+    let str = '';
     let year = moment(date_).get('year');
     let month = moment(date_).get('month');  // 0 to 11
     let day = moment(date_).get('date');
@@ -405,6 +404,62 @@ exports.getSimpleDate = function getSimpleDate(date) {
     }
     return str;
 }
+/**
+ *   对时间做简化处理
+ *
+ * @param {*} date
+ * @returns
+ */
+exports.getSimpleDate_ = function getSimpleDate_(date) {
+    let date_;
+    if (isEmpty(date)) {
+        return;
+    } else {
+        date_ = moment(date).format('YYYY-MM-DD HH:mm:ss.SSS');
+    }
+    let str = '';
+    let year = moment(date_).get('year');
+    let month = moment(date_).get('month');  // 0 to 11
+    let day = moment(date_).get('date');
+    let hour = moment(date_).get('hour');
+    let minute = moment(date_).get('minute');
+    let second = moment(date_).get('second');
+    let millisecond = moment(date_).get('millisecond');
+
+    let currentDate = moment().format('YYYY-MM-DD HH:mm:ss.SSS');
+    let yearCurrent = moment(currentDate).get('year');
+    let monthCurrent = moment(currentDate).get('month');  // 0 to 11
+    let dayCurrent = moment(currentDate).get('date');
+    let hourCurrent = moment(currentDate).get('hour');
+    let minuteCurrent = moment(currentDate).get('minute');
+    let secondCurrent = moment(currentDate).get('second');
+    let millisecondCurrent = moment(currentDate).get('millisecond');
+
+    let time = moment(date).unix();
+    let timeCurrent = moment(currentDate).unix();
+
+    const value = timeCurrent - time;
+    if (value < 60) {
+        str = I18n.t('just_time');
+    } else if (value < 60 * 60) {
+        str = parseInt(value / (60)) + I18n.t('minutes_ago');
+    } else if (value < 60 * 60 * 24) {
+        str = parseInt(value / (60 * 60)) + I18n.t('hours_ago');
+    } else if (value < 60 * 60 * 24 * 31) {
+        str = parseInt(value / (60 * 60 * 24)) + I18n.t('days_ago');
+    } else {
+        if (yearCurrent - year === 0) {
+            str = parseInt(monthCurrent - month) + I18n.t('months_ago');
+        } else {
+            if (yearCurrent - year < 2) {
+                str = parseInt(monthCurrent - month + 11) + I18n.t('months_ago');
+            } else {
+                str = parseInt(yearCurrent - year) + I18n.t('years_ago');
+            }
+        }
+    }
+    return str;
+}
 
 /**
  *   获取当前的utc时间
@@ -435,6 +490,24 @@ exports.getDateEnd = function getDateEnd(date) {
     return time;
 }
 
+/**
+ *    转换时间格式
+ *
+ * @param {*} date
+ * @param {*} format
+ * @returns
+ */
+exports.changeDateFormat = function changeDateFormat(date, format) {
+    if (isEmpty(date)) {
+        return;
+    } else {
+        if (isEmpty(format)) {
+            return moment(date).format('YYYY-MM-DD HH:mm:ss');
+        } else {
+            return moment(date), format(format);
+        }
+    }
+}
 /**
  *   获取当前版本号
  *
@@ -491,7 +564,7 @@ exports.getVersion = function getVersion(currentVersion, newVersion) {
 
 
 exports.getConf = function getConf(series, name) {
-    var conf = {
+    let conf = {
         chart: {
             backgroundColor: '#fff',
             zoomType: 'x',
@@ -528,7 +601,7 @@ exports.getConf = function getConf(series, name) {
             },
             formatter: function () {
 
-                var s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', (parseFloat(this.x))) + '</b>';
+                let s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', (parseFloat(this.x))) + '</b>';
                 $.each(this.points, function () {
                     s += '<br/>' + this.series.name + ': ' + parseFloat(this.y).toFixed(2);
                 });
@@ -591,7 +664,7 @@ exports.getConf = function getConf(series, name) {
     return conf;
 }
 exports.getConfDouble = function getConfDouble(yAxis, series) {
-    var conf = {
+    let conf = {
         chart: {
 
             backgroundColor: '#fff',
@@ -631,7 +704,7 @@ exports.getConfDouble = function getConfDouble(yAxis, series) {
                 fontWeight: "blod",
             },
             formatter: function () {
-                var s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M', (parseFloat(this.x))) + '</b>';
+                let s = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M', (parseFloat(this.x))) + '</b>';
                 $.each(this.points, function () {
                     s += '<br/>' + this.series.name + ': ' + parseFloat(this.y).toFixed(2);
                 });

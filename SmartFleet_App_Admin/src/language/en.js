@@ -59,6 +59,12 @@ export default {
     scan: 'Scan',
     custom: 'Custom',
     reset_password: 'Reset Password',
+    just_time: 'Just',
+    minutes_ago: ' minutes ago',
+    hours_ago: ' hours ago',
+    days_ago: ' days ago',
+    month_ago: ' months ago',
+    years_ago: ' years ago',
 
     //登录
     get_code_err: 'Verification code sent error, please try again later',
