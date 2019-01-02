@@ -24,7 +24,7 @@ import setting from '../../utils/setting';
 import ihtool from '../../utils/ihtool';
 import homeStyle from '../../styles/Home/homeStyle';
 
-const eventTypes = ['vehicle', 'driving', 'driving', 'driving',]
+const eventTypes = ['', 'vehicle', 'driving', 'order', 'ganss',]
 class Home extends Component {
     static navigationOptions = ({ navigation }) => ({
         tabBarLabel: I18n.t('tab_home'),
@@ -46,22 +46,22 @@ class Home extends Component {
             limit: 5,
             body: {
                 end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
-                labels: {
-                    code: eventTypes[this.state.eventType],
-                },
+                labels: {},
             }
         }));
     }
     refresh() {
+        let labels = {};
+        if (this.state.eventType !== 0) {
+            labels = { code: eventTypes[this.state.eventType] };
+        }
         this.props.dispatch(createAction('home/getStatistics')({ queryType: '1' }));
         this.props.dispatch(createAction('home/getAlerts')({
             cursor: 0,
             limit: 5,
             body: {
                 end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
-                labels: {
-                    code: eventTypes[this.state.eventType],
-                },
+                labels: labels,
             }
         }));
     }
@@ -71,7 +71,7 @@ class Home extends Component {
         this.props.navigation.navigate('EventDetail', {
             item: item,
             callback: (backdata) => {
-                var events = [];
+                let events = [];
                 for (let i = 0; i < this.props.events.length; i++) {
                     const element = this.props.events[i];
                     if (index == i) {
@@ -86,14 +86,16 @@ class Home extends Component {
     }
     refreshEvents(value) {
         this.setState({ eventType: value });
+        let labels = {};
+        if (value !== 0) {
+            labels = { code: eventTypes[value] };
+        }
         this.props.dispatch(createAction('home/getAlerts')({
             cursor: 0,
             limit: 5,
             body: {
                 end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
-                labels: {
-                    code: eventTypes[value],
-                },
+                labels: labels,
             }
         }));
     }
@@ -104,19 +106,21 @@ class Home extends Component {
             cursor: 0,
             level: 0,
             plateNo: '',
-            eventType: this.state.eventType + 1,
+            eventType: this.state.eventType,
             start_time: moment().add(-1, 'month').utc().format(),
             end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
         }));
+        let labels = {};
+        if (this.state.eventType !== 0) {
+            labels = { code: eventTypes[this.state.eventType] };
+        }
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
             limit: 20,
             body: {
                 begin: moment().add(-1, 'month').utc().format(),
                 end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
-                labels: {
-                    code: eventTypes[this.state.eventType]
-                }
+                labels: labels
             }
         }));
         this.props.navigation.navigate('Events', { eventsType: this.state.eventType + 1 });
@@ -239,16 +243,19 @@ class Home extends Component {
                     <View style={homeStyle.bodyView}>
                         <View style={homeStyle.titleView}>
                             <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 0 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(0)} >
-                                <Text style={this.state.eventType == 0 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_car')}</Text>
+                                <Text style={this.state.eventType == 0 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_all')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 1 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(1)} >
-                                <Text style={this.state.eventType == 1 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_driving')}</Text>
+                                <Text style={this.state.eventType == 1 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_car')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 2 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(2)} >
-                                <Text style={this.state.eventType == 2 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_work')}</Text>
+                                <Text style={this.state.eventType == 2 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_driving')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 3 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(3)} >
-                                <Text style={this.state.eventType == 3 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_alarm')}</Text>
+                                <Text style={this.state.eventType == 3 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_work')}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 4 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(4)} >
+                                <Text style={this.state.eventType == 4 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_alarm')}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={homeStyle.line} />

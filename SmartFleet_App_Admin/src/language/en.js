@@ -17,6 +17,7 @@ export default {
     ci: 'times',
 
 
+    event_for_all: 'Topic',
     event_for_car: 'Vehicle Event',
     event_for_driving: 'Driving Event',
     event_for_work: 'Work Order Event',

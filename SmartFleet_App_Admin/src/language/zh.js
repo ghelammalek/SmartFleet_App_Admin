@@ -16,7 +16,7 @@ export default {
     sheng: '升',
     ci: '次',
 
-
+    event_for_all: '总览',
     event_for_car: '车辆事件',
     event_for_driving: '驾驶事件',
     event_for_work: '工单事件',
@@ -142,10 +142,10 @@ export default {
     worktime_duraction: '工作时长及行驶里程',
     fuel_distance: '油耗及里程趋势',
     speed: '速度',
-    pilot_unbelt:'主驾驶未系安全带',
-    co_pilot_unbelt:'副驾驶未系安全带',
-    tco_abnormal:'当前冷却液温度:{value}℃',
-    insufficient_fuel:'当前油量{value}%',
+    pilot_unbelt: '主驾驶未系安全带',
+    co_pilot_unbelt: '副驾驶未系安全带',
+    tco_abnormal: '当前冷却液温度:{value}℃',
+    insufficient_fuel: '当前油量{value}%',
 
     event_unflod: '点击展开',
     event_hide: '点击收缩',
