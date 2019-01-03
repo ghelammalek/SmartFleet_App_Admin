@@ -24,7 +24,7 @@ import setting from '../../utils/setting';
 import ihtool from '../../utils/ihtool';
 import homeStyle from '../../styles/Home/homeStyle';
 
-const eventTypes = ['', 'vehicle', 'driving', 'order', 'ganss',]
+const eventTypes = ['', 'vehicle', 'driving', 'work', 'gateWay']
 class Home extends Component {
     static navigationOptions = ({ navigation }) => ({
         tabBarLabel: I18n.t('tab_home'),
@@ -241,7 +241,8 @@ class Home extends Component {
                         </View>
                     </View>
                     <View style={homeStyle.bodyView}>
-                        <View style={homeStyle.titleView}>
+                        <ScrollView horizontal={true} bounces={false}
+                            style={homeStyle.titleView} showsHorizontalScrollIndicator={false}>
                             <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 0 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(0)} >
                                 <Text style={this.state.eventType == 0 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_all')}</Text>
                             </TouchableOpacity>
@@ -257,7 +258,7 @@ class Home extends Component {
                             <TouchableOpacity disabled={this.props.isLoading} style={this.state.eventType == 4 ? homeStyle.btnView_ : homeStyle.btnView} activeOpacity={0.6} onPress={() => this.refreshEvents(4)} >
                                 <Text style={this.state.eventType == 4 ? homeStyle.btnTitle_ : homeStyle.btnTitle}>{I18n.t('event_for_alarm')}</Text>
                             </TouchableOpacity>
-                        </View>
+                        </ScrollView>
                         <View style={homeStyle.line} />
                         {
                             this.getItems(this.props.events)

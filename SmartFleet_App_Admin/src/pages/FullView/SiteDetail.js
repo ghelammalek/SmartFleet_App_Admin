@@ -60,21 +60,40 @@ class SiteDetail extends Component {
             isUnflod: false,
             isTime: false,
             isMap: true,
+            isLoading: false,
         };
         this.names = [I18n.t('detail.speed'), I18n.t('detail.voltage'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
 
     }
     componentWillUnmount() {
         this.timer && clearInterval(this.timer);
+        this.props.dispatch(createAction('siteDetail/updateState')({
+            isLoading: false,
+            isLoading: false,
+            loadData: false,
+            statistics: {},
+            event: [],
+            siteData: {
+                metrics: {
+                    iot_data: {},
+                    location_data: {}
+                }
+            },
+            siteDetail: {},
+            speedData: [],
+            marker: null,
+            center: null,
+        }));
     }
     componentDidMount() {
         // this.getAddress(this.state.location.y, this.state.location.x);
         this.props.navigation.setParams({ navAction: this.navAction.bind(this) });
         this.getAllData();
         this.timer = setInterval(() => {
-            this.setState({ zoom: 15 })
+            this.getAllData();
         }, 60000);
     }
+    //地理编码获取详细地址
     getAddress(latitude, longitude) {
         this.setState({ isMap: true });
         Geolocation.reverseGeoCode(latitude, longitude)

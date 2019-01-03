@@ -82,9 +82,10 @@ export default homeStyle = StyleSheet.create({
         borderRadius: 3,
     },
     titleView: {
+        flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
-        // marginTop: 8,
+        // alignItems: 'center',
+        height: 40,
         backgroundColor: '#fff',
     },
     btnView: {

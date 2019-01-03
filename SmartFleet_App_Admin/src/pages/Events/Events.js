@@ -30,7 +30,7 @@ import styles from '../../styles/Event/eventStyle';
 import homeStyle from '../../styles/Home/homeStyle';
 import siftStyle from '../../styles/siftViewStyle';
 
-const eventTypes = ['', 'vehicle', 'driving', 'driving', 'driving']
+const eventTypes = ['', 'vehicle', 'driving', 'work', 'gateWay']
 class Events extends Component {
     static navigationOptions = ({ navigation }) => ({
         tabBarLabel: I18n.t('tab_events'),
