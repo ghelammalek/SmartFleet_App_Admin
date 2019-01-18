@@ -7,6 +7,7 @@ import Home from '../pages/Home/Home';
 import FullView from '../pages/FullView/FullView';
 import SiteDetail from '../pages/FullView/SiteDetail';
 import SiteBigMap from '../pages/FullView/SiteBigMap';
+import HistoryTracksBigMap from '../pages/FullView/HistoryTracksBigMap';
 import HistoryView from '../pages/FullView/HistoryView';
 import Events from '../pages/Events/Events';
 import Setting from '../pages/Setting/Setting';
@@ -29,4 +30,5 @@ export default {
     HistoryView: { screen: HistoryView },
     LanguageView: { screen: LanguageView },
     ForgotPasswordView: { screen: ForgotPasswordView },
+    HistoryTracksBigMap: { screen: HistoryTracksBigMap }
 }

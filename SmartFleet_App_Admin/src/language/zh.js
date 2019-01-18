@@ -62,7 +62,7 @@ export default {
     minutes_ago: ' 分钟前',
     hours_ago: ' 小时前',
     days_ago: ' 天前',
-    month_ago: ' 月前',
+    months_ago: ' 个月前',
     years_ago: ' 年前',
 
     //登录

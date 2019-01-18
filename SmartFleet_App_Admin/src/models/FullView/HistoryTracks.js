@@ -8,8 +8,6 @@ import api from '../../constants/api';
 export default {
     namespace: 'historyTracks',
     state: {
-        start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
-        end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
         isLoading: false,
         loadData: false,
         loadtrend: false,
@@ -22,7 +20,6 @@ export default {
                 location_data: {}
             }
         },
-        selectTime: 1,
         siteDetail: {},
         speedData: [],
         distanceData: [],
@@ -81,11 +78,14 @@ export default {
                             markers.push({
                                 latitude: location.latitude,
                                 longitude: location.longitude,
+                                title: ihtool.getEventDesc(element),
                                 extra: { imageName: ihtool.getEventDetailImageName(element) }
                             });
                         }
                         if (element.labels && element.labels.code && element.labels.code === 'driving') {
-                            count = count + 1;
+                            if (element.level > 1) {
+                                count = count + 1;
+                            }
                         }
                     }
                     yield put({

@@ -65,14 +65,15 @@ class HistoryTracks extends Component {
             state: 1,
             isFlod: false,
         }
-        this.timeLabel = ['', I18n.t('common.this_day'), I18n.t('custom'), I18n.t('common.this_month'), I18n.t('common.this_year')]
+        this.selectTime = 1;
+        this.start_time = moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
+            this.end_time = moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
+            this.timeLabel = ['', I18n.t('common.this_day'), I18n.t('custom'), I18n.t('common.this_month'), I18n.t('common.this_year')]
         this.names = [I18n.t('speed'), I18n.t('worktime_duraction'), I18n.t('detail.temperature'), I18n.t('detail.braking_sign')]
 
     }
     componentDidMount() {
         this.props.dispatch(createAction('historyTracks/updateState')({
-            start_time: moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
-            end_time: moment(ihtool.getDateEnd(new Date())).format('YYYY-MM-DD HH:mm:ss'),
             isLoading: false,
             loadData: false,
             loadtrend: false,
@@ -85,7 +86,6 @@ class HistoryTracks extends Component {
                     location_data: {}
                 }
             },
-            selectTime: 1,
             siteDetail: {},
             speedData: [],
             distanceData: [],
@@ -99,6 +99,11 @@ class HistoryTracks extends Component {
         this.refresh();
     }
     refresh() {
+        this.getAlerts();
+        this.getTrendData(this.state.btnSelect);
+        this.getSiteTracks(this.state.btnSelect);
+    }
+    getAlerts() {
         this.props.dispatch(createAction('historyTracks/getAlerts')({
             cursor: 0,
             limit: 0,
@@ -111,8 +116,6 @@ class HistoryTracks extends Component {
                 mid: this.state.item.id,
             }
         }));
-        this.getTrendData(this.state.btnSelect);
-        this.getSiteTracks(this.state.btnSelect);
     }
     getSiteTracks(value) {
         this.props.dispatch(createAction('historyTracks/getSiteTracks')({
@@ -171,6 +174,9 @@ class HistoryTracks extends Component {
             serieses.push({
                 type: 'spline',
                 name: name,
+                dataGrouping: {
+                    enabled: false,
+                },
                 data: this.props.speedData,
                 lineWidth: 1,
             });
@@ -191,15 +197,24 @@ class HistoryTracks extends Component {
             const serieses = [{
                 name: I18n.t('dashboard.worktime'),
                 type: 'column',
+                dataGrouping: {
+                    enabled: false,
+                },
                 data: this.props.working_duration,
             }, {
                 name: I18n.t('dashboard.travlled_distance'),
                 type: 'column',
                 yAxis: 1,
+                dataGrouping: {
+                    enabled: false,
+                },
                 data: this.props.distanceData,
             }];
             return ihtool.getConfDouble(yAxis, serieses);
         }
+    }
+    pushBigMapView() {
+        Global.global.navigation.navigate('HistoryTracksBigMap');
     }
     getMarkers(markers, polylines) {
         let points = [];
@@ -212,6 +227,7 @@ class HistoryTracks extends Component {
                         points.push({
                             latitude: startLocation.lat,
                             longitude: startLocation.lng,
+                            title: I18n.t('start_location'),
                             extra: { imageName: 'start' }
                         });
                         if (tracks.length > 1) {
@@ -220,6 +236,7 @@ class HistoryTracks extends Component {
                             points.push({
                                 latitude: endLocation.lat,
                                 longitude: endLocation.lng,
+                                title: I18n.t('end_location'),
                                 extra: { imageName: 'stop' }
                             });
                         }
@@ -233,6 +250,7 @@ class HistoryTracks extends Component {
                 points.push({
                     latitude: marker.latitude,
                     longitude: marker.longitude,
+                    title: marker.title,
                     extra: { imageName: marker.extra.imageName }
                 });
             }
@@ -319,7 +337,7 @@ class HistoryTracks extends Component {
                         }
                     >
                         <View style={siteDetailStyle.bodyItemView}>
-                            <View style={styles.trendTitleView}>
+                            {/* <View style={styles.trendTitleView}>
                                 <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.changeType(1)}>
                                     <View style={this.state.state == 1 ? styles.btn : styles.btn_}>
                                         <Text style={this.state.state == 1 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('historyTack.vehicle_state')}</Text>
@@ -330,62 +348,76 @@ class HistoryTracks extends Component {
                                         <Text style={this.state.state == 2 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('historyTack.history_tack')}</Text>
                                     </View>
                                 </TouchableOpacity>
-                            </View>
-                            <View style={siteDetailStyle.line} />
-                            <View style={{ flexDirection: 'row', flex: 1, width: Dimensions.get('window').width * 2 }}>
-                                <View style={
-                                    this.state.state == 1 ? { width: Dimensions.get('window').width - 48 } :
-                                        { width: 0 }}>
-                                    <View style={styles.statictView}>
-                                        <View style={styles.statictItem_}>
-                                            <View style={styles.statictItem}>
-                                                <View style={styles.statictPoint} />
-                                                <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
-                                                <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + 'km'}</Text>
-                                            </View>
-                                            <View style={styles.statictItem}>
-                                                <View style={styles.statictPoint} />
-                                                <Text style={styles.text14_bold}>{I18n.t('common.when') + ': '}</Text>
-                                                <Text style={styles.text14}>{ihtool.placeholderStr(this.props.durations, true) + 'h'}</Text>
-                                            </View>
+                            </View> */}
+                            {/* <View style={siteDetailStyle.line} /> */}
+                            <MapView
+                                trafficEnabled={false}
+                                baiduHeatMapEnabled={false}
+                                mapType={MapTypes.NORMAL}
+                                style={styles.mapView}
+                                center={center}
+                                markers={markers}
+                                polylines={this.props.tracks}
+                                onMapClick={(e) => {
+
+                                }}
+                            />
+                            <TouchableOpacity style={styles.mapViewBtn}
+                                onPress={() => { this.pushBigMapView() }}
+                            >
+                            </TouchableOpacity>
+                            {/* <View style={{ flexDirection: 'row', flex: 1, width: Dimensions.get('window').width * 2 }}> */}
+                            <View style={{ flex: 1 }}>
+                                <View style={styles.statictView}>
+                                    <View style={styles.statictItem_}>
+                                        <View style={styles.statictItem}>
+                                            <View style={styles.statictPoint} />
+                                            <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
+                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + 'km'}</Text>
                                         </View>
-                                        <View style={styles.statictItem_}>
-                                            <View style={styles.statictItem}>
-                                                <View style={styles.statictPoint} />
-                                                <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
-                                                <Text style={styles.text14}>{ihtool.placeholderStr(this.props.events.length)}</Text>
-                                            </View>
-                                            <View style={styles.statictItem}>
-                                                <View style={styles.statictPoint} />
-                                                <Text style={styles.text14_bold}>{I18n.t('dashboard.illegal_drive_behavior') + ': '}</Text>
-                                                <Text style={styles.text14}>{this.props.count}</Text>
-                                            </View>
+                                        <View style={styles.statictItem}>
+                                            <View style={styles.statictPoint} />
+                                            <Text style={styles.text14_bold}>{I18n.t('common.when') + ': '}</Text>
+                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.durations, true) + 's'}</Text>
                                         </View>
                                     </View>
-                                    <View style={styles.eventView}>
-                                        <View style={styles.itemView_}>
-                                            <View style={styles.itemStateView_}>
-                                                <Text style={styles.text14_bold}>{I18n.t('historyTack.state')}</Text>
-                                            </View>
-                                            <View style={styles.itemTimeView_}>
-                                                <Text style={styles.text14_bold}>{I18n.t('common.when')}</Text>
-                                            </View>
-                                            <View style={styles.itemMesgView_}>
-                                                <Text style={styles.text14_bold}>{I18n.t('detail.content')}</Text>
-                                            </View>
+                                    <View style={styles.statictItem_}>
+                                        <View style={styles.statictItem}>
+                                            <View style={styles.statictPoint} />
+                                            <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
+                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.events.length)}</Text>
                                         </View>
-                                        {
-                                            this.getEventItems(this.props.events)
-                                        }
-                                        {
-                                            this.props.events.length > 0 ?
-                                                <TouchableOpacity activeOpacity={0.6} onPress={() => { this.setState({ isFlod: !this.state.isFlod }) }} style={siteDetailStyle.unflodBtn} >
-                                                    <Text style={siteDetailStyle.unflodBtnTitle}>{this.state.isFlod ? I18n.t('event_hide') : I18n.t('event_unflod')}</Text>
-                                                </TouchableOpacity> : <View />
-                                        }
+                                        <View style={styles.statictItem}>
+                                            <View style={styles.statictPoint} />
+                                            <Text style={styles.text14_bold}>{I18n.t('dashboard.illegal_drive_behavior') + ': '}</Text>
+                                            <Text style={styles.text14}>{this.props.count}</Text>
+                                        </View>
                                     </View>
                                 </View>
-                                <View style={
+                                <View style={styles.eventView}>
+                                    <View style={styles.itemView_}>
+                                        <View style={styles.itemStateView_}>
+                                            <Text style={styles.text14_bold}>{I18n.t('historyTack.state')}</Text>
+                                        </View>
+                                        <View style={styles.itemTimeView_}>
+                                            <Text style={styles.text14_bold}>{I18n.t('common.when')}</Text>
+                                        </View>
+                                        <View style={styles.itemMesgView_}>
+                                            <Text style={styles.text14_bold}>{I18n.t('detail.content')}</Text>
+                                        </View>
+                                    </View>
+                                    {
+                                        this.getEventItems(this.props.events)
+                                    }
+                                    {
+                                        this.props.events.length > 0 ?
+                                            <TouchableOpacity activeOpacity={0.6} onPress={() => { this.setState({ isFlod: !this.state.isFlod }) }} style={siteDetailStyle.unflodBtn} >
+                                                <Text style={siteDetailStyle.unflodBtnTitle}>{this.state.isFlod ? I18n.t('event_hide') : I18n.t('event_unflod')}</Text>
+                                            </TouchableOpacity> : <View />
+                                    }
+                                </View>
+                            </View>
+                            {/* <View style={
                                     this.state.state == 1 ? { height: 200, marginLeft: 50, width: Dimensions.get('window').width - 48, } :
                                         { width: Dimensions.get('window').width - 48 }}>
                                     <MapView
@@ -400,8 +432,8 @@ class HistoryTracks extends Component {
 
                                         }}
                                     />
-                                </View>
-                            </View>
+                                </View> */}
+                            {/* </View> */}
                         </View>
                         <View style={siteDetailStyle.bodyItemView}>
                             <View style={styles.trendTitleView}>
@@ -567,16 +599,16 @@ class HistoryTracks extends Component {
         if (this.state.isShow) {
             this.setState({
                 isShow: false,
-                selectTime: this.props.selectTime,
-                start_time: this.props.start_time,
-                end_time: this.props.end_time,
+                selectTime: this.selectTime,
+                start_time: this.start_time,
+                end_time: this.end_time,
             });
         } else {
             this.setState({
                 isShow: true,
-                selectTime: this.props.selectTime,
-                start_time: this.props.start_time,
-                end_time: this.props.end_time,
+                selectTime: this.selectTime,
+                start_time: this.start_time,
+                end_time: this.end_time,
             });
         }
     }
@@ -593,12 +625,10 @@ class HistoryTracks extends Component {
         } else if (moment(this.state.end_time).unix() - moment(this.state.start_time).unix() > 3600 * 24) {
             Alert.alert('', I18n.t('time_interval_less_24'), [{ text: I18n.t('okText'), onPress: () => { } },]);
         } else {
-            this.props.dispatch(createAction('historyTracks/updateState')({
-                selectTime: this.state.selectTime,
-                start_time: this.state.start_time,
-                end_time: this.state.end_time,
-            }));
-            this.setState({ isShow: false });
+            this.selectTime = this.state.selectTime;
+            this.start_time = this.state.start_time,
+                this.end_time = this.state.end_time,
+                this.setState({ isShow: false });
             this.refresh();
         }
     }
@@ -611,9 +641,6 @@ function mapStateToProps(state) {
         isLoad: state.historyTracks.isLoad,
         events: state.historyTracks.events,
         markers: state.historyTracks.markers,
-        start_time: state.historyTracks.start_time,
-        end_time: state.historyTracks.end_time,
-        selectTime: state.historyTracks.selectTime,
         speedData: state.historyTracks.speedData,
         distance: state.historyTracks.distance,
         distanceData: state.historyTracks.distanceData,

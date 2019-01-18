@@ -287,8 +287,14 @@ export default historyStyle = StyleSheet.create({
 
     mapView: {
         flex: 1,
-        height: 300,
-        marginTop: 12,
+        height: 150,
+    },
+    mapViewBtn: {
+        top: 12,
+        width: Dimensions.get('window').width,
+        height: 150,
+        position: 'absolute',
+        // backgroundColor: 'red'
     },
     nodataView: {
         flex: 1,
