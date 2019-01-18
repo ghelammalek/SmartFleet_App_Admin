@@ -191,6 +191,9 @@ class SiteDetail extends Component {
         serieses.push({
             type: 'spline',
             name: name,
+            dataGrouping: {
+                enabled: false,
+            },
             data: this.props.speedData,
             lineWidth: 1,
         });

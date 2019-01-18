@@ -153,11 +153,17 @@ class HistoryData extends Component {
         const serieses = [{
             name: text1,
             type: 'column',
+            dataGrouping: {
+                enabled: false,
+            },
             data: this.props.working_duration,
         }, {
             name: text2,
-            type: 'column',
+            type: 'spline',
             yAxis: 1,
+            dataGrouping: {
+                enabled: false,
+            },
             data: this.props.distanceData,
         }];
         return ihtool.getConfDouble(yAxis, serieses);

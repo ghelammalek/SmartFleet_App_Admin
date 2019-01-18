@@ -63,7 +63,7 @@ export default {
     minutes_ago: ' minutes ago',
     hours_ago: ' hours ago',
     days_ago: ' days ago',
-    month_ago: ' months ago',
+    months_ago: ' months ago',
     years_ago: ' years ago',
 
     //登录

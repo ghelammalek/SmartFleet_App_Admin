@@ -452,7 +452,7 @@ exports.getSimpleDate_ = function getSimpleDate_(date) {
             str = parseInt(monthCurrent - month) + I18n.t('months_ago');
         } else {
             if (yearCurrent - year < 2) {
-                str = parseInt(monthCurrent - month + 11) + I18n.t('months_ago');
+                str = parseInt(monthCurrent - month + 12) + I18n.t('months_ago');
             } else {
                 str = parseInt(yearCurrent - year) + I18n.t('years_ago');
             }
