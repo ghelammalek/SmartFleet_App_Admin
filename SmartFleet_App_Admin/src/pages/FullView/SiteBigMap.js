@@ -57,7 +57,8 @@ export default class SiteBigMap extends Component {
                     zoom={15}
                     mapType={MapTypes.NORMAL}
                     center={this.state.center}
-                    marker={this.state.marker}
+                    // marker={this.state.marker}
+                    markers={[this.state.marker]}
                     style={{ flex: 1 }}
                 />
             </View>

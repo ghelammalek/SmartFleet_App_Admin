@@ -54,7 +54,7 @@ function refreshToken(method, url1, header, body, hasToken) {
         "&grant_type=refresh_token" +
         "&refresh_token=" + Global.cfg.refresh_token;
 
-    return RNFetchBlob.config({ timeout: 20000 })
+    return RNFetchBlob
         .fetch(POST, url, HEADER_FORM)
         .then((response) => response.json())
         .then((data) => {
@@ -127,7 +127,7 @@ function request(method, url1, header, body, hasToken) {
         url += ('access_token=' + Global.cfg.access_token);
     }
     url = getServerIP() + url;
-    return RNFetchBlob.config({ timeout: 20000 })
+    return RNFetchBlob
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {
@@ -172,7 +172,7 @@ function request(method, url1, header, body, hasToken) {
 }
 function request_(method, url1, header, body, hasToken) {
     var url = url1;
-    return RNFetchBlob.config({ timeout: 20000 })
+    return RNFetchBlob
         .fetch(method, url, header, JSON.stringify(body))
         .then((response) => response.json())
         .then((data) => {
@@ -271,7 +271,7 @@ exports.delete = function (url, body, hasToken, header = HEADER_JSON) {
 //         "&grant_type=refresh_token" +
 //         "&refresh_token=" + Global.cfg.refresh_token;
 
-//     RNFetchBlob.config({ timeout: 20000 })
+//     RNFetchBlob
 //         .fetch(POST, url, HEADER_FORM)
 //         .then((response) => response.json())
 //         .then((data) => {

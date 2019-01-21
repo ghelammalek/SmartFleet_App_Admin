@@ -200,14 +200,18 @@ class SiteDetail extends Component {
         return ihtool.getConf(serieses, unit);
     }
     pushBigMapView() {
-        this.props.navigation.navigate('SiteBigMap', {
-            title: this.state.title,
-            center: this.props.center,
-            marker: {
+        let marker = {};
+        if (this.props.marker) {
+            marker = {
                 title: this.state.address,
                 longitude: this.props.marker.longitude,
                 latitude: this.props.marker.latitude,
-            },
+            }
+        }
+        this.props.navigation.navigate('SiteBigMap', {
+            title: this.state.title,
+            center: this.props.center,
+            marker: marker,
         });
     }
     render() {
@@ -305,7 +309,7 @@ class SiteDetail extends Component {
                                 }}
                             />
                             {
-                                this.state.isMap ? <View /> :
+                                this.state.isMap || isEmpty(this.props.marker) ? <View /> :
                                     <View style={styles.mapMsgView}>
                                         <View style={styles.mapMsg}>
                                             <Text style={styles.message}>{this.state.address}</Text>
