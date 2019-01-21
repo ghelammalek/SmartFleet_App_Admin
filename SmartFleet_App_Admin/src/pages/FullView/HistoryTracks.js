@@ -309,6 +309,8 @@ class HistoryTracks extends Component {
         const conf = this.getSeries();
         const markers = this.getMarkers(this.props.markers, this.props.tracks);
         const center = markers.length == 0 ? ihtool.getInitPs() : undefined;
+        const durations = this.props.durations ? parseFloat(this.props.durations / 3600).toFixed(2) : '--';
+        const count = this.props.count ? this.props.count : '--';
         return (
             <View style={styles.container}>
                 <View style={styles.topView}>
@@ -373,24 +375,24 @@ class HistoryTracks extends Component {
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
-                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + 'km'}</Text>
+                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + I18n.t('km')}</Text>
                                         </View>
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('common.when') + ': '}</Text>
-                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.durations, true) + 's'}</Text>
+                                            <Text style={styles.text14}>{durations + I18n.t('hour')}</Text>
                                         </View>
                                     </View>
                                     <View style={styles.statictItem_}>
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
-                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.events.length)}</Text>
+                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.events.length) + I18n.t('pc')}</Text>
                                         </View>
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('dashboard.illegal_drive_behavior') + ': '}</Text>
-                                            <Text style={styles.text14}>{this.props.count}</Text>
+                                            <Text style={styles.text14}>{count + I18n.t('times')}</Text>
                                         </View>
                                     </View>
                                 </View>

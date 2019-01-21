@@ -96,7 +96,7 @@ export default historyStyle = StyleSheet.create({
 
     statictView: {
         flex: 1,
-        paddingHorizontal: 12,
+        paddingHorizontal: 8,
         marginTop: 12,
         backgroundColor: '#fbfbfb',
         borderColor: '#e0e0e0',
@@ -109,6 +109,7 @@ export default historyStyle = StyleSheet.create({
         height: 40,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        // backgroundColor: 'red'
     },
     statictItem_: {
         flex: 1,
@@ -130,6 +131,7 @@ export default historyStyle = StyleSheet.create({
         color: '#2d2d2d',
     },
     text14: {
+        flex: 1,
         fontSize: 14,
         color: '#2d2d2d',
     },

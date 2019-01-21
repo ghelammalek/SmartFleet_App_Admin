@@ -14,7 +14,8 @@ export default {
     hour: 'h',
     liang: 'unit',
     sheng: 'liter',
-    ci: 'times',
+    times: 'times',
+    pc: 'pc',
 
 
     event_for_all: 'Topic',
