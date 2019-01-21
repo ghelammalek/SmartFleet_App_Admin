@@ -14,7 +14,8 @@ export default {
     hour: '小时',
     liang: '辆',
     sheng: '升',
-    ci: '次',
+    times: '次',
+    pc: '个',
 
     event_for_all: '总览',
     event_for_car: '车辆事件',
