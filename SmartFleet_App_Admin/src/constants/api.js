@@ -5,6 +5,7 @@ import moment from 'moment';
 import { isEmpty } from '../utils/index';
 import request from './request';
 import md5 from '../utils/md5';
+import I18n from '../language/index'
 
 
 const HEADER_FORM = {
@@ -222,8 +223,11 @@ exports.getSiteTracks = function getSiteTracks(params) {
  * @returns
  */
 exports.getAlerts = function (params) {
+    const language = I18n.locale.indexOf('zh') > -1 ? 'zh_CN' : 'en_US';
     const url = '/api/sites/alerts?cursor=' + params.cursor +
-        '&limit=' + params.limit + '&mapType=' + config.mapType;
+        '&limit=' + params.limit +
+        '&mapType=' + config.mapType +
+        '&language=' + language;
     return request.post(url, params.body, true, HEADER_JSON);
 }
 
@@ -235,7 +239,9 @@ exports.getAlerts = function (params) {
  * @returns
  */
 exports.postAlert = function (_id) {
-    const url = '/api/alerts/' + _id + '/confirm';
+    const language = I18n.locale.indexOf('zh') > -1 ? 'zh_CN' : 'en_US';
+    const url = '/api/alerts/' + _id + '/confirm?' +
+        'language=' + language;
     return request.post(url, null, true, HEADER_JSON);
 }
 
