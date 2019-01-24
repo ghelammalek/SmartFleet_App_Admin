@@ -5,6 +5,7 @@ import I18n from '../../language/index';
 import api from '../../constants/api';
 import moment from 'moment';
 import ihtool from '../../utils/ihtool';
+import JPushModule from 'jpush-react-native';
 
 
 
@@ -43,7 +44,7 @@ export default {
                 }
             }
         },
-        * validatePhone({ payload,onSuccess,onFailed }, { call, put, select }) {
+        * validatePhone({ payload, onSuccess, onFailed }, { call, put, select }) {
             const data = yield call(api.validatePhone, payload.tel);
             // console.log(data);
             if (data) {
@@ -84,6 +85,12 @@ export default {
                                     Global.cfg.refresh_token = '';
                                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                                 } else {
+                                    const _id = userInfo.result._id || '';
+                                    JPushModule.setTags([_id], (success) => {
+                                        console.log("Set tag succeed", success);
+                                    }, (err) => {
+                                        console.log("Set tag failed", err);
+                                    });
                                     Global.cfg.settingInfo = settingInfo.result;
                                     Global.cfg.setRunningConfig();
                                     Global.global.navigation.dispatch(signin(data));
@@ -137,6 +144,12 @@ export default {
                                     Global.cfg.refresh_token = '';
                                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                                 } else {
+                                    const _id = userInfo.result._id || '';
+                                    JPushModule.setTags([_id], (success) => {
+                                        console.log("Set tag succeed", success);
+                                    }, (err) => {
+                                        console.log("Set tag failed", err);
+                                    });
                                     Global.cfg.settingInfo = settingInfo.result;
                                     Global.cfg.setRunningConfig();
                                     Global.global.navigation.dispatch(signin(data));

@@ -15,6 +15,7 @@ import {
     Dimensions,
 } from 'react-native';
 
+import JPushModule from 'jpush-react-native';
 import { connect } from '../../routes/dva';
 import { isEmpty, createAction } from '../../utils/index';
 import Images from '../../constants/Images';

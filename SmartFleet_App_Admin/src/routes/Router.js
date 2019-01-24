@@ -19,7 +19,7 @@ import {
 } from 'react-navigation';
 import CardStackStyleInterpolator from 'react-navigation/src/views/StackView/StackViewStyleInterpolator';
 import SplashScreen from 'react-native-splash-screen';
-
+import JPushModule from 'jpush-react-native';
 import Images from '../constants/Images';
 import I18n from '../language/index';
 import { isEmpty, createAction } from '../utils/index';
@@ -47,9 +47,53 @@ export default class Router extends Component {
             Global.cfg = cfg;
             cfg.getRunningConfig(this);
         }
+        this.state = {
+            access_token: '',
+            refresh_token: '',
+            pushMsg: '',
+        }
     }
     refresh(cfg) {
         Global.cfg = cfg;
+    }
+    componentDidMount() {
+        if (Platform.OS === 'android') {
+            JPushModule.initPush()
+            JPushModule.getInfo(map => {
+            })
+            JPushModule.notifyJSDidLoad(resultCode => {
+                if (resultCode === 0) {
+                }
+            })
+        } else {
+            JPushModule.setupPush()
+        }
+        JPushModule.addReceiveCustomMsgListener((message) => {
+            this.setState({ pushMsg: message });
+        });
+        JPushModule.addReceiveNotificationListener((message) => {
+            console.log("receive notification: " + message);
+        });
+        JPushModule.addReceiveOpenNotificationListener((message) => {
+            // console.log('Opening notification!');
+            // console.log('map.extra: ' + JSON.stringify(message));
+            // Global.global.navigation.dispatch(main);
+            // Global.global.navigation.navigate('Setting');
+            // Global.global.navigation.navigate('UpgradeVersionView');
+        });
+    }
+    componentWillUnmount() {
+        // NetInfo.removeEventListener(
+        //     'connectionChange',
+        //     handleFirstConnectivityChange
+        // );
+        // JPushModule.removeReceiveCustomMsgListener();
+        // JPushModule.removeReceiveNotificationListener();
+        // JPushModule.removeReceiveOpenNotificationListener();
+        if (Platform.OS === 'ios') {
+            NativeAppEventEmitter.removeAllListeners();
+            DeviceEventEmitter.removeAllListeners();
+        }
     }
     renderTabs() {
         return createTabNavigator({

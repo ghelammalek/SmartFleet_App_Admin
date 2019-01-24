@@ -19,6 +19,8 @@ import ihtool from '../../utils/ihtool';
 import setting from '../../utils/setting';
 import NavigationBar from '../../widget/NavigationBar';
 import styles from '../../styles/setting/settingStyle.js';
+import JPushModule from 'jpush-react-native';
+
 const signin = StackActions.reset({
     index: 0,
     actions: [
@@ -117,6 +119,11 @@ class Setting extends Component {
      * 跳转到登录界面
      */
     loginOut() {
+        JPushModule.cleanTags((success) => {
+            console.log("Set tag succeed", success);
+        }, (err) => {
+            console.log("Set tag failed", err);
+        });
         // this.props.dispatch(createAction('setting/loginOut')({}));
         Global.cfg.access_token = '';
         Global.cfg.refresh_token = '';
