@@ -89,5 +89,15 @@
   [RNSplashScreen show];
   return YES;
 }
-
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+  if (@available(iOS 11.0, *)) {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = -1;
+  } else {
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate date];
+    localNotification.applicationIconBadgeNumber = -1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+  }
+  [JPUSHService setBadge:0];
+}
 @end
