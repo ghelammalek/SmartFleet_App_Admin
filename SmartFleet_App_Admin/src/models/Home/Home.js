@@ -10,11 +10,7 @@ import ihtool from '../../utils/ihtool';
 
 export default {
     namespace: 'home',
-    state: {
-        data: {},
-        isLoading: false,
-        events: null,
-    },
+    state: {},
     reducers: {
         updateState(state, { payload }) {
             return { ...state, ...payload }
@@ -23,60 +19,41 @@ export default {
     effects: {
         * getVersion({ payload }, { call, put, select }) {
             const data = yield call(api.getVersion);
-            if (data) {
-                if (data.error) {
-                } else {
-                    if (ihtool.getVersion(ihtool.getCurrentVersion(), data.version)) {
-                        Alert.alert(I18n.t('new_version_title'), I18n.t('new_version_message'), [
-                            { text: I18n.t('cancel'), onPress: () => { } },
-                            {
-                                text: I18n.t('home_upgrade'), onPress: () => {
-                                    Linking.openURL(config.ios_download_url).catch((err) => { });
-                                }
-                            }]);
-                    }
+            if (data && data.error === undefined) {
+                if (ihtool.getVersion(ihtool.getCurrentVersion(), data.version)) {
+                    Alert.alert(I18n.t('new_version_title'), I18n.t('new_version_message'), [
+                        { text: I18n.t('cancel'), onPress: () => { } },
+                        {
+                            text: I18n.t('home_upgrade'), onPress: () => {
+                                Linking.openURL(config.ios_download_url).catch((err) => { });
+                            }
+                        }]);
                 }
             }
         },
-        * getStatistics({ payload }, { call, put, select }) {
+        * getStatistics({ payload, onSuccess, onFaild }, { call, put, select }) {
             const data = yield call(api.getStatistics, payload.queryType);
-            if (data) {
-                if (data.error) {
-                } else {
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            data: data.result,
-                        }
-                    });
-                }
+            if (data && data.error === undefined) {
+                onSuccess(data.result);
+            } else {
+                onFaild({});
             }
         },
-        * getAlerts({ payload }, { call, put, select }) {
-            yield put({
-                type: 'updateState',
-                payload: {
-                    isLoading: true,
-                }
-            });
+        * getAlerts({ payload, onSuccess, onFaild }, { call, put, select }) {
             const data = yield call(api.getAlerts, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    isLoading: false,
-                }
-            });
-            if (data) {
-                if (data.error) {
-                } else {
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            events: data.result,
-                        }
-                    });
-                }
+            if (data && data.error === undefined) {
+                onSuccess(data.result);
+            } else {
+                onFaild([]);
             }
         },
+        * getTops({ payload, onSuccess, onFaild }, { call, put, select }) {
+            const data = yield call(api.getTops, payload);
+            if (data && data.error === undefined) {
+                onSuccess(data.result);
+            } else {
+                onFaild([]);
+            }
+        }
     },
 }

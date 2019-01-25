@@ -80,6 +80,7 @@ export default homeStyle = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 10,
         borderRadius: 3,
+        marginBottom: 12,
     },
     titleView: {
         flex: 1,
@@ -115,7 +116,33 @@ export default homeStyle = StyleSheet.create({
         color: '#24ba8e',
     },
 
-
+    topView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    topMarkView: {
+        width: 20,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+        marginRight: 12,
+        borderRadius: 10,
+    },
+    topMarkLabel: {
+        fontSize: 12,
+        color: 'white',
+    },
+    topMarkLabel_: {
+        fontSize: 12,
+        color: '#2d2d2d',
+    },
+    topNameView: {
+        flex: 1,
+        marginHorizontal: 12,
+    },
 
     itemView: {
         flex: 1,
@@ -201,17 +228,21 @@ export default homeStyle = StyleSheet.create({
 
     nodataView: {
         flex: 1,
-        minHeight: 300,
+        minHeight: 200,
         backgroundColor: '#fff',
     },
     moreView: {
-        flex: 1,
+        width: 50,
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        borderTopColor: '#f3f3f3',
-        borderTopWidth: 1,
+        // backgroundColor: 'red',
+        marginRight: -12
+    },
+    moreImage: {
+        width: 16,
+        height: 16,
+        resizeMode: 'contain'
     },
     line: {
         width: Dimensions.get('window').width,

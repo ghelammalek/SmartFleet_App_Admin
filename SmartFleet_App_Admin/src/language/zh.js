@@ -35,7 +35,7 @@ export default {
     select_end_time: '请选择结束时间',
     start_must_earlier_end: '开始时间必须早于结束时间',
     time_interval_less_24: '时间间隔请保持在24小时内',
-
+    runningTime: '行驶时长',
     //title
     event_detail: '事件详情',
     start_location: '开始位置',

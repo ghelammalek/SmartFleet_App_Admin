@@ -116,7 +116,20 @@ exports.forgotten_password = function forgotten_password(params) {
     const url = "/api2/forgotten_password";
     return request.post(url, params, false, HEADER_JSON);
 }
-
+/**
+ *  获取车辆排名(工作时长，行驶时长，行驶里程)
+ * 
+ * @param {*} params
+ * @returns
+ */
+exports.getTops = function (params) {
+    const url = "/top/" + params.type +
+        "?oid=" + params.oid +
+        "&start=2018-12-01T16%3A00%3A00Z" +
+        "&end=2019-01-22T16%3A00%3A00Z" +
+        "&limit=5&order=1";
+    return request.get(url, null, true, HEADER_JSON);
+}
 
 /**
  *    获取车辆的统计数据

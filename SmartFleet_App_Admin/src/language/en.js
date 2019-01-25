@@ -36,7 +36,7 @@ export default {
     select_end_time: 'Please select end time',
     start_must_earlier_end: 'Start must be earlier than end time',
     time_interval_less_24: 'Please keep the time interval within 24 hours',
-
+    runningTime: 'Mileage Hours',
     //title
     event_detail: 'Event Details',
     start_location: 'Start location',
