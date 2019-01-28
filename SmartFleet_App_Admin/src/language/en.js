@@ -6,16 +6,20 @@ export default {
     tab_owner: 'Owner',
 
     //home
-    label_distance: 'Today’s Mileage',
-    label_duration: 'Today’s Hours',
-    label_fuelConsumption: 'Today’s Liters',
-    label_cars: 'Today’s Vehicles',
+    today_distance: 'Today’s Mileage',
+    today_duration: 'Today’s Hours',
+    today_fuelConsumption: 'Today’s Liters',
+    label_distance: 'Mileage',
+    label_duration: 'Working Hours',
+    label_fuelConsumption: 'Liters',
+    label_cars: 'Vehicles',
     km: 'km',
     hour: 'h',
     liang: 'unit',
     sheng: 'liter',
     times: 'times',
     pc: 'pc',
+    statistics_data: 'Statistics of {value}',
 
 
     event_for_all: 'Topic',

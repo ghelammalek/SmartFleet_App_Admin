@@ -32,7 +32,7 @@ export default {
             }
         },
         * getStatistics({ payload, onSuccess, onFaild }, { call, put, select }) {
-            const data = yield call(api.getStatistics, payload.queryType);
+            const data = yield call(api.getStatisticsTime, payload);
             if (data && data.error === undefined) {
                 onSuccess(data.result);
             } else {

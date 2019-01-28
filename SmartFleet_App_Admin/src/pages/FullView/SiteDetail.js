@@ -243,7 +243,7 @@ class SiteDetail extends Component {
                         <View style={homeStyle.staticView_}>
                             <Image style={homeStyle.static_image} source={Images.home_distance} />
                             <View style={homeStyle.static_titleView}>
-                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_distance')}</Text>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('today_distance')}</Text>
                                 <View style={homeStyle.static_subView}>
                                     <Text style={homeStyle.static_title}>{statistics.distance}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('km')}</Text>
@@ -253,7 +253,7 @@ class SiteDetail extends Component {
                         <View style={homeStyle.staticView_}>
                             <Image style={homeStyle.static_image} source={Images.home_duration} />
                             <View style={homeStyle.static_titleView}>
-                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_duration')}</Text>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('today_duration')}</Text>
                                 <View style={homeStyle.static_subView}>
                                     <Text style={homeStyle.static_title}>{statistics.working}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('hour')}</Text>
@@ -263,7 +263,7 @@ class SiteDetail extends Component {
                         <View style={homeStyle.staticView_}>
                             <Image style={homeStyle.static_image} source={Images.home_fuelConsumption} />
                             <View style={homeStyle.static_titleView}>
-                                <Text style={homeStyle.static_sunTitle}>{I18n.t('label_fuelConsumption')}</Text>
+                                <Text style={homeStyle.static_sunTitle}>{I18n.t('today_fuelConsumption')}</Text>
                                 <View style={homeStyle.static_subView}>
                                     <Text style={homeStyle.static_title}>{statistics.fuelConsumption}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('sheng')}</Text>

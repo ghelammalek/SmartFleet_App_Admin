@@ -6,9 +6,12 @@ export default {
     tab_owner: '我',
 
     //home
-    label_distance: '今日里程',
-    label_duration: '今日工作时长',
-    label_fuelConsumption: '今日燃料消耗',
+    today_distance: '今日里程',
+    today_duration: '今日工作时长',
+    today_fuelConsumption: '今日燃料消耗',
+    label_distance: '里程',
+    label_duration: '工作时长',
+    label_fuelConsumption: '燃料消耗',
     label_cars: '出勤车辆',
     km: '千米',
     hour: '小时',
@@ -16,6 +19,7 @@ export default {
     sheng: '升',
     times: '次',
     pc: '个',
+    statistics_data: '{value}统计数据',
 
     event_for_all: '总览',
     event_for_car: '车辆事件',

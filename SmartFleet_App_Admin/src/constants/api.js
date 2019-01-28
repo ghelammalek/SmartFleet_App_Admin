@@ -123,12 +123,11 @@ exports.forgotten_password = function forgotten_password(params) {
  * @returns
  */
 exports.getTops = function (params) {
-    const url = "/top/" + params.type +
-        "?oid=" + params.oid +
-        "&start=2018-12-01T16%3A00%3A00Z" +
-        "&end=2019-01-22T16%3A00%3A00Z" +
+    const url = "/api/statistics/topN/" + params.type +
+        "?start=" + params.start +
+        "&end=" + params.end +
         "&limit=5&order=1";
-    return request.get(url, null, true, HEADER_JSON);
+    return request.get(url, null, true, HEADER_FORM);
 }
 
 /**
@@ -154,8 +153,8 @@ exports.getStatistics = function (queryType, plateNo) {
  */
 exports.getStatisticsTime = function (params) {
     let url = '/api/statistics/vehicle/accumulation?queryType=' + params.queryType
-        + '&startTime=' + params.begin
-        + '&endTime=' + params.end;
+        + '&startTime=' + (isEmpty(params.begin) ? '' : params.begin)
+        + '&endTime=' + (isEmpty(params.end) ? '' : params.end);
     if (params.plateNo) {
         url = url + '&plateNo=' + encodeURIComponent(params.plateNo);
     }

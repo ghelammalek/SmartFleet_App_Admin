@@ -5,10 +5,12 @@ import {
     View,
     Alert,
     Image,
+    Modal,
     FlatList,
     ScrollView,
     RefreshControl,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 
 import { connect } from '../../routes/dva';
@@ -23,6 +25,7 @@ import Global from '../../utils/Global';
 import setting from '../../utils/setting';
 import ihtool from '../../utils/ihtool';
 import homeStyle from '../../styles/Home/homeStyle';
+import PopView from '../../widget/PopView';
 
 const eventTypes = ['', 'vehicle', 'driving', 'work', 'gateWay']
 const topTypes = ['distance', 'running_duration', 'working_duration'];
@@ -44,8 +47,10 @@ class Home extends Component {
             isLoadEvents: false,
             isLoadTop: false,
             isLoadStastics: false,
+            modalVisible: false,
         }
-
+        this.num = 0;
+        this.titles = [I18n.t('common.this_day'), I18n.t('common.this_week'), I18n.t('common.this_month'), I18n.t('common.this_year')];
     }
     componentWillMount() {
         this.props.dispatch({
@@ -55,12 +60,14 @@ class Home extends Component {
     }
     componentDidMount() {
         this.getStatistics('1');
+        this.getTops(this.state.topType);
         this.getEvents(this.state.eventType);
     }
     refresh() {
         if (this.state.isRefresh === false) {
             this.setState({ isRefresh: true })
             this.getStatistics('1');
+            this.getTops(this.state.topType);
             this.getEvents(this.state.eventType);
         }
     }
@@ -69,7 +76,11 @@ class Home extends Component {
             this.setState({ isLoadStastics: true })
             this.props.dispatch({
                 type: 'home/getStatistics',
-                payload: { queryType: queryType },
+                payload: {
+                    queryType: queryType,
+                    begin: moment(this.getStartTime(this.num)).unix(),
+                    end: moment(this.getEndtime()).unix(),
+                },
                 onSuccess: (result) => {
                     this.setState({ statistics: result, isLoadStastics: false })
                 },
@@ -92,7 +103,8 @@ class Home extends Component {
                     cursor: 0,
                     limit: 5,
                     body: {
-                        end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
+                        begin: this.getStartTime(this.num),
+                        end: this.getEndtime(),
                         labels: labels,
                     }
                 },
@@ -114,14 +126,14 @@ class Home extends Component {
         }
     }
     getTops(value) {
-        const { oid } = Global.cfg.userInfo;
         if (this.state.isLoadTop === false) {
-            this.setState({ isLoadTop: true, topType: value })
+            this.setState({ isLoadTop: true, topType: value, topData: [] })
             this.props.dispatch({
                 type: 'home/getTops',
                 payload: {
                     type: topTypes[value],
-                    oid: oid,
+                    start: this.getStartTime(this.num),
+                    end: this.getEndtime(),
                 },
                 onSuccess: (result) => {
                     this.setState({ topData: result, isLoadTop: false })
@@ -170,7 +182,7 @@ class Home extends Component {
             limit: 20,
             body: {
                 begin: moment().add(-1, 'month').utc().format(),
-                end: moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format(),
+                end: this.getEndtime(),
                 labels: labels
             }
         }));
@@ -212,6 +224,40 @@ class Home extends Component {
             </TouchableOpacity>
         )
     }
+    changeValue(item) {
+        if (this.state.topType === 0) {
+            return item[`${topTypes[this.state.topType]}`] || '--';
+        } else {
+            const value = item[`${topTypes[this.state.topType]}`];
+            if (value) {
+                return parseFloat(value / 3600).toFixed(2);
+            } else {
+                return '--';
+            }
+        }
+    }
+    getStartTime(value) {
+        let weekOfday = moment().format('d');
+        let week = (weekOfday === '0' ? 7 : weekOfday - 1);
+        let date = moment().subtract(week, 'days').format('YYYY-MM-DD')
+        if (value === 1) {
+            return moment(date).utc().format();
+        } else if (value === 2) {
+            return moment(moment().month(moment().month()).startOf('month').format('YYYY-MM-DD')).utc().format();
+        } else if (value === 3) {
+            return moment(moment().year(moment().year()).startOf('year').format('YYYY-MM-DD')).utc().format();
+        } else {
+            return moment(moment().format('YYYY-MM-DD')).utc().format();
+        }
+    }
+    getEndtime() {
+        return moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format();
+    }
+    selectAction(value) {
+        this.setState({ modalVisible: false });
+        this.num = value;
+        this.refresh();
+    }
     getItems(items) {
         if (items && items.length > 0) {
             return items.map((item, index) =>
@@ -223,26 +269,38 @@ class Home extends Component {
                         <Text style={homeStyle.itemTitle}>{item.site_id}</Text>
                     </View>
                     <Text style={homeStyle.time}>
-                        {(item[`${topTypes[this.state.topType]}`] || '--') + ' ' + I18n.t(`${this.state.topType === 0 ? 'common.km_per_hr' : 'common.hour'}`)}
+                        {this.changeValue(item) + ' ' + I18n.t(`${this.state.topType === 0 ? 'common.km_per_hr' : 'common.hour'}`)}
                     </Text>
                 </View>
             )
         } else {
             return (
-                <TouchableOpacity disabled={this.state.isLoadTop}
-                    style={homeStyle.nodataView}
-                    activeOpacity={0.6}
-                    onPress={() => this.getTops(this.state.topType)} >
-                    <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
-                </TouchableOpacity>
+                <View style={{ flex: 1 }}>
+                    {
+                        this.state.isLoadTop ?
+                            <View style={homeStyle.loadingView}>
+                                <ActivityIndicator style={homeStyle.loading} />
+                            </View> :
+                            <TouchableOpacity disabled={this.state.isLoadTop}
+                                style={homeStyle.nodataView}
+                                activeOpacity={0.6}
+                                onPress={() => this.getTops(this.state.topType)} >
+                                <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
+                            </TouchableOpacity>
+                    }
+                </View>
             );
         }
     }
     render() {
         const statistics = ihtool.getStatistics(this.state.statistics);
+        let label = I18n.t('statistics_data');
         return (
             <View style={homeStyle.container}>
-                <NavigationBar title={I18n.t('tab_home')} />
+                <NavigationBar title={I18n.t('tab_home')}
+                    rightImage={Images.other_more}
+                    rightAction={() => this.setState({ modalVisible: true })}
+                />
                 <ScrollView
                     style={homeStyle.scrollView}
                     showsVerticalScrollIndicator={false}
@@ -255,6 +313,9 @@ class Home extends Component {
                         />
                     }
                 >
+                    <Text style={{ marginTop: 12, marginLeft: 8, fontSize: 14, color: '#979797' }}>
+                        {label.replace('{value}', this.titles[this.num])}
+                    </Text>
                     <View style={homeStyle.staticView}>
                         <View style={homeStyle.staticView_}>
                             <Image style={homeStyle.static_image} source={Images.home_distance} />
@@ -371,14 +432,36 @@ class Home extends Component {
                                     >
                                     </FlatList>
                                 </View> :
-                                <TouchableOpacity disabled={this.state.isLoadEvents} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.refreshEvents(this.state.eventType)} >
-                                    <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
-                                </TouchableOpacity>
+                                <View style={{ flex: 1 }}>
+                                    {
+                                        this.state.isLoadEvents ?
+                                            <View style={homeStyle.loadingView}>
+                                                <ActivityIndicator style={homeStyle.loading} />
+                                            </View> :
+                                            <TouchableOpacity disabled={this.state.isLoadEvents} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.refreshEvents(this.state.eventType)} >
+                                                <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
+                                            </TouchableOpacity>
+                                    }
+                                </View>
                         }
                     </View>
-
                     <View style={homeStyle.space_Vertical} />
                 </ScrollView>
+                <Modal
+                    visible={this.state.modalVisible}
+                    transparent={true}
+                    onRequestClose={() => this.setState({ modalVisible: false })}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => this.setState({ modalVisible: false })}
+                        style={{ flex: 1, alignItems: 'flex-end', backgroundColor: 'rgba(169,169,169,0.3)' }}
+                    >
+                        <PopView style={{ marginTop: 50, alignItems: 'flex-end' }}
+                            arrowStyle={{ marginRight: 8 }}
+                            backgroundColor={'white'}
+                            onPress={(index) => this.selectAction(index)}
+                            titles={this.titles}
+                        />
+                    </TouchableOpacity>
+                </Modal>
             </View>
         );
     }

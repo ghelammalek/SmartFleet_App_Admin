@@ -225,7 +225,16 @@ export default homeStyle = StyleSheet.create({
         height: 14,
         resizeMode: 'contain',
     },
-
+    loadingView: {
+        flex: 1,
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loading: {
+        width: 30,
+        height: 30,
+    },
     nodataView: {
         flex: 1,
         minHeight: 200,
