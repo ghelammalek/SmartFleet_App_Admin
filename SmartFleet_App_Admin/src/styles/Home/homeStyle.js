@@ -259,5 +259,76 @@ export default homeStyle = StyleSheet.create({
         backgroundColor: '#f3f3f3',
         marginLeft: -12,
         // marginBottom: 6,
-    }
+    },
+
+
+    cellView: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        borderRadius: 3,
+        marginTop: 10,
+    },
+    cellTopView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+    },
+    cellTopLeftView: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginRight: 8,
+    },
+    cellTopRightView: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    cellMessageView: {
+        flex: 1,
+        paddingHorizontal: 10,
+    },
+    cellMessage: {
+        fontSize: 14,
+        color: '#adadad',
+    },
+    cellTypeView: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginRight: 8,
+    },
+    cellTypeView_: {
+        // flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    cellMessage: {
+        fontSize: 12,
+        color: '#2d2d2d',
+    },
+    cellLevelImage: {
+        marginLeft: 8,
+        width: 16,
+        height: 16,
+        resizeMode: 'contain',
+    },
+    cellTypeLabel: {
+        fontSize: 12,
+        color: '#2d2d2d',
+    },
+    cellBottomeView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding: 10,
+    },
 });

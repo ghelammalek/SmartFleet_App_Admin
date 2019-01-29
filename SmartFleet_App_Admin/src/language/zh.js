@@ -119,6 +119,8 @@ export default {
 
     event_confirm: '已确认',
     event_unconfirm: '未确认',
+    event_recover: '已恢复',
+    recover_time: '恢复时间',
     level1: '提示',
     level2: '预警',
     level3: '故障',

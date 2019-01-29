@@ -121,6 +121,8 @@ export default {
 
     event_confirm: 'Confirmed',
     event_unconfirm: 'Unconfirmed',
+    event_recover: 'Recover',
+    recover_time: 'Recover Time',
     level1: '提示',
     level2: '预警',
     level3: '故障',

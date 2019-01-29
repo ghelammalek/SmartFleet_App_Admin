@@ -78,13 +78,17 @@ exports.getStatistics = function getStatistics(params) {
 exports.getEventType = function getEventType(record) {
     const { labels, fields, level } = record || {};
     const { value, legal, type, category, desc } = fields || {};
-    const { sub_code } = labels || {};
+    const { sub_code, code } = labels || {};
 
     let label = '';
-    if (sub_code === 'behavior') {
-        label = I18n.t('notice.car_notice');
-    } else if (sub_code === 'driving') {
-        label = I18n.t('notice.driving_notice');
+    if (code === 'vehicle') {
+        label = I18n.t('event_for_car');
+    } else if (code === 'driving') {
+        label = I18n.t('event_for_driving');
+    } else if (code === 'work') {
+        label = I18n.t('event_for_work');
+    } else if (code === 'gateWay') {
+        label = I18n.t('event_for_alarm');
     }
     return label;
 }
@@ -174,6 +178,84 @@ exports.getEventDetailImage = function getEventDetailImage(record) {
         } else if (type === 'heading') {
             return Images.event_heading;
         }
+    } else if (sub_code === 'driver') {
+        return Images.event_driver;
+    } else if (sub_code === 'asset') {
+        if (value === 0) {
+            return Images.event_asset;
+        } else {
+            return Images.event_asset_warning;
+        }
+    } else if (sub_code === 'behavior') {
+        if (type === 'fatigure') {
+            if (level == 4) {
+                return Images.event_fatigure_alert;
+            } else {
+                return Images.event_fatigure_warning;
+            }
+        } else if (type === 'seatbelt') {
+            if (level == 4) {
+                return Images.event_seatbelt_alert;
+            } else {
+                return Images.event_seatbelt_warning;
+            }
+        } else if (type === 'brake') {
+            if (level == 4) {
+                return Images.event_brake_alert;
+            } else {
+                return Images.event_brake_warning;
+            }
+        }
+    } else if (sub_code === 'state') {
+        if (type === 'fuel_capacity_changed') {
+            if (level == 4) {
+                return Images.event_fuel_capacity_changed_alert;
+            } else {
+                return Images.event_fuel_capacity_changed_warning;
+            }
+        } else if (type === 'insufficient_fuel') {
+            return Images.event_insufficient_fuel_alert;
+        } else if (type === 'tco_abnormal') {
+            return Images.event_tco_abnormal_alert;
+        } else if (type === 'gnss') {
+            return Images.event_gnss_alert;
+        } else if (type === 'battery') {
+            if (level == 4) {
+                return Images.event_battery_alert;
+            } else {
+                return Images.event_battery_warning;
+            }
+        }
+    } else if (sub_code === 'safety') {
+        if (type === 'crash') {
+            if (level == 4) {
+                return Images.event_crash_alert;
+            } else {
+                return Images.event_crash_warning;
+            }
+        } else if (type === 'turnover') {
+            if (level == 4) {
+                return Images.event_turnover_alert;
+            } else {
+                return Images.event_turnover_warning;
+            }
+        } else if (type === 'urgency') {
+            if (level == 4) {
+                return Images.event_urgency_alert;
+            } else {
+                return Images.event_urgency_warning;
+            }
+        }
+    } else if (sub_code === 'obd-dtc') {
+        if (level == 5) {
+            return Images.event_obd_5;
+        } else if (level == 4) {
+            return Images.event_obd_4;
+        } else if (level == 3) {
+            return Images.event_obd_3;
+        } else if (level == 2) {
+            return Images.event_obd_2;
+        }
     } else {
         return null;
     }
@@ -212,6 +294,84 @@ exports.getEventDetailImageName = function getEventDetailImageName(record) {
             }
         } else if (type === 'heading') {
             return 'heading';
+        }
+    } else if (sub_code === 'driver') {
+        return 'driver';
+    } else if (sub_code === 'asset') {
+        if (value === 0) {
+            return 'asset';
+        } else {
+            return 'asset_warning';
+        }
+    } else if (sub_code === 'behavior') {
+        if (type === 'fatigure') {
+            if (level == 4) {
+                return 'fatigure_alert';
+            } else {
+                return 'fatigure_warning';
+            }
+        } else if (type === 'seatbelt') {
+            if (level == 4) {
+                return 'seatbelt_alert';
+            } else {
+                return 'seatbelt_warning';
+            }
+        } else if (type === 'brake') {
+            if (level == 4) {
+                return 'brake_alert';
+            } else {
+                return 'brake_warning';
+            }
+        }
+    } else if (sub_code === 'state') {
+        if (type === 'fuel_capacity_changed') {
+            if (level == 4) {
+                return 'fuel_capacity_changed_alert';
+            } else {
+                return 'fuel_capacity_changed_warning';
+            }
+        } else if (type === 'insufficient_fuel') {
+            return 'insufficient_fuel_alert';
+        } else if (type === 'tco_abnormal') {
+            return 'tco_abnormal_alert';
+        } else if (type === 'gnss') {
+            return 'gnss_alert';
+        } else if (type === 'battery') {
+            if (level == 4) {
+                return 'battery_alert';
+            } else {
+                return 'battery_warning';
+            }
+        }
+    } else if (sub_code === 'safety') {
+        if (type === 'crash') {
+            if (level == 4) {
+                return 'crash_alert';
+            } else {
+                return 'crash_warning';
+            }
+        } else if (type === 'turnover') {
+            if (level == 4) {
+                return 'turnover_alert';
+            } else {
+                return 'turnover_warning';
+            }
+        } else if (type === 'urgency') {
+            if (level == 4) {
+                return 'urgency_alert';
+            } else {
+                return 'urgency_warning';
+            }
+        }
+    } else if (sub_code === 'obd-dtc') {
+        if (level == 5) {
+            return 'obd_5';
+        } else if (level == 4) {
+            return 'obd_4';
+        } else if (level == 3) {
+            return 'obd_3';
+        } else if (level == 2) {
+            return 'obd_2';
         }
     } else {
         return '';

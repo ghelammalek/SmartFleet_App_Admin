@@ -190,34 +190,43 @@ class Home extends Component {
     }
     _renderItem(data) {
         const { item, index } = data;
+        const { fields } = item;
+        const { alarm_message } = fields || {};
         return (
-            <TouchableOpacity disabled={this.state.isLoadEvents} key={index} activeOpacity={0.6} onPress={() => this.pushEventDetail(item, index)} >
-                <View style={homeStyle.itemView}>
-                    <View style={homeStyle.itemTopView}>
-                        <View style={homeStyle.itemTopLeft}>
+            <TouchableOpacity disabled={this.state.isLoadEvents}
+                key={index} activeOpacity={0.6}
+                onPress={() => this.pushEventDetail(item, index)}
+            >
+                <View style={homeStyle.cellView}>
+                    <View style={homeStyle.cellTopView}>
+                        <View style={homeStyle.cellTopLeftView}>
                             <Text style={homeStyle.itemTitle} >{item.moduleName}</Text>
-                            <View style={item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
-                                <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_confirm') : I18n.t('event_unconfirm')}</Text>
-                            </View>
+                            <Image style={homeStyle.cellLevelImage} source={ihtool.getEventLevelImage(item.level)} />
+                            <Image style={homeStyle.cellLevelImage} source={ihtool.getEventDetailImage(item)} />
                         </View>
-                        <View style={homeStyle.itemTopRight}>
+                        <View style={homeStyle.cellTopRightView}>
                             <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.startsAt)}</Text>
                             <Image style={homeStyle.imgagRight} source={Images.other_right} />
                         </View>
                     </View>
-                    <View style={homeStyle.itemBodyView}>
-                        <View style={homeStyle.itemTextView}>
-                            <Text style={homeStyle.itemText} >{I18n.t('event_type') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{ihtool.getEventType(item)}</Text>
-                        </View>
-                        <View style={homeStyle.itemTextView}>
-                            <Text style={homeStyle.itemText} >{I18n.t('event_level') + '：'}</Text>
-                            <Image style={homeStyle.itemLevelImage} source={ihtool.getEventLevelImage(item.level)} />
-                            <Image style={homeStyle.itemLevelImage} source={ihtool.getEventDetailImage(item)} />
-                        </View>
-                        <View style={homeStyle.itemTextView}>
-                            <Text style={homeStyle.itemText} >{I18n.t('event_desc') + '：'}</Text>
-                            <Text style={homeStyle.itemText} >{ihtool.getEventDesc(item)}</Text>
+                    <View style={homeStyle.cellMessageView}>
+                        <Text style={homeStyle.cellMessage} >{alarm_message}</Text>
+                    </View>
+                    <View style={homeStyle.cellBottomeView}>
+                        {
+                            item.confirmedAt ?
+                                <View style={homeStyle.cellTypeView}>
+                                    <Text style={homeStyle.cellTypeLabel}>{I18n.t('event_confirm')}</Text>
+                                </View> : <View style={{ flex: 1 }} />
+                        }
+                        {
+                            item.endAt ?
+                                <View style={homeStyle.cellTypeView}>
+                                    <Text style={homeStyle.cellTypeLabel}>{I18n.t('event_recover')}</Text>
+                                </View> : <View style={{ flex: 1 }} />
+                        }
+                        <View style={homeStyle.cellTypeView}>
+                            <Text style={homeStyle.cellTypeLabel}>{ihtool.getEventType(item)}</Text>
                         </View>
                     </View>
                 </View>

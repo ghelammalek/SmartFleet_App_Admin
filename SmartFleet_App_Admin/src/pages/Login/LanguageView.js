@@ -50,7 +50,6 @@ class LanguageView extends Component {
         this.setState({
             language: item.id,
         });
-        console.log(item.id);
     }
     getItems(data) {
         return data.map((item, i) =>

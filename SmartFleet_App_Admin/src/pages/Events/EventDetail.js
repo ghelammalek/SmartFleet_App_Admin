@@ -81,29 +81,39 @@ class EventDetail extends Component {
             baiduHeatMapEnabled: false,
             center: centerPoint,
             markers: markers,
+            isLoading: false,
         };
     }
-    componentDidMount() {
-        this.props.dispatch(createAction('eventDetail/updateState')({ data: this.state.data }));
-    }
-    componentWillUnmount() {
-        // this.props.dispatch(createAction('eventDetail/updateState')({ data: null }));
-    }
     postAlert() {
-        this.props.dispatch(createAction('eventDetail/updateState')({ isLoading: true }));
-        // this.props.dispatch(createAction('eventDetail/postAlert')({ _id: this.state.data._id }, this));
+        this.setState({ isLoading: true });
         this.props.dispatch({
             type: 'eventDetail/postAlert',
             payload: {
                 _id: this.state.data._id
             },
-            that: this,
+            onSuccess: (result) => {
+                let data = { ...this.state.data };
+                data.confirmState = result.confirmState;
+                data.confirmedAt = result.confirmedAt;
+                this.setState({ isLoading: false, data: data });
+                Alert.alert('', I18n.t('successful'), [{
+                    text: I18n.t('okText'), onPress: () => {
+                        this.props.navigation.state.params.callback(data);
+                        this.props.navigation.goBack();
+                    }
+                },]);
+            },
+            onFaild: () => {
+                this.setState({ isLoading: false });
+            }
         });
     }
     _renderItem = (item) => {
         if (item == null) {
             return <View />
         } else {
+            const { fields } = item;
+            const { alarm_message } = fields || {};
             return (
                 <View style={this.state.markers.length > 0 ? styles.itemView : styles.itemView_}>
                     <View style={homeStyle.itemTopView}>
@@ -128,15 +138,22 @@ class EventDetail extends Component {
                             <Image style={homeStyle.itemLevelImage} source={ihtool.getEventDetailImage(item)} />
                         </View>
                         {
-                            item.confirmState ?
+                            item.confirmedAt ?
                                 <View style={homeStyle.itemTextView}>
-                                    <Text style={styles.itemText} >{I18n.t('notice.confirm_time') + '：'}</Text>
+                                    <Text style={styles.itemText} >{I18n.t('event_confirm') + '：'}</Text>
                                     <Text style={styles.itemText} >{moment(item.confirmedAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
+                                </View> : null
+                        }
+                        {
+                            item.endAt ?
+                                <View style={homeStyle.itemTextView}>
+                                    <Text style={styles.itemText} >{I18n.t('recover_time') + '：'}</Text>
+                                    <Text style={styles.itemText} >{moment(item.endAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
                                 </View> : null
                         }
                         <View style={homeStyle.itemTextView}>
                             <Text style={styles.itemText} >{I18n.t('event_desc') + '：'}</Text>
-                            <Text style={styles.itemText} >{ihtool.getEventDesc(item)}</Text>
+                            <Text style={styles.itemText} >{alarm_message}</Text>
                         </View>
                     </View>
                     {
@@ -175,19 +192,16 @@ class EventDetail extends Component {
                             /> : <View />
                 }
                 {
-                    this._renderItem(this.props.data)
+                    this._renderItem(this.state.data)
                 }
                 {
-                    this.props.isLoading ? <LoadingView /> : <View />
+                    this.state.isLoading ? <LoadingView /> : <View />
                 }
             </View>
         );
     }
 }
 function mapStateToProps(state) {
-    return {
-        isLoading: state.eventDetail.isLoading,
-        data: state.eventDetail.data,
-    }
+    return { ...state }
 }
 export default connect(mapStateToProps)(EventDetail);
