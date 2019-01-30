@@ -119,9 +119,9 @@ class EventDetail extends Component {
                     <View style={homeStyle.itemTopView}>
                         <View style={homeStyle.itemTopLeft}>
                             <Text style={homeStyle.itemTitle} >{item.moduleName}</Text>
-                            <View style={item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
+                            {/* <View style={item.confirmState ? homeStyle.itemClearView : homeStyle.itemClearView_}>
                                 <Text style={homeStyle.itemClear} >{item.confirmState ? I18n.t('event_confirm') : I18n.t('event_unconfirm')}</Text>
-                            </View>
+                            </View> */}
                         </View>
                         <View style={homeStyle.itemTopRight}>
                             <Text style={homeStyle.time} >{moment(item.startsAt).format('YYYY-MM-DD HH:mm:ss')}</Text>
@@ -153,7 +153,9 @@ class EventDetail extends Component {
                         }
                         <View style={homeStyle.itemTextView}>
                             <Text style={styles.itemText} >{I18n.t('event_desc') + '：'}</Text>
-                            <Text style={styles.itemText} >{alarm_message}</Text>
+                            <View style={{ flex: 1 }}>
+                                <Text style={styles.itemText} >{alarm_message}</Text>
+                            </View>
                         </View>
                     </View>
                     {
