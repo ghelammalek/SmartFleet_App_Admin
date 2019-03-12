@@ -205,7 +205,7 @@ class Home extends Component {
                             <Image style={homeStyle.cellLevelImage} source={ihtool.getEventDetailImage(item)} />
                         </View>
                         <View style={homeStyle.cellTopRightView}>
-                            <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.startsAt)}</Text>
+                            <Text style={homeStyle.time} >{ihtool.getSimpleDate_(item.startsAt)}</Text>
                             <Image style={homeStyle.imgagRight} source={Images.other_right} />
                         </View>
                     </View>
@@ -435,6 +435,7 @@ class Home extends Component {
                                 <View style={{ maxHeight: 300 }}>
                                     <FlatList
                                         bounces={false}
+                                        showsVerticalScrollIndicator={false}
                                         renderItem={this._renderItem.bind(this)}
                                         data={this.state.events}
                                         keyExtractor={(item, index) => index.toString()}

@@ -85,8 +85,8 @@ export default {
                                     Global.cfg.refresh_token = '';
                                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                                 } else {
-                                    const _id = userInfo.result._id || '';
-                                    JPushModule.setTags([_id], (success) => {
+                                    const ids = userInfo.result.groupIds || [];
+                                    JPushModule.setTags(ids, (success) => {
                                         console.log("Set tag succeed", success);
                                     }, (err) => {
                                         console.log("Set tag failed", err);
@@ -144,8 +144,8 @@ export default {
                                     Global.cfg.refresh_token = '';
                                     Alert.alert('', I18n.t('signIn_err'), [{ text: I18n.t('okText'), onPress: () => { } },]);
                                 } else {
-                                    const _id = userInfo.result._id || '';
-                                    JPushModule.setTags([_id], (success) => {
+                                    const ids = userInfo.result.groupIds || [];
+                                    JPushModule.setTags(ids, (success) => {
                                         console.log("Set tag succeed", success);
                                     }, (err) => {
                                         console.log("Set tag failed", err);

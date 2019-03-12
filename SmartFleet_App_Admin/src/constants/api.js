@@ -304,7 +304,7 @@ exports.getSettingInfo = function () {
  * @returns
  */
 exports.getUserInfo = function () {
-    const url = '/api2/users/this?verbose=100';
+    const url = '/api/v3/user/this?verbose=100';
     return request.get(url, null, true, HEADER_JSON);
 }
 

@@ -206,7 +206,7 @@ class Events extends Component {
                             <Image style={homeStyle.cellLevelImage} source={ihtool.getEventDetailImage(item)} />
                         </View>
                         <View style={homeStyle.cellTopRightView}>
-                            <Text style={homeStyle.time} >{ihtool.getSimpleDate(item.startsAt)}</Text>
+                            <Text style={homeStyle.time} >{ihtool.getSimpleDate_(item.startsAt)}</Text>
                             <Image style={homeStyle.imgagRight} source={Images.other_right} />
                         </View>
                     </View>
