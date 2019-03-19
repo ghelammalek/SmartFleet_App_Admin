@@ -8,27 +8,6 @@ import api from '../../constants/api';
 export default {
     namespace: 'historyTracks',
     state: {
-        isLoading: false,
-        loadData: false,
-        loadtrend: false,
-        loadtracks: false,
-        statistics: {},
-        events: [],
-        siteData: {
-            metrics: {
-                iot_data: {},
-                location_data: {}
-            }
-        },
-        siteDetail: {},
-        speedData: [],
-        distanceData: [],
-        working_duration: [],
-        distance: null,
-        count: null,
-        durations: null,
-        tracks: [],
-        markers: [],
     },
     reducers: {
         updateState(state, { payload }) {
@@ -36,36 +15,19 @@ export default {
         }
     },
     effects: {
-        * getStatistics({ payload }, { call, put, select }) {
-            const data = yield call(api.getStatistics, payload.queryType, payload.plateNo);
+        * getStatistics({ payload, onSuccess, onFaild }, { call, put, select }) {
+            const data = yield call(api.getStatisticsTime, payload);
             if (data) {
                 if (data.error) {
                 } else {
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            statistics: data.result,
-                        }
-                    });
+                    onSuccess(ihtool.getStatistics(data.result));
+                    return;
                 }
             }
+            onFaild();
         },
-        * getAlerts({ payload }, { call, put, select }) {
-            yield put({
-                type: 'updateState',
-                payload: {
-                    isLoading: true,
-                    markers: [],
-                    events: [],
-                }
-            });
+        * getAlerts({ payload, onSuccess, onFaild }, { call, put, select }) {
             const data = yield call(api.getAlerts, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    isLoading: false,
-                }
-            });
             if (data) {
                 if (data.error) {
                 } else {
@@ -88,115 +50,54 @@ export default {
                             }
                         }
                     }
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            markers: markers,
-                            events: data.result,
-                            count: count,
-                        }
+                    onSuccess({
+                        markers: markers,
+                        events: data.result,
+                        count: count,
                     });
+                    return;
                 }
             }
+            onFaild();
         },
-        *getSiteTracks({ payload }, { call, put, select }) {
-            yield put({
-                type: 'updateState',
-                payload: {
-                    loadData: true,
-                    loadtracks: true,
-                    tracks: [],
-                }
-            });
+        *getSiteTracks({ payload, onSuccess, onFaild }, { call, put, select }) {
             const data = yield call(api.getSiteTracks, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    loadData: false,
-                    loadtrend: false,
-                }
-            });
             if (data) {
                 if (data.error || data.result == undefined) {
                 } else {
-                    yield put({
-                        type: 'updateState',
-                        payload: {
-                            tracks: data.result.tracks,
-                        }
-                    });
+                    onSuccess(data.result.tracks);
+                    return;
                 }
             }
+            onFaild();
         },
-        *getSiteTrend({ payload }, { call, put, select }) {
-            if (payload.fields == 'speed') {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        loadData: true,
-                        loadtrend: true,
-                        speedData: [],
-                    }
-                });
-            } else {
-                yield put({
-                    type: 'updateState',
-                    payload: {
-                        loadData: true,
-                        loadtrend: true,
-                        distanceData: [],
-                        working_duration: [],
-                    }
-                });
-            }
+        *getSiteTrend({ payload, onSuccess, onFaild }, { call, put, select }) {
             const data = yield call(api.getSiteTrend, payload);
-            yield put({
-                type: 'updateState',
-                payload: {
-                    loadData: false,
-                    loadtrend: false,
-                }
-            });
             if (data) {
                 if (data.error || data.result == undefined) {
                 } else {
                     if (payload.fields == 'speed') {
-                        yield put({
-                            type: 'updateState',
-                            payload: {
-                                speedData: data.result.values,
-                            }
-                        });
+                        onSuccess(data.result.values);
+                        return;
                     } else {
                         let distanceData = [];
                         let working_duration = [];
-                        let durations = 0;
-                        let distance = 0;
                         if (data.result && data.result.values) {
                             for (let i = 0; i < data.result.values.length; i++) {
                                 const element = data.result.values[i];
                                 working_duration.push([element[0], element[1]]);
                                 distanceData.push([element[0], element[2]]);
-                                if (element[1]) {
-                                    durations = durations + element[1];
-                                }
-                                if (element[2]) {
-                                    distance = distance + element[2];
-                                }
                             }
                         }
-                        yield put({
-                            type: 'updateState',
-                            payload: {
-                                distanceData: distanceData,
-                                working_duration: working_duration,
-                                durations: durations,
-                                distance: distance,
-                            }
+                        onSuccess({
+                            distanceData: distanceData,
+                            working_duration: working_duration,
                         });
+                        return;
                     }
                 }
             }
+            onFaild();
         }
     },
 }

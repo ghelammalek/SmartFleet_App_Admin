@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2019-01-29 15:52:40
+ * @Last Modified time: 2019-03-19 12:41:21
  */
 
 export default {
@@ -107,6 +107,8 @@ export default {
     event_seatbelt_alert: require('../assets/images/event/seatbelt_alert.png'),
     event_turnover_warning: require('../assets/images/event/turnover_warning.png'),
     event_turnover_alert: require('../assets/images/event/turnover_alert.png'),
+    event_fatigure_warning: require('../assets/images/event/fatigure_warning.png'),
+    event_fatigure_alert: require('../assets/images/event/fatigure_alert.png'),
     event_tco_abnormal_alert: require('../assets/images/event/tco_abnormal_alert.png'),
     event_urgency: require('../assets/images/event/urgency.png'),
     event_obd_2: require('../assets/images/event/obd_2.png'),

@@ -53,19 +53,13 @@ exports.placeholderStr = function placeholderStr(str, isFloat) {
  */
 exports.getStatistics = function getStatistics(params) {
     const statistics = {
-        id: params.id == undefined ? '--' : params.id,
-        distance: params.distance == undefined ? '--' : params.distance,
-        duration: params.duration == undefined ? '--' : params.duration,
-        fuelConsumption: params.fuelConsumption == undefined ? '--' : params.fuelConsumption,
-        illegal: params.illegal == undefined ? '--' : params.illegal,
-        accident: params.accident == undefined ? '--' : params.accident,
-        createTime: params.createTime == undefined ? '--' : params.createTime,
-        queryType: params.queryType == undefined ? '--' : params.queryType,
-        cars: params.cars == undefined ? '--' : params.cars,
-        workPerson: params.workPerson == undefined ? '--' : params.workPerson,
-        working: params.working == undefined ? '--' : params.working,
-        plateNo: params.plateNo == undefined ? '--' : params.plateNo,
-        maintainCount: params.maintainCount == undefined ? '--' : params.maintainCount,
+        working_duration: params.working_duration || '--',//工作时长
+        running_duration: params.running_duration || '--',//行驶时间
+        fuel_consumption: params.fuel_consumption || '--',//燃油消耗
+        illegalBehavior: params.illegalBehavior || '--',//非法驾驶行为
+        distance: params.distance || '--',//行驶里程
+        on_duty: params.on_duty || '--',//出勤
+        event: params.event || '--',//事件
     }
     return statistics;
 }
@@ -240,11 +234,11 @@ exports.getEventDetailImage = function getEventDetailImage(record) {
                 return Images.event_turnover_warning;
             }
         } else if (type === 'urgency') {
-            if (level == 4) {
-                return Images.event_urgency_alert;
-            } else {
-                return Images.event_urgency_warning;
-            }
+            // if (level == 4) {
+            return Images.event_urgency;
+            // } else {
+            //     return Images.event_urgency;
+            // }
         }
     } else if (sub_code === 'obd-dtc') {
         if (level == 5) {
@@ -357,11 +351,11 @@ exports.getEventDetailImageName = function getEventDetailImageName(record) {
                 return 'turnover_warning';
             }
         } else if (type === 'urgency') {
-            if (level == 4) {
-                return 'urgency_alert';
-            } else {
-                return 'urgency_warning';
-            }
+            // if (level == 4) {
+            return 'urgency';
+            // } else {
+            //     return 'urgency_warning';
+            // }
         }
     } else if (sub_code === 'obd-dtc') {
         if (level == 5) {
@@ -472,9 +466,9 @@ exports.getEventDesc = function getEventDesc(record) {
     } else if (sub_code === 'safety') {
         if (type === 'crash') {
             label = I18n.t('notice.crash');
-        } else if (sub_code === 'turnover') {
+        } else if (type === 'turnover') {
             label = I18n.t('notice.turnover');
-        } else if (sub_code === 'urgency') {
+        } else if (type === 'urgency') {
             label = I18n.t('notice.urgency');
         }
     } else if (sub_code === 'obd-dtc') {
@@ -512,7 +506,7 @@ exports.getTime13 = function getTime(date) {
 exports.getSimpleDate = function getSimpleDate(date) {
     let date_;
     if (isEmpty(date)) {
-        return;
+        return '--';
     } else {
         date_ = moment(date).format('YYYY-MM-DD HH:mm:ss.SSS');
     }
@@ -573,7 +567,7 @@ exports.getSimpleDate = function getSimpleDate(date) {
 exports.getSimpleDate_ = function getSimpleDate_(date) {
     let date_;
     if (isEmpty(date)) {
-        return;
+        return '--';
     } else {
         date_ = moment(date).format('YYYY-MM-DD HH:mm:ss.SSS');
     }
@@ -595,7 +589,7 @@ exports.getSimpleDate_ = function getSimpleDate_(date) {
     let secondCurrent = moment(currentDate).get('second');
     let millisecondCurrent = moment(currentDate).get('millisecond');
 
-    let time = moment(date).unix();
+    let time = moment(date_).unix();
     let timeCurrent = moment(currentDate).unix();
 
     const value = timeCurrent - time;

@@ -9,6 +9,7 @@ import {
     ScrollView,
     Dimensions,
     Keyboard,
+    ActivityIndicator,
     RefreshControl,
     TouchableOpacity,
 } from 'react-native';
@@ -35,6 +36,7 @@ import moment from 'moment';
 import styles from '../../styles/FullView/historyStyle';
 import siteDetailStyle from '../../styles/FullView/siteDetailStyle';
 import siftStyle from '../../styles/siftViewStyle';
+import homeStyle from '../../styles/Home/homeStyle';
 import ChartView from '../../widget/react-native-highcharts';
 
 const units = ['km/h', 'v', '℃', ''];
@@ -64,6 +66,16 @@ class HistoryTracks extends Component {
             btnSelect: 1,
             state: 1,
             isFlod: false,
+            isLoading: false,
+            markers: [],
+            events: [],
+            loadtracks: false,
+            tracks: [],
+            loadtrend: false,
+            speedData: [],
+            distanceData: [],
+            working_duration: [],
+            statistics: {},
         }
         this.selectTime = 1;
         this.start_time = moment(ihtool.getDateBegain(new Date())).format('YYYY-MM-DD HH:mm:ss'),
@@ -73,76 +85,148 @@ class HistoryTracks extends Component {
 
     }
     componentDidMount() {
-        this.props.dispatch(createAction('historyTracks/updateState')({
-            isLoading: false,
-            loadData: false,
-            loadtrend: false,
-            loadtracks: false,
-            statistics: {},
-            events: [],
-            siteData: {
-                metrics: {
-                    iot_data: {},
-                    location_data: {}
-                }
-            },
-            siteDetail: {},
-            speedData: [],
-            distanceData: [],
-            working_duration: [],
-            distance: null,
-            durations: null,
-            count: null,
-            tracks: [],
-            markers: [],
-        }));
         this.refresh();
     }
     refresh() {
         this.getAlerts();
         this.getTrendData(this.state.btnSelect);
         this.getSiteTracks(this.state.btnSelect);
+        this.getStatistics();
     }
-    getAlerts() {
-        this.props.dispatch(createAction('historyTracks/getAlerts')({
-            cursor: 0,
-            limit: 0,
-            body: {
+    getStatistics() {
+        this.props.dispatch({
+            type: 'historyTracks/getStatistics',
+            payload: {
+                plateNo: this.state.item.id,
                 begin: moment(this.state.start_time).utc().format(),
                 end: moment(this.state.end_time).utc().format(),
-                labels: {
-                    code: 'driving',
-                },
-                mid: this.state.item.id,
+            },
+            onSuccess: (result) => {
+                this.setState({
+                    statistics: result,
+                });
+            },
+            onFaild: () => {
+                this.setState({
+                    statistics: {},
+                });
             }
-        }));
+        });
     }
-    getSiteTracks(value) {
-        this.props.dispatch(createAction('historyTracks/getSiteTracks')({
-            plateNo: this.state.item.id,
-            start: moment(this.state.start_time).utc().format(),
-            end: moment(this.state.end_time).utc().format(),
-        }))
+    getAlerts() {
+        this.setState({ isLoading: true, events: [] });
+        this.props.dispatch({
+            type: 'historyTracks/getAlerts',
+            payload: {
+                cursor: 0,
+                limit: 0,
+                body: {
+                    begin: moment(this.state.start_time).utc().format(),
+                    end: moment(this.state.end_time).utc().format(),
+                    labels: {
+                        code: 'driving',
+                    },
+                    mid: this.state.item.id,
+                }
+            },
+            onSuccess: (result) => {
+                this.setState({
+                    isLoading: false,
+                    markers: result.markers,
+                    events: result.events,
+                })
+            },
+            onFaild: () => {
+                this.setState({
+                    isLoading: false,
+                    markers: [],
+                    events: [],
+                })
+            }
+        })
+    }
+    getSiteTracks() {
+        this.setState({
+            loadtracks: false,
+        })
+        this.props.dispatch({
+            type: 'historyTracks/getSiteTracks',
+            payload: {
+                plateNo: this.state.item.id,
+                start: moment(this.state.start_time).utc().format(),
+                end: moment(this.state.end_time).utc().format(),
+            },
+            onSuccess: (result) => {
+                this.setState({
+                    loadtracks: false,
+                    tracks: result,
+                });
+            },
+            onFaild: () => {
+                this.setState({
+                    loadtracks: false,
+                    tracks: [],
+                });
+            }
+        });
     }
     getTrendData(value) {
-        this.props.dispatch(createAction('historyTracks/getSiteTrend')({
-            plateNo: this.state.item.id,
-            metric: 'iot_data',
-            fields: 'speed',
-            start: moment(this.state.start_time).utc().format(),
-            end: moment(this.state.end_time).utc().format(),
-            interval: 60,
-            function: 'max'
-        }));
-        this.props.dispatch(createAction('historyTracks/getSiteTrend')({
-            plateNo: this.state.item.id,
-            metric: 'iot_data',
-            fields: 'working_duration,distance',
-            start: moment(this.state.start_time).utc().format(),
-            end: moment(this.state.end_time).utc().format(),
-            interval: 3600,
-            function: 'max'
-        }))
+        this.setState({
+            loadtrend: false,
+        });
+        if (value == 1) {
+            this.props.dispatch({
+                type: 'historyTracks/getSiteTrend',
+                payload: {
+                    plateNo: this.state.item.id,
+                    metric: 'iot_data',
+                    fields: 'speed',
+                    start: moment(this.state.start_time).utc().format(),
+                    end: moment(this.state.end_time).utc().format(),
+                    interval: 60,
+                    function: 'max'
+                },
+                onSuccess: (result) => {
+                    this.setState({
+                        loadtrend: false,
+                        speedData: result,
+                    });
+                },
+                onFaild: () => {
+                    this.setState({
+                        loadtrend: false,
+                        speedData: [],
+                    });
+                }
+            });
+        } else {
+            this.props.dispatch({
+                type: 'historyTracks/getSiteTrend',
+                payload: {
+                    plateNo: this.state.item.id,
+                    metric: 'iot_data',
+                    fields: 'working_duration,distance',
+                    start: moment(this.state.start_time).utc().format(),
+                    end: moment(this.state.end_time).utc().format(),
+                    interval: 3600,
+                    function: 'max'
+                },
+                onSuccess: (result) => {
+                    this.setState({
+                        loadtrend: false,
+                        distanceData: result.distanceData,
+                        working_duration: result.working_duration,
+                    });
+                },
+                onFaild: () => {
+                    this.setState({
+                        loadtrend: false,
+                        distanceData: [],
+                        working_duration: [],
+                    });
+                }
+            });
+        }
     }
     selectToday(value) {
         this.setState({
@@ -177,7 +261,7 @@ class HistoryTracks extends Component {
                 dataGrouping: {
                     enabled: false,
                 },
-                data: this.props.speedData,
+                data: this.state.speedData,
                 lineWidth: 1,
             });
             return ihtool.getConf(serieses, unit);
@@ -200,7 +284,7 @@ class HistoryTracks extends Component {
                 dataGrouping: {
                     enabled: false,
                 },
-                data: this.props.working_duration,
+                data: this.state.working_duration,
             }, {
                 name: I18n.t('dashboard.travlled_distance'),
                 type: 'column',
@@ -208,13 +292,19 @@ class HistoryTracks extends Component {
                 dataGrouping: {
                     enabled: false,
                 },
-                data: this.props.distanceData,
+                data: this.state.distanceData,
             }];
             return ihtool.getConfDouble(yAxis, serieses);
         }
     }
     pushBigMapView() {
-        Global.global.navigation.navigate('HistoryTracksBigMap');
+        Global.global.navigation.navigate(
+            'HistoryTracksBigMap',
+            {
+                markers: this.getMarkers(this.state.markers, this.state.tracks),
+                tracks: this.state.tracks
+            }
+        );
     }
     getMarkers(markers, polylines) {
         let points = [];
@@ -257,60 +347,39 @@ class HistoryTracks extends Component {
         }
         return points;
     }
-    getEventItems(items) {
-        if (items && items.length > 0) {
-            return items.map((item, index) => {
-                if (this.state.state == 1) {
-                    if (this.state.isFlod == true) {
-                        return <View style={styles.itemView} key={index}>
-                            <View style={styles.itemStateView}>
-                                <Image style={styles.itemImage} source={ihtool.getEventDetailImage(item)} />
-                            </View>
-                            <View style={styles.itemTimeView}>
-                                <Text style={styles.text14}>{moment(item.startsAt).format('YYYY-MM-DD HH:mm')}</Text>
-                            </View>
-                            <View style={styles.itemMesgView}>
-                                <Text numberOfLines={2} style={styles.text14}>{ihtool.getEventDesc(item)}</Text>
-                            </View>
-                        </View>
-                    } else {
-                        if (index < 3) {
-                            return <View style={styles.itemView} key={index}>
-                                <View style={styles.itemStateView}>
-                                    <Image style={styles.itemImage} source={ihtool.getEventDetailImage(item)} />
-                                </View>
-                                <View style={styles.itemTimeView}>
-                                    <Text style={styles.text14}>{moment(item.startsAt).format('YYYY-MM-DD HH:mm')}</Text>
-                                </View>
-                                <View style={styles.itemMesgView}>
-                                    <Text numberOfLines={2} style={styles.text14}>{ihtool.getEventDesc(item)}</Text>
-                                </View>
-                            </View>
-                        } else {
-                            return <View key={index} />
-                        }
-                    }
-                } else {
-                    return <View key={index} />
-                }
-            })
-        } else {
-            return (
-                <TouchableOpacity disabled={this.props.isLoading} style={styles.nodataView} activeOpacity={0.6} onPress={() => this.refresh()} >
-                    {
-                        this.state.state == 1 ?
-                            <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} /> : <View />
-                    }
-                </TouchableOpacity>
-            );
-        }
+    _renderItem(data) {
+        const { item, index } = data;
+        const { fields } = item;
+        const { alarm_message } = fields || {};
+        return (
+            <View style={styles.itemView} key={index}>
+                <View style={styles.itemStateView}>
+                    <Image style={styles.itemImage}
+                        source={ihtool.getEventDetailImage(item)}
+                    />
+                </View>
+                <View style={styles.line} />
+                <View style={styles.itemTimeView}>
+                    <Text style={styles.text14}>
+                        {moment(item.startsAt).format('YYYY-MM-DD HH:mm')}
+                    </Text>
+                </View>
+                <View style={styles.line} />
+                <View style={styles.itemMesgView}>
+                    <Text
+                        style={styles.text14}
+                    >
+                        {alarm_message}
+                    </Text>
+                </View>
+            </View>
+        )
     }
     render() {
         const conf = this.getSeries();
-        const markers = this.getMarkers(this.props.markers, this.props.tracks);
+        const markers = this.getMarkers(this.state.markers, this.state.tracks);
         const center = markers.length == 0 ? ihtool.getInitPs() : undefined;
-        const durations = this.props.durations ? parseFloat(this.props.durations / 3600).toFixed(2) : '--';
-        const count = this.props.count ? this.props.count : '--';
+        const statistics = ihtool.getStatistics(this.state.statistics);
         return (
             <View style={styles.container}>
                 <View style={styles.topView}>
@@ -319,10 +388,17 @@ class HistoryTracks extends Component {
                         style={styles.siftBtnView}
                         onPress={() => this.siftBtnAction()}
                         activeOpacity={0.6}
-                        disabled={this.props.isLoading}
+                        disabled={this.state.isLoading}
                     >
-                        <Text style={styles.timeLable}>{this.getTimeLabel(this.state.selectTime)}</Text>
-                        <Image style={styles.siftBtnImage} source={this.state.isShow ? Images.other_triangle_up_select : Images.other_triangle_down_select} />
+                        <Text style={styles.timeLable}>
+                            {this.getTimeLabel(this.state.selectTime)}
+                        </Text>
+                        <Image style={styles.siftBtnImage}
+                            source={this.state.isShow ?
+                                Images.other_triangle_up_select :
+                                Images.other_triangle_down_select
+                            }
+                        />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.body}>
@@ -339,19 +415,6 @@ class HistoryTracks extends Component {
                         }
                     >
                         <View style={siteDetailStyle.bodyItemView}>
-                            {/* <View style={styles.trendTitleView}>
-                                <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.changeType(1)}>
-                                    <View style={this.state.state == 1 ? styles.btn : styles.btn_}>
-                                        <Text style={this.state.state == 1 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('historyTack.vehicle_state')}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.btnView} disabled={this.props.loadData} activeOpacity={0.6} onPress={() => this.changeType(2)}>
-                                    <View style={this.state.state == 2 ? styles.btn : styles.btn_}>
-                                        <Text style={this.state.state == 2 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('historyTack.history_tack')}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View> */}
-                            {/* <View style={siteDetailStyle.line} /> */}
                             <MapView
                                 trafficEnabled={false}
                                 baiduHeatMapEnabled={false}
@@ -359,7 +422,7 @@ class HistoryTracks extends Component {
                                 style={styles.mapView}
                                 center={center}
                                 markers={markers}
-                                polylines={this.props.tracks}
+                                polylines={this.state.tracks}
                                 onMapClick={(e) => {
 
                                 }}
@@ -368,31 +431,30 @@ class HistoryTracks extends Component {
                                 onPress={() => { this.pushBigMapView() }}
                             >
                             </TouchableOpacity>
-                            {/* <View style={{ flexDirection: 'row', flex: 1, width: Dimensions.get('window').width * 2 }}> */}
                             <View style={{ flex: 1 }}>
                                 <View style={styles.statictView}>
                                     <View style={styles.statictItem_}>
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('historyTack.mileage') + ': '}</Text>
-                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.distance, true) + I18n.t('km')}</Text>
+                                            <Text style={styles.text14}>{statistics.distance + I18n.t('km')}</Text>
                                         </View>
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('common.when') + ': '}</Text>
-                                            <Text style={styles.text14}>{durations + I18n.t('hour')}</Text>
+                                            <Text style={styles.text14}>{statistics.working_duration + I18n.t('hour')}</Text>
                                         </View>
                                     </View>
                                     <View style={styles.statictItem_}>
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('common.alarms') + ': '}</Text>
-                                            <Text style={styles.text14}>{ihtool.placeholderStr(this.props.events.length) + I18n.t('pc')}</Text>
+                                            <Text style={styles.text14}>{statistics.event + I18n.t('pc')}</Text>
                                         </View>
                                         <View style={styles.statictItem}>
                                             <View style={styles.statictPoint} />
                                             <Text style={styles.text14_bold}>{I18n.t('dashboard.illegal_drive_behavior') + ': '}</Text>
-                                            <Text style={styles.text14}>{count + I18n.t('times')}</Text>
+                                            <Text style={styles.text14}>{statistics.illegalBehavior + I18n.t('times')}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -408,43 +470,52 @@ class HistoryTracks extends Component {
                                             <Text style={styles.text14_bold}>{I18n.t('detail.content')}</Text>
                                         </View>
                                     </View>
-                                    {
-                                        this.getEventItems(this.props.events)
-                                    }
-                                    {
-                                        this.props.events.length > 0 ?
-                                            <TouchableOpacity activeOpacity={0.6} onPress={() => { this.setState({ isFlod: !this.state.isFlod }) }} style={siteDetailStyle.unflodBtn} >
-                                                <Text style={siteDetailStyle.unflodBtnTitle}>{this.state.isFlod ? I18n.t('event_hide') : I18n.t('event_unflod')}</Text>
-                                            </TouchableOpacity> : <View />
-                                    }
+                                    <View style={{ height: 300 }}>
+                                        {
+                                            this.state.events && this.state.events.length > 0 ?
+                                                <FlatList
+                                                    bounces={false}
+                                                    showsVerticalScrollIndicator={false}
+                                                    renderItem={this._renderItem.bind(this)}
+                                                    data={this.state.events}
+                                                    keyExtractor={(item, index) => index.toString()}
+                                                >
+                                                </FlatList> :
+                                                <View style={styles.itemView}>
+                                                    {
+                                                        this.state.isLoading ?
+                                                            <View style={homeStyle.loadingView}>
+                                                                <ActivityIndicator style={homeStyle.loading} />
+                                                            </View> :
+                                                            <TouchableOpacity disabled={this.state.isLoading}
+                                                                style={homeStyle.nodataView}
+                                                                activeOpacity={0.6}
+                                                                onPress={() => this.getAlerts()}
+                                                            >
+                                                                <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
+                                                            </TouchableOpacity>
+                                                    }
+                                                </View>
+                                        }
+                                    </View>
                                 </View>
                             </View>
-                            {/* <View style={
-                                    this.state.state == 1 ? { height: 200, marginLeft: 50, width: Dimensions.get('window').width - 48, } :
-                                        { width: Dimensions.get('window').width - 48 }}>
-                                    <MapView
-                                        trafficEnabled={false}
-                                        baiduHeatMapEnabled={false}
-                                        mapType={MapTypes.NORMAL}
-                                        style={styles.mapView}
-                                        center={center}
-                                        markers={markers}
-                                        polylines={this.props.tracks}
-                                        onMapClick={(e) => {
-
-                                        }}
-                                    />
-                                </View> */}
-                            {/* </View> */}
                         </View>
                         <View style={siteDetailStyle.bodyItemView}>
                             <View style={styles.trendTitleView}>
-                                <TouchableOpacity style={styles.btnView} disabled={this.props.loadtrend} activeOpacity={0.6} onPress={() => this.btnAction(1)}>
+                                <TouchableOpacity style={styles.btnView}
+                                    disabled={this.state.loadtrend}
+                                    activeOpacity={0.6}
+                                    onPress={() => this.btnAction(1)}
+                                >
                                     <View style={this.state.btnSelect == 1 ? styles.btn : styles.btn_}>
                                         <Text style={this.state.btnSelect == 1 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('speed')}</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.btnView} disabled={this.props.loadtrend} activeOpacity={0.6} onPress={() => this.btnAction(2)}>
+                                <TouchableOpacity style={styles.btnView}
+                                    disabled={this.state.loadtrend}
+                                    activeOpacity={0.6} onPress={() => this.btnAction(2)}
+                                >
                                     <View style={this.state.btnSelect == 2 ? styles.btn : styles.btn_}>
                                         <Text style={this.state.btnSelect == 2 ? siteDetailStyle.btnTitle : siteDetailStyle.btnTitle_}>{I18n.t('worktime_duraction')}</Text>
                                     </View>
@@ -452,7 +523,12 @@ class HistoryTracks extends Component {
                             </View>
                             <View style={siteDetailStyle.line} />
                             <View style={siteDetailStyle.chartView} >
-                                <ChartView style={{ flex: 1 }} config={conf} more={this.state.btnSelect == 1 ? false : true} stock={false}></ChartView>
+                                <ChartView style={{ flex: 1 }}
+                                    config={conf}
+                                    more={this.state.btnSelect == 1 ? false : true}
+                                    stock={false}
+                                >
+                                </ChartView>
                             </View>
                         </View>
                         <View style={{ height: 20 }} />
@@ -465,11 +541,23 @@ class HistoryTracks extends Component {
                                 <View style={siftStyle.bodyView}>
                                     <Text style={siftStyle.title}>{I18n.t('select_time')}</Text>
                                     <View style={siftStyle.wrapView}>
-                                        <TouchableOpacity style={this.state.selectTime == 1 ? siftStyle.itemView_ : siftStyle.itemView} activeOpacity={0.6} onPress={() => this.selectToday(1)}>
+                                        <TouchableOpacity style={
+                                            this.state.selectTime == 1 ?
+                                                siftStyle.itemView_ : siftStyle.itemView
+                                        }
+                                            activeOpacity={0.6}
+                                            onPress={() => this.selectToday(1)}
+                                        >
                                             <Text style={this.state.selectTime == 1 ? siftStyle.itemText_ : siftStyle.itemText}>{this.timeLabel[1]}</Text>
                                         </TouchableOpacity>
-                                        <View style={this.state.selectTime == 2 ? siftStyle.itemView_ : siftStyle.itemView}>
-                                            <Text style={this.state.selectTime == 2 ? siftStyle.itemText_ : siftStyle.itemText}>{this.timeLabel[2]}</Text>
+                                        <View style={
+                                            this.state.selectTime == 2 ?
+                                                siftStyle.itemView_ : siftStyle.itemView}
+                                        >
+                                            <Text style={this.state.selectTime == 2 ?
+                                                siftStyle.itemText_ : siftStyle.itemText
+                                            }
+                                            >{this.timeLabel[2]}</Text>
                                             <DatePicker
                                                 hideText={true}
                                                 showIcon={false}
@@ -533,7 +621,9 @@ class HistoryTracks extends Component {
                                                     color: '#2d2d2d',
                                                 }
                                             }}
-                                            onDateChange={(date) => { this.setState({ start_time: date, selectTime: 0 }); }}
+                                            onDateChange={(date) => {
+                                                this.setState({ start_time: date, selectTime: 0 });
+                                            }}
                                         />
                                     </View>
                                     <View style={siftStyle.separator_} />
@@ -565,15 +655,23 @@ class HistoryTracks extends Component {
                                                     color: '#2d2d2d',
                                                 }
                                             }}
-                                            onDateChange={(date) => { this.setState({ end_time: date, selectTime: 0 }); }}
+                                            onDateChange={(date) => {
+                                                this.setState({ end_time: date, selectTime: 0 });
+                                            }}
                                         />
                                     </View>
                                     <View style={siftStyle.separator} />
                                     <View style={siftStyle.btnView}>
-                                        <TouchableOpacity style={siftStyle.resetView} activeOpacity={0.6} onPress={() => this.resetAction()}>
+                                        <TouchableOpacity style={siftStyle.resetView}
+                                            activeOpacity={0.6}
+                                            onPress={() => this.resetAction()}
+                                        >
                                             <Text style={siftStyle.reset} >{I18n.t('reset')}</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={siftStyle.confirmView} activeOpacity={0.6} onPress={() => this.confirmAction()}>
+                                        <TouchableOpacity style={siftStyle.confirmView}
+                                            activeOpacity={0.6}
+                                            onPress={() => this.confirmAction()}
+                                        >
                                             <Text style={siftStyle.confirm} >{I18n.t('confirm')}</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -595,7 +693,7 @@ class HistoryTracks extends Component {
     }
     btnAction(value) {
         this.setState({ btnSelect: value });
-        // this.getTrendData(value);
+        this.getTrendData(value);
     }
     siftBtnAction() {
         if (this.state.isShow) {
@@ -637,19 +735,6 @@ class HistoryTracks extends Component {
 }
 function mapStateToProps(state) {
     return {
-        loadtracks: state.historyTracks.loadtracks,
-        loadtrend: state.historyTracks.loadtrend,
-        isLoading: state.historyTracks.isLoading,
-        isLoad: state.historyTracks.isLoad,
-        events: state.historyTracks.events,
-        markers: state.historyTracks.markers,
-        speedData: state.historyTracks.speedData,
-        distance: state.historyTracks.distance,
-        distanceData: state.historyTracks.distanceData,
-        count: state.historyTracks.count,
-        durations: state.historyTracks.durations,
-        working_duration: state.historyTracks.working_duration,
-        tracks: state.historyTracks.tracks,
     }
 }
 export default connect(mapStateToProps)(HistoryTracks);

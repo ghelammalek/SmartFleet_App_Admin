@@ -109,7 +109,10 @@ class SiteDetail extends Component {
         this.props.dispatch(createAction('siteDetail/updateState')({
             isLoading: false,
         }));
-        this.props.dispatch(createAction('siteDetail/getStatistics')({ queryType: '1', plateNo: this.state.title }));
+        this.props.dispatch(createAction('siteDetail/getStatistics')({
+            queryType: '1',
+            plateNo: this.state.title
+        }));
         this.props.dispatch(createAction('siteDetail/getAlerts')({
             cursor: 0,
             limit: 1,
@@ -255,7 +258,7 @@ class SiteDetail extends Component {
                             <View style={homeStyle.static_titleView}>
                                 <Text style={homeStyle.static_sunTitle}>{I18n.t('today_duration')}</Text>
                                 <View style={homeStyle.static_subView}>
-                                    <Text style={homeStyle.static_title}>{statistics.working}</Text>
+                                    <Text style={homeStyle.static_title}>{statistics.working_duration}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('hour')}</Text>
                                 </View>
                             </View>
@@ -265,7 +268,7 @@ class SiteDetail extends Component {
                             <View style={homeStyle.static_titleView}>
                                 <Text style={homeStyle.static_sunTitle}>{I18n.t('today_fuelConsumption')}</Text>
                                 <View style={homeStyle.static_subView}>
-                                    <Text style={homeStyle.static_title}>{statistics.fuelConsumption}</Text>
+                                    <Text style={homeStyle.static_title}>{statistics.fuel_consumption}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('sheng')}</Text>
                                 </View>
                             </View>
@@ -275,7 +278,7 @@ class SiteDetail extends Component {
                             <View style={homeStyle.static_titleView}>
                                 <Text style={homeStyle.static_sunTitle}>{I18n.t('dashboard.day_illegal_drive')}</Text>
                                 <View style={homeStyle.static_subView}>
-                                    <Text style={homeStyle.static_title}>{statistics.illegal}</Text>
+                                    <Text style={homeStyle.static_title}>{statistics.illegalBehavior}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('common.times')}</Text>
                                 </View>
                             </View>

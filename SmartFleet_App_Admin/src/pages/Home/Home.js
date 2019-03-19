@@ -78,8 +78,8 @@ class Home extends Component {
                 type: 'home/getStatistics',
                 payload: {
                     queryType: queryType,
-                    begin: moment(this.getStartTime(this.num)).unix(),
-                    end: moment(this.getEndtime()).unix(),
+                    begin: this.getStartTime(this.num),
+                    end: this.getEndtime(),
                 },
                 onSuccess: (result) => {
                     this.setState({ statistics: result, isLoadStastics: false })
@@ -215,17 +215,17 @@ class Home extends Component {
                     <View style={homeStyle.cellBottomeView}>
                         {
                             item.confirmedAt ?
-                                <View style={homeStyle.cellTypeView}>
+                                <View style={[homeStyle.cellTypeView]}>
                                     <Text style={homeStyle.cellTypeLabel}>{I18n.t('event_confirm')}</Text>
                                 </View> : <View style={{ flex: 1 }} />
                         }
                         {
                             item.endAt ?
-                                <View style={homeStyle.cellTypeView}>
+                                <View style={[homeStyle.cellTypeView, { justifyContent: 'center' }]}>
                                     <Text style={homeStyle.cellTypeLabel}>{I18n.t('event_recover')}</Text>
                                 </View> : <View style={{ flex: 1 }} />
                         }
-                        <View style={homeStyle.cellTypeView}>
+                        <View style={[homeStyle.cellTypeView, { justifyContent: 'flex-end' }]}>
                             <Text style={homeStyle.cellTypeLabel}>{ihtool.getEventType(item)}</Text>
                         </View>
                     </View>
@@ -341,7 +341,7 @@ class Home extends Component {
                             <View style={homeStyle.static_titleView}>
                                 <Text style={homeStyle.static_sunTitle}>{I18n.t('label_duration')}</Text>
                                 <View style={homeStyle.static_subView}>
-                                    <Text style={homeStyle.static_title}>{statistics.duration}</Text>
+                                    <Text style={homeStyle.static_title}>{statistics.working_duration}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('hour')}</Text>
                                 </View>
                             </View>
@@ -351,7 +351,7 @@ class Home extends Component {
                             <View style={homeStyle.static_titleView}>
                                 <Text style={homeStyle.static_sunTitle}>{I18n.t('label_fuelConsumption')}</Text>
                                 <View style={homeStyle.static_subView}>
-                                    <Text style={homeStyle.static_title}>{statistics.fuelConsumption}</Text>
+                                    <Text style={homeStyle.static_title}>{statistics.fuel_consumption}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('sheng')}</Text>
                                 </View>
                             </View>
@@ -361,7 +361,7 @@ class Home extends Component {
                             <View style={homeStyle.static_titleView}>
                                 <Text style={homeStyle.static_sunTitle}>{I18n.t('label_cars')}</Text>
                                 <View style={homeStyle.static_subView}>
-                                    <Text style={homeStyle.static_title}>{statistics.workPerson}</Text>
+                                    <Text style={homeStyle.static_title}>{statistics.on_duty}</Text>
                                     <Text style={homeStyle.static_sunTitle}>{I18n.t('liang')}</Text>
                                 </View>
                             </View>

@@ -137,8 +137,8 @@ exports.getTops = function (params) {
  * @returns
  */
 exports.getStatistics = function (queryType, plateNo) {
-
-    let url = '/api/statistics/vehicle/accumulation?queryType=' + queryType;
+    let url = '/api/iot-ext/summary?start=' + moment(moment().format('YYYY-MM-DD')).utc().format()
+        + '&end=' + moment(moment().format('YYYY-MM-DD HH:mm:ss.SSS')).utc().format();
     if (plateNo) {
         url = url + '&plateNo=' + encodeURIComponent(plateNo);
     }
@@ -152,9 +152,8 @@ exports.getStatistics = function (queryType, plateNo) {
  * @returns
  */
 exports.getStatisticsTime = function (params) {
-    let url = '/api/statistics/vehicle/accumulation?queryType=' + params.queryType
-        + '&startTime=' + (isEmpty(params.begin) ? '' : params.begin)
-        + '&endTime=' + (isEmpty(params.end) ? '' : params.end);
+    let url = '/api/iot-ext/summary?start=' + params.begin
+        + '&end=' + params.end;
     if (params.plateNo) {
         url = url + '&plateNo=' + encodeURIComponent(params.plateNo);
     }
@@ -167,7 +166,9 @@ exports.getStatisticsTime = function (params) {
  * @returns
  */
 exports.getSites = function () {
-    const url = '/api/general/sites?cursor=0&limit=100000000&mapType=' + config.mapType;
+    const url = '/api/general/sites?cursor=0&limit=100000000&startTime=0&endTime='
+        + moment().utc().format()
+        + '&mapType=' + config.mapType;
     return request.get(url, null, true, HEADER_JSON);
 }
 

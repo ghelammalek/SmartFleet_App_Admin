@@ -71,8 +71,8 @@ class HistoryData extends Component {
     }
     refresh() {
         this.props.dispatch(createAction('historyData/getStatistics')({
-            begin: moment(this.state.start_time).valueOf(),
-            end: moment(this.state.end_time).valueOf(),
+            begin: moment(this.state.start_time).utc().format(),
+            end: moment(this.state.end_time).utc().format(),
             plateNo: this.state.item.plateNo,
             queryType: 1,
         }));
@@ -240,7 +240,7 @@ class HistoryData extends Component {
                                     <View style={styles.detailItem}>
                                         <View style={siteDetailStyle.detailLabelView}><Text style={siteDetailStyle.detailLabel}>{'累计时长' + ': '}</Text></View>
                                         <View style={{ flex: 1 }}>
-                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.duration, true) + ' 小时'}</Text>
+                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.working_duration, true) + ' 小时'}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -257,7 +257,7 @@ class HistoryData extends Component {
                                     <View style={styles.detailItem}>
                                         <View style={siteDetailStyle.detailLabelView}><Text style={siteDetailStyle.detailLabel}>{'累计油耗' + ': '}</Text></View>
                                         <View style={{ flex: 1 }}>
-                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.fuelConsumption, true) + ' 升'}</Text>
+                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.fuel_consumption, true) + ' 升'}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -274,7 +274,7 @@ class HistoryData extends Component {
                                     <View style={styles.detailItem}>
                                         <View style={siteDetailStyle.detailLabelView}><Text style={siteDetailStyle.detailLabel}>{'违规驾驶' + ': '}</Text></View>
                                         <View style={{ flex: 1 }}>
-                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.illegal) + ' 次'}</Text>
+                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.illegalBehavior) + ' 次'}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -284,7 +284,7 @@ class HistoryData extends Component {
                                     <View style={styles.detailItem}>
                                         <View style={siteDetailStyle.detailLabelView}><Text style={siteDetailStyle.detailLabel}>{'疑似事故' + ': '}</Text></View>
                                         <View style={{ flex: 1 }}>
-                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.accident) + ' 次'}</Text>
+                                            <Text style={siteDetailStyle.message}>{ihtool.placeholderStr(statistics.event) + ' 次'}</Text>
                                         </View>
                                     </View>
                                     <View style={siteDetailStyle.line_vertical} />

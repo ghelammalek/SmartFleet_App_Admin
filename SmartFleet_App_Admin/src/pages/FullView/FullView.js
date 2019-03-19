@@ -91,7 +91,9 @@ class FullView extends Component {
                             <Text style={styles.itemTitle} >{item.item.plateNo}</Text>
                         </View>
                         <View style={styles.itemTopRight}>
-                            <Text style={styles.time} >{item.item.minutes + I18n.t('before_minutes')}</Text>
+                            <Text style={styles.time} >
+                                {ihtool.getSimpleDate_(item.item.minutes ? parseFloat(item.item.minutes) : null)}
+                            </Text>
                             <Image style={styles.imgagRight} source={Images.other_right} />
                         </View>
                     </View>
@@ -190,15 +192,17 @@ class FullView extends Component {
         for (let i = 0; i < this.props.rootData.length; i++) {
             const site = this.props.rootData[i];
             if (site.plateNo.indexOf(evt.nativeEvent.text) > -1) {
-                const marker = {
-                    longitude: site.location.x,
-                    latitude: site.location.y,
-                    title: site.plateNo,
-                    extenInfo: {
-                        name: '',
+                if (site.location) {
+                    const marker = {
+                        longitude: site.location.x,
+                        latitude: site.location.y,
+                        title: site.plateNo,
+                        extenInfo: {
+                            name: '',
+                        }
                     }
+                    markers.push(marker);
                 }
-                markers.push(marker);
                 data.push(site);
             }
         }

@@ -13,7 +13,7 @@ plugins {
 
 xcodebuild {
 
-    version = "9"
+    version = "10"
     workspace = 'SmartFleet_App_Admin.xcworkspace'
     target = 'SmartFleet_App_Admin'
     scheme = 'SmartFleet_App_Admin'

@@ -42,15 +42,17 @@ export default {
                 } else {
                     for (let i = 0; i < data.result.length; i++) {
                         const site = data.result[i];
-                        const marker = {
-                            longitude: site.location.x,
-                            latitude: site.location.y,
-                            title: site.plateNo,
-                            extenInfo: {
-                                name: '',
+                        if (site.location) {
+                            const marker = {
+                                longitude: site.location.x,
+                                latitude: site.location.y,
+                                title: site.plateNo,
+                                extenInfo: {
+                                    name: '',
+                                }
                             }
+                            markers.push(marker);
                         }
-                        markers.push(marker);
                     }
                     yield put({
                         type: 'updateState',

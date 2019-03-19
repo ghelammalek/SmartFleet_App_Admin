@@ -36,6 +36,10 @@ class HistoryTracksMapView extends Component {
         super(props);
         this.state = {
             isShow: false,
+            markers: this.getMarkers(this.props.navigation.state.params.markers, this.props.navigation.state.params.tracks),
+            tracks: this.props.navigation.state.params.tracks,
+            polylines: this.props.navigation.state.params.polylines,
+            selectItems: [],
         }
     }
     componentDidMount() {
@@ -87,8 +91,7 @@ class HistoryTracksMapView extends Component {
         return points;
     }
     render() {
-        const markers = this.getMarkers(this.props.markers, this.props.tracks);
-        const center = markers.length == 0 ? ihtool.getInitPs() : undefined;
+        const center = this.state.markers.length == 0 ? ihtool.getInitPs() : undefined;
         return (
             <View style={styles.container}>
                 <MapView
@@ -97,8 +100,8 @@ class HistoryTracksMapView extends Component {
                     mapType={MapTypes.NORMAL}
                     style={styles.container}
                     center={center}
-                    markers={markers}
-                    polylines={this.state.isShow ? this.props.tracks : []}
+                    markers={this.state.markers}
+                    polylines={this.state.isShow ? this.state.tracks : []}
                     onMapClick={(e) => {
 
                     }}
@@ -109,8 +112,8 @@ class HistoryTracksMapView extends Component {
 }
 function mapStateToProps(state) {
     return {
-        markers: state.historyTracks.markers,
-        tracks: state.historyTracks.tracks,
+        // markers: state.historyTracks.markers,
+        // tracks: state.historyTracks.tracks,
     }
 }
 export default connect(mapStateToProps)(HistoryTracksMapView);
