@@ -28,9 +28,9 @@ exports.getInitPs = function getInitPs() {
 exports.changeNum = function changeNum(num) {
     let value = '';
     if (num < 10000) {
-        value = num.toFixed(2);
+        value = parseFloat(num).toFixed(2);
     } else {
-        value = (num / 1000).toFixed(2) + 'k';
+        value = parseFloat(num).toFixed(0);
     }
     return value;
 }
@@ -53,13 +53,13 @@ exports.placeholderStr = function placeholderStr(str, isFloat) {
  */
 exports.getStatistics = function getStatistics(params) {
     const statistics = {
-        working_duration: params.working_duration || '--',//工作时长
-        running_duration: params.running_duration || '--',//行驶时间
-        fuel_consumption: params.fuel_consumption || '--',//燃油消耗
-        illegalBehavior: params.illegalBehavior || '--',//非法驾驶行为
-        distance: params.distance || '--',//行驶里程
-        on_duty: params.on_duty || '--',//出勤
-        event: params.event || '--',//事件
+        working_duration: this.placeholderStr(params.working_duration, true),//工作时长
+        running_duration: this.placeholderStr(params.running_duration, true),//行驶时间
+        fuel_consumption: this.placeholderStr(params.fuel_consumption, false),//燃油消耗
+        illegalBehavior: this.placeholderStr(params.illegalBehavior),//非法驾驶行为
+        distance: this.placeholderStr(params.distance, true),//行驶里程
+        on_duty: this.placeholderStr(params.on_duty),//出勤
+        event: this.placeholderStr(params.event),//事件
     }
     return statistics;
 }

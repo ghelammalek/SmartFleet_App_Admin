@@ -53,8 +53,8 @@ export default homeStyle = StyleSheet.create({
         flexDirection: 'column',
     },
     static_subView: {
-        // marginTop: 3,
         alignItems: 'flex-end',
+        justifyContent: 'flex-start',
         flexDirection: 'row',
     },
     static_title: {

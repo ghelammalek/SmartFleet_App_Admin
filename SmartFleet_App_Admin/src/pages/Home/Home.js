@@ -332,7 +332,9 @@ class Home extends Component {
                                 <Text style={homeStyle.static_sunTitle}>{I18n.t('label_distance')}</Text>
                                 <View style={homeStyle.static_subView}>
                                     <Text style={homeStyle.static_title}>{statistics.distance}</Text>
-                                    <Text style={homeStyle.static_sunTitle}>{I18n.t('km')}</Text>
+                                    <View>
+                                        <Text style={homeStyle.static_sunTitle}>{I18n.t('km')}</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
