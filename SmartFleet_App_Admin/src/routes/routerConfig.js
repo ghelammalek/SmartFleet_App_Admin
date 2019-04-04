@@ -15,6 +15,7 @@ import UpgradeVersionView from '../pages/Setting/UpgradeVersionView';
 import EventDetail from '../pages/Events/EventDetail';
 import ScanView from '../pages/FullView/ScanView';
 import RegisterCar from '../pages/FullView/RegisterCar';
+import ServerIPView from '../pages/Login/ServerIPView';
 
 export default {
     Home: { screen: Home },
@@ -30,5 +31,6 @@ export default {
     HistoryView: { screen: HistoryView },
     LanguageView: { screen: LanguageView },
     ForgotPasswordView: { screen: ForgotPasswordView },
-    HistoryTracksBigMap: { screen: HistoryTracksBigMap }
+    HistoryTracksBigMap: { screen: HistoryTracksBigMap },
+    ServerIPView: { screen: ServerIPView },
 }

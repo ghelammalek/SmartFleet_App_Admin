@@ -40,8 +40,8 @@ export default loginStyle = StyleSheet.create({
         // backgroundColor: 'red',
     },
     img: {
-        width: 16,
-        height: 16,
+        width: 18,
+        height: 18,
         resizeMode: 'contain',
         marginRight: 15,
     },
@@ -84,7 +84,7 @@ export default loginStyle = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "bold",
     },
     spaceView: {
@@ -98,7 +98,7 @@ export default loginStyle = StyleSheet.create({
 
     },
     changeTypeLabel: {
-        fontSize: 12,
+        fontSize: 14,
         color: '#1c1c1d',
     },
     changeLabel: {
@@ -150,6 +150,17 @@ export default loginStyle = StyleSheet.create({
         backgroundColor: '#24ba8e',
         marginTop: 40,
     },
+
+
+    gaojiView: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 60,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 })
 
 

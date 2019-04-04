@@ -6,6 +6,19 @@ import moment from 'moment';
 import { isEmpty } from '../utils/index';
 import VersionNumber from 'react-native-version-number';
 
+exports.changeQRCode = function changeQRCode(text) {
+    let arr = text.split('\n');
+    let dict = {};
+    for (let i = 0; i < arr.length; i++) {
+        const element1 = arr[i];
+        const list = element1.split('=');
+        if (list.length > 1) {
+            dict[list[0]] = list[1];
+        }
+    }
+    return dict;
+}
+
 //判断国际化里是否有字段
 exports.judgeText = function judgeText(text) {
     if (I18n.t(text).indexOf('.' + text + '"') == -1) {

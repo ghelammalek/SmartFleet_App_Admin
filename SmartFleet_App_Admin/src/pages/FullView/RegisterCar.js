@@ -41,17 +41,18 @@ class RegisterCar extends Component {
         if (value == 1) {
             this.props.navigation.navigate('ScanView', {
                 callback: (backdata) => {
+                    const dict = ihtool.changeQRCode(backdata);
                     this.setState({
                         asset_no: backdata,
                     })
                 }
             });
         } else {
-
             this.props.navigation.navigate('ScanView', {
                 callback: (backdata) => {
+                    const dict = ihtool.changeQRCode(backdata);
                     this.setState({
-                        sn: backdata,
+                        sn: dict.sn,
                     })
                 }
             });

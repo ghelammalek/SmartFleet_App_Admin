@@ -24,6 +24,7 @@ import Global from '../../utils/Global';
 import setting from '../../utils/setting';
 import loginStyle from '../../styles/Login/loginStyle';
 import md5 from '../../utils/md5';
+import config from '../../utils/config';
 
 class Login extends Component {
     constructor(props) {
@@ -318,17 +319,25 @@ class Login extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    {
+                        config.type == 'dev' ? <View style={loginStyle.gaojiView}>
+                            <TouchableOpacity
+                                onPress={() => { this.changeServer() }}
+                            >
+                                <Text style={{ fontSize: 14 }}>{'高级'}</Text>
+                            </TouchableOpacity>
+                        </View> : null
+                    }
                 </View >
             </TouchableWithoutFeedback >
         )
     }
+    changeServer() {
+        this.props.navigation.navigate('ServerIPView');
+    }
 }
 function mapStateToProps(state) {
     return {
-        // tel: state.login.tel,
-        // code: state.login.code,
-        // username: state.login.username,
-        // password: state.login.password,
         visible: state.login.visible,
         language: state.login.language,
     }
