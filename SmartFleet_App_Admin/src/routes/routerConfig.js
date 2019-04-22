@@ -16,6 +16,8 @@ import EventDetail from '../pages/Events/EventDetail';
 import ScanView from '../pages/FullView/ScanView';
 import RegisterCar from '../pages/FullView/RegisterCar';
 import ServerIPView from '../pages/Login/ServerIPView';
+import AddGateway from '../pages/FullView/AddGateway';
+import GatewayDetail from '../pages/FullView/GatewayDetail';
 
 export default {
     Home: { screen: Home },
@@ -33,4 +35,6 @@ export default {
     ForgotPasswordView: { screen: ForgotPasswordView },
     HistoryTracksBigMap: { screen: HistoryTracksBigMap },
     ServerIPView: { screen: ServerIPView },
+    AddGateway: { screen: AddGateway },
+    GatewayDetail: { screen: GatewayDetail }
 }

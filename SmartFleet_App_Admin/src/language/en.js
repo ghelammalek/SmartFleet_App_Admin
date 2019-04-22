@@ -105,7 +105,8 @@ export default {
     add_car: 'Add Vehicle',
     please_entry_plateNo: 'Please enter license number',
     pleaseholder_plateNo: 'Please enter license number',
-    please_entry_sn: 'Please enter gateway serial number',
+    please_entry_sn: 'Please enter the gateway serial number',
+    please_entry_mac: 'Please enter the Mac address of the gateway',
     plateNo: 'License Number',
     please_entry: 'Please enter',
     asset_no: 'Asset Number',
@@ -118,6 +119,7 @@ export default {
     register_car_exist: 'The Vehicle already exists',
     home_nodata_label: 'No data',
     home_refresh_label: 'Please try to refresh!',
+    invalid_data: 'Invalid data',
 
     event_confirm: 'Confirmed',
     event_unconfirm: 'Unconfirmed',

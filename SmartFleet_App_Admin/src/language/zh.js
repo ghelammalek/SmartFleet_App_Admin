@@ -104,6 +104,7 @@ export default {
     please_entry_plateNo: '请输入车牌号',
     pleaseholder_plateNo: '请输入车牌号',
     please_entry_sn: '请输入网关序列号',
+    please_entry_mac: '请输入网关mac地址',
     plateNo: '车牌号',
     please_entry: '请输入',
     asset_no: '资产编号',
@@ -116,6 +117,8 @@ export default {
     register_car_exist: '该车辆已经被注册了',
     home_nodata_label: '无数据',
     home_refresh_label: '请尝试刷新!',
+    invalid_data: '无效的数据',
+
 
     event_confirm: '已确认',
     event_unconfirm: '未确认',

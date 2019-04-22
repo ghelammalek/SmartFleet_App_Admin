@@ -23,7 +23,7 @@ import moment from 'moment';
 import ihtool from '../../utils/ihtool';
 import styles from '../../styles/FullView/registerCarStyle';
 
-class RegisterCar extends Component {
+class GatewayDetail extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerTitle: I18n.t('add_car'),
         headerBackTitle: null,
@@ -195,4 +195,4 @@ class RegisterCar extends Component {
 function mapStateToProps(state) {
     return { ...state }
 }
-export default connect(mapStateToProps)(RegisterCar);
+export default connect(mapStateToProps)(GatewayDetail);

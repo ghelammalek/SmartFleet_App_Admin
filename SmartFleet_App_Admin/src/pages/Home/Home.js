@@ -11,8 +11,10 @@ import {
     RefreshControl,
     TouchableOpacity,
     ActivityIndicator,
+    NativeAppEventEmitter,
 } from 'react-native';
 
+import JPushModule from 'jpush-react-native';
 import { connect } from '../../routes/dva';
 import { isEmpty, createAction } from '../../utils/index';
 import NavigationBar from '../../widget/NavigationBar';
@@ -62,6 +64,20 @@ class Home extends Component {
         this.getStatistics('1');
         this.getTops(this.state.topType);
         this.getEvents(this.state.eventType);
+
+        JPushModule.addReceiveCustomMsgListener((message) => {
+            // console.log('----map.extra: ' + JSON.stringify(message));
+        });
+        JPushModule.addReceiveNotificationListener((message) => {
+            // console.log("receive notification: " + message);
+            // Global.global.navigation.navigate('EventDetail', {});
+        });
+        JPushModule.addReceiveOpenNotificationListener((message) => {
+            // console.log('Opening notification!');
+            // console.log('map.extra: ' + JSON.stringify(message));
+            // Global.global.navigation.navigate('EventDetail', { item: { moduleName: message.moduleName } });
+        });
+        // }
     }
     refresh() {
         if (this.state.isRefresh === false) {
@@ -450,7 +466,11 @@ class Home extends Component {
                                             <View style={homeStyle.loadingView}>
                                                 <ActivityIndicator style={homeStyle.loading} />
                                             </View> :
-                                            <TouchableOpacity disabled={this.state.isLoadEvents} style={homeStyle.nodataView} activeOpacity={0.6} onPress={() => this.refreshEvents(this.state.eventType)} >
+                                            <TouchableOpacity disabled={this.state.isLoadEvents}
+                                                style={homeStyle.nodataView}
+                                                activeOpacity={0.6}
+                                                onPress={() => this.getEvents(this.state.eventType)}
+                                            >
                                                 <NoDataView label1={I18n.t('home_nodata_label')} label2={I18n.t('home_refresh_label')} />
                                             </TouchableOpacity>
                                     }

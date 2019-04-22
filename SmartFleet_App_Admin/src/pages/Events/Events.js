@@ -12,7 +12,6 @@ import {
     RefreshControl,
     TouchableOpacity,
 } from 'react-native';
-
 import DatePicker from 'react-native-datepicker';
 import { connect } from '../../routes/dva';
 import NavigationBar from '../../widget/NavigationBar';
@@ -47,24 +46,6 @@ class Events extends Component {
             end_time: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
         }
     }
-    // componentWillMount() {
-    //     console.log('componentWillMount');
-    // }
-    // componentWillUpdate() {
-    //     console.log('componentWillUpdate');
-    // }
-    // componentDidUpdate() {
-    //     console.log('componentDidUpdate');
-    // }
-    // componentDidCatch() {
-    //     console.log('componentDidCatch');
-    // }
-    // componentWillReceiveProps() {
-    //     console.log('componentWillReceiveProps');
-    // }
-    // componentWillUnmount() {
-    //     console.log('componentWillUnmount');
-    // }
     componentDidMount() {
         let body = {};
         let labels = {};
@@ -90,6 +71,7 @@ class Events extends Component {
             limit: 20,
             body: body,
         }));
+
     }
     refresh() {
         let body = {};
@@ -115,7 +97,9 @@ class Events extends Component {
             labels.site_name = this.props.plateNo;
         }
         body.labels = labels;
-        this.props.dispatch(createAction('events/updateState')({ isLoad: true, end_time: end }));
+        this.props.dispatch(createAction('events/updateState')({
+            isLoad: true, end_time: end
+        }));
         this.props.dispatch(createAction('events/getAlerts')({
             cursor: 0,
             limit: 20,
@@ -184,6 +168,7 @@ class Events extends Component {
             }
         });
     }
+
     _separator = () => {
         return <View style={styles.separator} />;
     }
@@ -193,7 +178,6 @@ class Events extends Component {
         const { fields } = item;
         const { alarm_message } = fields || {};
         return (
-
             <TouchableOpacity disabled={this.props.isLoad}
                 key={index} activeOpacity={0.6}
                 onPress={() => this.pushEventDetail(item, index)}

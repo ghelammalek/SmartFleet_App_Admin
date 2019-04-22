@@ -161,8 +161,6 @@ export default historyStyle = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         minHeight: 50,
-        // alignItems: 'center',
-        // justifyContent: 'center',
         borderTopWidth: 1,
         borderTopColor: '#e0e0e0',
     },
@@ -181,15 +179,9 @@ export default historyStyle = StyleSheet.create({
         borderRightColor: '#e0e0e0',
     },
     itemStateView: {
-        // flex: 1,
-        // // height: 50,
-        // maxWidth: 140,
-        // height: 50,
         width: 60,
         justifyContent: 'center',
         alignItems: 'center',
-        // borderRightWidth: 1,
-        // borderRightColor: '#e0e0e0',
     },
     itemTimeView_: {
         height: 40,
@@ -202,28 +194,19 @@ export default historyStyle = StyleSheet.create({
     },
     itemTimeView: {
         flex: 1,
-        // height: 50,
         maxWidth: 140,
-        // alignItems: 'flex-start',
         justifyContent: 'center',
-        // borderRightWidth: 1,
-        // borderRightColor: '#e0e0e0',
         paddingHorizontal: 8,
-        // backgroundColor: 'red'
     },
     itemMesgView_: {
         flex: 1,
-        // alignItems: 'flex-start',
         justifyContent: 'center',
-        // height: 40,
         paddingHorizontal: 8,
     },
     itemMesgView: {
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        // height: 50,
-        // paddingHorizontal: 8,
         padding: 8,
     },
     itemImage: {
@@ -281,10 +264,8 @@ export default historyStyle = StyleSheet.create({
     recordRightView: {
         flex: 1,
         flexDirection: 'column',
-        // justifyContent: 'flex-start',
         alignItems: 'flex-start',
         paddingBottom: 30,
-        // backgroundColor: 'red'
     },
     recordTimeView: {
         height: 15,

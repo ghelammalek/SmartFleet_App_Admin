@@ -2,7 +2,7 @@
  * @Author: mikey.zhanglf 
  * @Date: 2018-07-20 09:51:09 
  * @Last Modified by: mikey.zhanglf
- * @Last Modified time: 2019-03-19 12:41:21
+ * @Last Modified time: 2019-04-11 19:00:11
  */
 
 export default {
@@ -43,7 +43,7 @@ export default {
     other_more: require('../assets/images/other/more.png'),
     other_add: require('../assets/images/other/add.png'),
     other_add_select: require('../assets/images/other/add_select.png'),
-    other_scan: require('../assets/images/other/scan.png'),
+    other_scan: require('../assets/images/other/icon_scan.png'),
     other_default_car: require('../assets/images/other/default_car.png'),
     other_nodata: require('../assets/images/other/nodata.png'),
     other_list: require('../assets/images/other/list.png'),
@@ -116,4 +116,8 @@ export default {
     event_obd_4: require('../assets/images/event/obd_4.png'),
     event_obd_5: require('../assets/images/event/obd_5.png'),
 
+
+    gateway_scan: require('../assets/images/gatway/gateway_scan.png'),
+    gateway_refresh: require('../assets/images/gatway/gateway_refresh.png'),
+    gateway_sigle: require('../assets/images/gatway/gateway_sigle.png'),
 }

@@ -11,19 +11,21 @@ import {
     DeviceEventEmitter,
     Dimensions,
 } from 'react-native'
-
+import {
+    NavigationBar,
+    NavBarBtn,
+    LoadingView,
+    Images,
+    I18n,
+    Global,
+    setting,
+    moment,
+    ihtool
+} from '../../routes/index';
+import { connect } from '../../routes/dva';
+import { isEmpty, createAction } from '../../utils/index';
 import Barcode from 'react-native-smart-barcode'
 import TimerEnhance from 'react-native-smart-timer-enhance'
-import NavigationBar from '../../widget/NavigationBar';
-import LoadingView from "../../widget/LoadingView";
-import { isEmpty, createAction } from '../../utils/index';
-import Images from '../../constants/Images';
-import I18n from '../../language/index';
-import Global from '../../utils/Global';
-import setting from '../../utils/setting';
-import ihtool from '../../utils/ihtool';
-
-//const { width: deviceWidth, height: deviceHeight } = Dimensions.get('window')
 
 class ScanView extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -32,21 +34,52 @@ class ScanView extends Component {
     });
     constructor(props) {
         super(props);
+        this.state = {
+            isLoading: false,
+        }
     }
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', }}>
                 <Barcode style={{ flex: 1, alignSelf: 'stretch', }}
                     ref={component => this._barCode = component}
-                    onBarCodeRead={this._onBarCodeRead} />
+                    onBarCodeRead={this._onBarCodeRead}
+                />
+
+                {
+                    this.state.isLoading ? <LoadingView /> : <View />
+                }
             </View>
         )
     }
-
-    componentDidMount() {
-
+    submit(sn, mac) {
+        if (sn == '') {
+            Alert.alert('', I18n.t('please_entry_sn'),
+                [{ text: I18n.t('okText'), onPress: () => { } }]
+            );
+        } else if (mac == '') {
+            Alert.alert('', I18n.t('please_entry_mac'),
+                [{ text: I18n.t('okText'), onPress: () => { } }]
+            );
+        } else {
+            this.setState({
+                isLoading: true,
+            });
+            this.props.dispatch({
+                type: 'registerCar/getGatewayInfo',
+                payload: {
+                    sn: sn,
+                    mac: mac,
+                },
+                onSuccess: (result) => {
+                    this.setState({ isLoading: false });
+                },
+                onFaild: (result) => {
+                    this.setState({ isLoading: false });
+                }
+            })
+        }
     }
-
     componentWillUnmount() {
         this._barCode.stopScan()
     }
@@ -56,19 +89,43 @@ class ScanView extends Component {
         // console.log(`e.nativeEvent.data.type = ${e.nativeEvent.data.type}, e.nativeEvent.data.code = ${e.nativeEvent.data.code}`)
         this._stopScan();
         if (code == undefined) {
-            Alert.alert('', I18n.t('no_data'), [{ text: I18n.t('okText'), onPress: () => this._startScan() },]);
+            Alert.alert('', I18n.t('invalid_data'),
+                [{
+                    text: I18n.t('okText'),
+                    onPress: () => this._startScan()
+                }]);
         } else {
-            this.props.navigation.state.params.callback(code);
-            this.props.navigation.goBack();
+            // this.props.navigation.state.params.callback(code);
+            // this.props.navigation.popToTop();
+            const dict = ihtool.changeQRCode(code);
+            if (dict.sn && dict.mac) {
+                this.submit(dict.sn, dict.mac);
+            } else {
+                Alert.alert('', I18n.t('invalid_data'),
+                    [{
+                        text: I18n.t('okText'),
+                        onPress: () => {
+                            if (this._barCode) {
+                                this._barCode.startScan()
+                            }
+                        }
+                    }]);
+            }
         }
 
     }
     _startScan = (e) => {
-        this._barCode.startScan()
+        if (this._barCode) {
+            this._barCode.startScan()
+        }
     }
     _stopScan = (e) => {
-        this._barCode.stopScan()
+        if (this._barCode) {
+            this._barCode.stopScan()
+        }
     }
 }
-
-export default TimerEnhance(ScanView)
+function mapStateToProps(state) {
+    return { ...state }
+}
+export default connect(mapStateToProps)(TimerEnhance(ScanView));

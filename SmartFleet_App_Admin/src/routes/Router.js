@@ -11,6 +11,7 @@ import {
     Text,
     View,
     Image,
+    NativeAppEventEmitter
 } from 'react-native';
 import {
     createBottomTabNavigator,
@@ -68,19 +69,8 @@ export default class Router extends Component {
         } else {
             JPushModule.setupPush()
         }
-        JPushModule.addReceiveCustomMsgListener((message) => {
-            this.setState({ pushMsg: message });
-        });
-        JPushModule.addReceiveNotificationListener((message) => {
-            console.log("receive notification: " + message);
-        });
-        JPushModule.addReceiveOpenNotificationListener((message) => {
-            // console.log('Opening notification!');
-            // console.log('map.extra: ' + JSON.stringify(message));
-            // Global.global.navigation.dispatch(main);
-            // Global.global.navigation.navigate('Setting');
-            // Global.global.navigation.navigate('UpgradeVersionView');
-        });
+
+
     }
     componentWillUnmount() {
         // NetInfo.removeEventListener(

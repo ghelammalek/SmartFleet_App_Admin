@@ -160,7 +160,10 @@ class EventDetail extends Component {
                     </View>
                     {
                         item.confirmState ? <View /> :
-                            <TouchableOpacity style={item.confirmState ? styles.clearBtnView_ : styles.clearBtnView} disabled={item.confirmState} activeOpacity={0.6} onPress={() => this.postAlert()} >
+                            <TouchableOpacity style={item.confirmState ? styles.clearBtnView_ : styles.clearBtnView}
+                                disabled={item.confirmState} activeOpacity={0.6}
+                                onPress={() => this.postAlert()}
+                            >
                                 <Text style={styles.clearBtn}>{I18n.t('confirm_event')}</Text>
                             </TouchableOpacity>
                     }

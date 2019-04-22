@@ -16,16 +16,20 @@ export default {
         }
     },
     effects: {
-        * register({ payload, that }, { call, put, select }) {
-            yield put({
-                type: 'updateState',
-                isLoading: true,
-            })
+        * getGatewayInfo({ payload, onSuccess, onFaild }, { call, put, select }) {
+            const data = yield call(api.getGatewayInfo, payload);
+            if (data) {
+                if (data.error) {
+
+                } else {
+                    onSuccess(data.result);
+                    return;
+                }
+            }
+            onFaild(data);
+        },
+        * register({ payload, onSuccess, onFaild }, { call, put, select }) {
             const data = yield call(api.register, payload);
-            yield put({
-                type: 'updateState',
-                isLoading: false,
-            })
             if (data) {
                 if (data.error) {
                     if (data.result) {

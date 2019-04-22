@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-
 import {
     View,
     Image,
     Text,
     TouchableHighlight
 } from 'react-native';
-
-import selectItemStyle from '../style/selectItemStyle';
-import Images from '../constants/Images/Images.js';
+import Images from '../constants/Images';
+import selectItemStyle from '../styles/selectItemStyle';
 
 export default class SelectItem extends Component {
     render() {

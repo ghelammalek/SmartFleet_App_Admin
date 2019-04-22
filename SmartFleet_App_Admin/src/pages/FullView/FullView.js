@@ -72,12 +72,8 @@ class FullView extends Component {
         this.props.navigation.navigate('SiteDetail', { item: item });
     }
     pushRegisterCarView() {
-        this.props.navigation.navigate('RegisterCar', {
-            callback: () => {
-                this.props.dispatch(createAction('fullView/updateState')({ isLoading: true }));
-                this.props.dispatch(createAction('fullView/getSites')({}));
-            }
-        });
+        // this.props.navigation.navigate('AddGateway');
+        this.props.navigation.navigate('ScanView');
     }
     _separator = () => {
         return <View style={styles.separator} />;
@@ -116,9 +112,6 @@ class FullView extends Component {
         const center = markers.length == 0 ? ihtool.getInitPs() : undefined;
         return (
             <View style={styles.container}>
-                {/* <NavigationBar
-                    title={I18n.t('tab_cars')}
-                /> */}
                 <ScrollableTabView
                     locked={true}
                     renderTabBar={() =>
@@ -151,10 +144,9 @@ class FullView extends Component {
                             onMapClick={(e) => {
                             }}
                         />
-
-                        <TouchableOpacity style={styles.refreshView} disabled={this.props.isLoading} activeOpacity={0.7} onPress={() => this.refresh_()}>
+                        {/* <TouchableOpacity style={styles.refreshView} disabled={this.props.isLoading} activeOpacity={0.7} onPress={() => this.refresh_()}>
                             <Image style={styles.refreshImage} source={Images.ico_refresh} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View
                         tabLabel={I18n.t('car_list')}
@@ -177,8 +169,12 @@ class FullView extends Component {
                         />
                     </View>
                 </ScrollableTabView>
-                <TouchableOpacity style={styles.addView} disabled={this.props.isLoading} activeOpacity={0.7} onPress={() => this.pushRegisterCarView()}>
-                    <Image style={styles.refreshImage} source={Images.other_add_select} />
+                <TouchableOpacity style={styles.addView}
+                    disabled={this.props.isLoading}
+                    activeOpacity={0.7}
+                    onPress={() => this.pushRegisterCarView()}
+                >
+                    <Image style={styles.refreshImage} source={Images.gateway_scan} />
                 </TouchableOpacity>
                 {
                     this.props.isLoading ? <LoadingView /> : <View />

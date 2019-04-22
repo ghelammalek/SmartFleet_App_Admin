@@ -270,14 +270,25 @@ exports.postAlert = function (_id) {
  * @returns
  */
 exports.register = function (params) {
-    const url = '/dapi/sites?sn=' + params.sn +
+    const url = '/api/sites?sn=' + params.sn +
         '&auth=' + params.email +
         '&sign=' + md5.hex_md5(params.sn + params.email + '64391099@inhand');
     var labels = { labels: params.body };
     return request.post(url, labels, true, HEADER_JSON);
 }
 
-
+/**
+ *   获取网关信息
+ *
+ * @param {*} params
+ * @returns
+ */
+exports.getGatewayInfo = function (params) {
+    const url = 'https://04faac2f-6203-45ad-a2d4-81edd09c12c2.mock.pstmn.io/api/products/' + params.sn +
+        '?sn=' + params.sn +
+        '&mac=' + params.mac;
+    return request.get(url, null, true, HEADER_JSON);
+}
 
 
 

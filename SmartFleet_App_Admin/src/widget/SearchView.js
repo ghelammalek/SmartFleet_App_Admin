@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import Images from '../constants/Images';
 import styles from '../styles/searchViewStyle';
-import { connect } from '../routes/dva';
 import I18n from '../language/index';
 import { isEmpty } from '../utils/index';
 import Global from '../utils/Global';
